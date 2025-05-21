@@ -44,6 +44,7 @@ body {
     right: 20px;
     font-size: 2rem;
     text-decoration: none;
+    color: white;
 }
 
 /* ===== Barra de navegação no topo ===== */
@@ -57,7 +58,6 @@ body {
     gap: 10px;
 }
 
-/* Botões */
 .botoes-navegacao button {
     flex: 1 1 15%;
     min-width: 120px;
@@ -129,3 +129,78 @@ body {
     text-align: center;
 }
 
+/* ===== Conteúdo principal ===== */
+.conteudo {
+    padding: 30px 20px;
+    text-align: center;
+}
+
+.conteudo h2 {
+    font-size: 2rem;
+    margin-bottom: 10px;
+}
+
+.conteudo p {
+    margin-bottom: 30px;
+    color: #555;
+}
+
+.cards {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.card {
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    padding: 20px;
+    width: 280px;
+}
+
+.card h3 {
+    margin-bottom: 10px;
+    color: #0077b6;
+}
+
+.card p {
+    color: #555;
+}
+
+/* ===== Rodapé ===== */
+.rodape {
+    background-color: #0077b6;
+    color: white;
+    padding: 15px;
+    text-align: center;
+}
+
+/* ===== Responsividade ===== */
+@media (max-width: 768px) {
+    .menu-button .bar {
+        width: 48px;
+        height: 6px;
+        margin: 8px 0;
+    }
+
+    .logo, .logo-direita {
+        width: 60px;
+        height: 60px;
+    }
+
+    .titulo {
+        font-size: 2rem;
+    }
+
+    .botoes-navegacao button {
+        flex: 1 1 45%;
+        padding: 15px 0;
+        font-size: 1rem;
+    }
+
+    .linha {
+        width: 70%;
+    }
+}
