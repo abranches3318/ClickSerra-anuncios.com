@@ -28,23 +28,21 @@ body {
     border-radius: 2px;
 }
 
-/* Imagem do logo no topo esquerdo */
 .logo {
     position: absolute;
     top: 16px;
-    left: 50px; /* fica após o botão hambúrguer */
-    width: 90px;
-    height: 90px;
+    left: 110px; /* aumentado para dar espaço ao botão maior */
+    width: 144px; /* 72px (largura do botão) * 2 */
+    height: 144px;
     object-fit: contain;
 }
 
-/* Imagem adicional no topo direito */
 .logo-direita {
     position: absolute;
     top: 16px;
     right: 20px;
-    width: 48px;
-    height: 48px;
+    width: 144px;
+    height: 144px;
     object-fit: contain;
 }
 
