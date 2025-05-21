@@ -8,14 +8,14 @@
 </head>
 <body>
 
-    <!-- Menu lateral oculto -->
-    <div id="menu-lateral" class="menu-lateral">
+    <!-- Menu lateral -->
+    <div id="menuLateral" class="menu-lateral">
         <a href="javascript:void(0)" class="fechar" onclick="fecharMenu()">&times;</a>
         <a href="#">Início</a>
         <a href="#">Bairros</a>
         <a href="#">Empregos</a>
         <a href="#">Eventos</a>
-        <a href="#">Anuncie Aqui</a>
+        <a href="#">Anuncie aqui</a>
     </div>
 
     <!-- Barra de navegação no topo -->
@@ -25,59 +25,42 @@
             <div class="bar"></div>
             <div class="bar"></div>
         </div>
-
         <button>Início</button>
         <button>Bairros</button>
         <button>Empregos</button>
         <button>Eventos</button>
         <button>Anuncie Aqui</button>
-
-        <img src="logo-direita.png" class="logo-direita" alt="Logo Direita">
+        <img src="logo-direita.png" alt="Logo Direita" class="logo-direita">
     </div>
 
-    <!-- Linha decorativa abaixo dos botões -->
-    <div class="linha"></div>
-
-    <!-- Cabeçalho com título e logo -->
+    <!-- Cabeçalho com logo e título -->
     <div class="cabecalho">
-        <img src="logo.png" class="logo" alt="Logo">
+        <img src="logo.png" alt="Logo" class="logo">
         <h1 class="titulo">Click Serra Anúncios</h1>
     </div>
 
-    <!-- Conteúdo principal -->
-    <main class="conteudo">
-        <h2>Bem-vindo ao Click Serra!</h2>
-        <p>Encontre os melhores anúncios de comércios, empregos, eventos e muito mais na região da Serra.</p>
+    <!-- Linha decorativa -->
+    <div class="linha"></div>
 
-        <div class="cards">
-            <div class="card">
-                <h3>Comércios</h3>
-                <p>Encontre empresas e serviços locais.</p>
-            </div>
-            <div class="card">
-                <h3>Empregos</h3>
-                <p>Veja as vagas disponíveis na sua região.</p>
-            </div>
-            <div class="card">
-                <h3>Eventos</h3>
-                <p>Fique por dentro dos eventos locais.</p>
-            </div>
-        </div>
-    </main>
+    <!-- Conteúdo principal -->
+    <div class="conteudo">
+        <h2>Bem-vindo ao Click Serra!</h2>
+        <p>Seu site de anúncios, empregos, eventos e muito mais.</p>
+    </div>
 
     <!-- Rodapé -->
-    <footer class="rodape">
-        <p>&copy; 2025 Click Serra Anúncios - Todos os direitos reservados</p>
-    </footer>
+    <div class="rodape">
+        <p>&copy; 2025 Click Serra. Todos os direitos reservados.</p>
+    </div>
 
     <!-- Script do menu -->
     <script>
         function abrirMenu() {
-            document.getElementById("menu-lateral").style.width = "250px";
+            document.getElementById("menuLateral").style.width = "250px";
         }
 
         function fecharMenu() {
-            document.getElementById("menu-lateral").style.width = "0";
+            document.getElementById("menuLateral").style.width = "0";
         }
     </script>
 
