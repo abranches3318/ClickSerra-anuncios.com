@@ -28,23 +28,23 @@ body {
     border-radius: 2px;
 }
 
-/* Logo no topo esquerdo */
+/* Imagem do logo no topo esquerdo */
 .logo {
     position: absolute;
-    top: 20px;
-    left: 60px;
-    width: 80px;
-    height: 80px;
+    top: 16px;
+    left: 60px; /* fica após o botão hambúrguer */
+    width: 48px;
+    height: 48px;
     object-fit: contain;
 }
 
-/* Logo no topo direito */
+/* Imagem adicional no topo direito */
 .logo-direita {
     position: absolute;
-    top: 20px;
+    top: 16px;
     right: 20px;
-    width: 80px;
-    height: 80px;
+    width: 48px;
+    height: 48px;
     object-fit: contain;
 }
 
@@ -53,12 +53,12 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-top: 40px; /* Subimos o título */
+    margin-top: 80px; /* espaço por causa dos elementos no topo */
     flex-wrap: wrap;
 }
 
 .titulo {
-    font-size: 2.8rem;
+    font-size: 2.5rem;
     color: #222;
     text-align: center;
 }
@@ -68,7 +68,7 @@ body {
     width: 50%;
     height: 4px;
     background-color: #555;
-    margin: 10px auto 25px auto;
+    margin: 15px auto 25px auto;
     border-radius: 2px;
 }
 
@@ -81,7 +81,7 @@ body {
 }
 
 .botoes-navegacao button {
-    flex: 1 1 18%;
+    flex: 1 1 18%; /* tenta ocupar igualmente, mas respeita o tamanho mínimo */
     min-width: 150px;
     background-color: #0077b6;
     color: white;
@@ -97,3 +97,4 @@ body {
 .botoes-navegacao button:hover {
     background-color: #023e8a;
 }
+
