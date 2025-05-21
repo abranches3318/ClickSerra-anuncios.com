@@ -33,8 +33,8 @@ body {
     position: absolute;
     top: 16px;
     left: 60px; /* fica após o botão hambúrguer */
-    width: 48px;
-    height: 48px;
+    width: 60px;
+    height: 60px;
     object-fit: contain;
 }
 
