@@ -8,9 +8,19 @@
 </head>
 <body>
 
+    <!-- Menu lateral oculto -->
+    <div id="menu-lateral" class="menu-lateral">
+        <a href="javascript:void(0)" class="fechar" onclick="fecharMenu()">&times;</a>
+        <a href="#">Início</a>
+        <a href="#">Bairros</a>
+        <a href="#">Empregos</a>
+        <a href="#">Eventos</a>
+        <a href="#">Anuncie Aqui</a>
+    </div>
+
     <!-- Barra de navegação no topo -->
     <div class="botoes-navegacao">
-        <div class="menu-button">
+        <div class="menu-button" onclick="abrirMenu()">
             <div class="bar"></div>
             <div class="bar"></div>
             <div class="bar"></div>
@@ -33,6 +43,17 @@
         <img src="logo.png" class="logo" alt="Logo">
         <h1 class="titulo">Click Serra Anúncios</h1>
     </div>
+
+    <!-- Script do menu -->
+    <script>
+        function abrirMenu() {
+            document.getElementById("menu-lateral").style.width = "250px";
+        }
+
+        function fecharMenu() {
+            document.getElementById("menu-lateral").style.width = "0";
+        }
+    </script>
 
 </body>
 </html>
