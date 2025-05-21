@@ -53,7 +53,7 @@ body {
 
 /* Linha decorativa centralizada */
 .linha {
-    width: 50%;
+    width: 70%;
     height: 4px;
     background-color: #555;
     margin: 15px auto 25px auto;
