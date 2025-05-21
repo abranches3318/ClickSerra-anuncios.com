@@ -32,9 +32,9 @@ body {
 .logo {
     position: absolute;
     top: 16px;
-    left: 60px; /* fica após o botão hambúrguer */
-    width: 60px;
-    height: 60px;
+    left: 50px; /* fica após o botão hambúrguer */
+    width: 90px;
+    height: 90px;
     object-fit: contain;
 }
 
