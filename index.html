@@ -4,65 +4,34 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Click Serra Anúncios</title>
-    <link rel="stylesheet" href="estilo.css">
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <!-- Menu lateral -->
-    <div id="menuLateral" class="menu-lateral">
-        <a href="javascript:void(0)" class="fechar" onclick="fecharMenu()">&times;</a>
-        <a href="#">Início</a>
-        <a href="#">Bairros</a>
-        <a href="#">Empregos</a>
-        <a href="#">Eventos</a>
-        <a href="#">Anuncie aqui</a>
-    </div>
-
-    <!-- Barra de navegação no topo -->
-    <div class="botoes-navegacao">
-        <div class="menu-button" onclick="abrirMenu()">
-            <div class="bar"></div>
-            <div class="bar"></div>
-            <div class="bar"></div>
-        </div>
-        <button>Início</button>
-        <button>Bairros</button>
-        <button>Empregos</button>
-        <button>Eventos</button>
-        <button>Anuncie Aqui</button>
-        <img src="logo-direita.png" alt="Logo Direita" class="logo-direita">
+    <!-- Botão de Menu (hambúrguer) -->
+    <div class="menu-button">
+        <div class="bar"></div>
+        <div class="bar"></div>
+        <div class="bar"></div>
     </div>
 
     <!-- Cabeçalho com logo e título -->
     <div class="cabecalho">
-        <img src="logo.png" alt="Logo" class="logo">
+        <img src="logo.png" alt="Logo Click Serra" class="logo">
         <h1 class="titulo">Click Serra Anúncios</h1>
     </div>
 
     <!-- Linha decorativa -->
     <div class="linha"></div>
 
-    <!-- Conteúdo principal -->
-    <div class="conteudo">
-        <h2>Bem-vindo ao Click Serra!</h2>
-        <p>Seu site de anúncios, empregos, eventos e muito mais.</p>
+    <!-- Navegação com botões -->
+    <div class="botoes-navegacao">
+        <button>Início</button>
+        <button>Bairros</button>
+        <button>Empregos</button>
+        <button>Eventos</button>
+        <button>Anuncie Aqui</button>
     </div>
-
-    <!-- Rodapé -->
-    <div class="rodape">
-        <p>&copy; 2025 Click Serra. Todos os direitos reservados.</p>
-    </div>
-
-    <!-- Script do menu -->
-    <script>
-        function abrirMenu() {
-            document.getElementById("menuLateral").style.width = "250px";
-        }
-
-        function fecharMenu() {
-            document.getElementById("menuLateral").style.width = "0";
-        }
-    </script>
 
 </body>
 </html>
