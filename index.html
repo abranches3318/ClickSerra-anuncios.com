@@ -9,9 +9,9 @@
 <body>
 
     <!-- 🔷 Barra de Navegação -->
-    <div class="barra-navegacao">
-        <div class="menu-button">☰</div>
-        <nav class="itens-navegacao">
+    <header class="barra-navegacao">
+        <button class="menu-button" aria-label="Menu">☰</button>
+        <nav class="itens-navegacao" aria-label="Navegação principal">
             <a href="#">Início</a>
             <a href="#">Bairros</a>
             <a href="#">Empregos</a>
@@ -19,29 +19,28 @@
             <a href="#">Anuncie Aqui</a>
         </nav>
         <div class="busca">
-            <div class="icone-lupa">🔍</div>
-            <input type="text" placeholder="Buscar" class="campo-busca">
+            <button class="icone-lupa" aria-label="Buscar">🔍</button>
+            <input type="text" placeholder="Buscar" class="campo-busca" aria-label="Campo de busca">
         </div>
-    </div>
+    </header>
 
     <div class="linha-barra"></div>
 
-    <!-- 🔷 Cabeçalho -->
-    <header class="cabecalho">
+    <!-- 🔷 Cabeçalho Principal -->
+    <section class="cabecalho">
         <img src="imagens/logotipo.png" alt="Logo Click Serra" class="logo">
         <div class="texto-cabecalho">
             <h1>Click Serra Anúncios</h1>
             <p>Conectando você aos melhores comércios, serviços, empregos e eventos da cidade de Serra-ES.</p>
         </div>
-    </header>
+    </section>
 
     <!-- 🔷 Seção Top 10 Categorias -->
     <section class="top-categorias">
         <h2>TOP 10 Categorias</h2>
         <div class="container-cards">
-            <div class="seta esquerda">◀</div>
+            <button class="seta esquerda" aria-label="Rolar para a esquerda">◀</button>
             <div class="cards">
-                <!-- Exemplo de card -->
                 <div class="card">
                     <img src="imagens/mercado.jpg" alt="Mercados">
                     <p>Mercados</p>
@@ -83,7 +82,7 @@
                     <p>Advogados</p>
                 </div>
             </div>
-            <div class="seta direita">▶</div>
+            <button class="seta direita" aria-label="Rolar para a direita">▶</button>
         </div>
     </section>
 
