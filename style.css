@@ -110,38 +110,4 @@ body {
     text-align: center;
 }
 
-/* Linha decorativa */
-.linha {
-    width: 50%;
-    height: 4px;
-    background-color: #555;
-    margin: 10px auto 25px auto;
-    border-radius: 2px;
-}
 
-/* 🔵 Botões de navegação */
-.botoes-navegacao {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    gap: 10px;
-    padding: 20px;
-}
-
-.botoes-navegacao button {
-    flex: 1 1 18%;
-    min-width: 150px;
-    background-color: #0077b6;
-    color: white;
-    border: none;
-    padding: 18px 0;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-    font-size: 1.2rem;
-    text-align: center;
-}
-
-.botoes-navegacao button:hover {
-    background-color: #023e8a;
-}
