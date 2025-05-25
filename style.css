@@ -1,11 +1,17 @@
-/* Reset */
+/* 🔥 Reset */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
+html, body {
+    height: 100%;
+}
+
 body {
+    display: flex;
+    flex-direction: column;
     font-family: Arial, sans-serif;
     background-color: #f9f9f9;
     color: #333;
@@ -99,23 +105,27 @@ body {
     display: flex;
     align-items: center;
     position: relative;
+    width: 100vw;
+    overflow: hidden;
 }
 
 .cards {
     display: flex;
+    gap: 20px;
     overflow-x: auto;
     scroll-behavior: smooth;
-    gap: 20px;
+    padding: 10px;
+    width: 100%;
 }
 
 .card {
-    min-width: 30%;
-    flex: 0 0 auto;
-    background-color: #fff;
+    flex: 0 0 calc((100% - 60px) / 3); /* 3 cards por vez */
+    background-color: white;
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0,0,0,0.2);
     text-align: center;
     overflow: hidden;
+    min-width: 300px;
 }
 
 .card img {
@@ -131,11 +141,14 @@ body {
     font-weight: bold;
 }
 
+/* 🔷 Setas */
 .seta {
     cursor: pointer;
-    font-size: 2rem;
+    font-size: 2.5rem;
     padding: 10px;
     user-select: none;
+    color: #333;
+    transition: color 0.3s;
 }
 
 .seta:hover {
@@ -174,10 +187,15 @@ body {
     padding: 0 10px 10px;
 }
 
-/* 🔷 Rodapé */
+/* 🔷 Rodapé Fixo */
+main {
+    flex: 1;
+}
+
 .rodape {
     background-color: #0077b6;
     color: white;
     text-align: center;
     padding: 15px;
+    margin-top: auto;
 }
