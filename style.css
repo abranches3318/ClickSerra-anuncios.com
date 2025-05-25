@@ -16,21 +16,20 @@ body {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 0 20px;
-    background-color: #0077b6; /* Azul */
+    background-color: #0077b6;
+    padding: 10px 20px;
     position: fixed;
     top: 0;
     left: 0;
     right: 0;
     z-index: 1000;
-    height: 60px;
 }
 
-/* Botão hambúrguer */
-.menu-button {
+.menu-button, .busca {
     display: flex;
     flex-direction: column;
-    gap: 5px;
+    align-items: center;
+    gap: 4px;
     cursor: pointer;
 }
 
@@ -41,88 +40,138 @@ body {
     border-radius: 2px;
 }
 
-/* 🔗 Itens de navegação */
 .itens-navegacao {
     display: flex;
-    flex: 1;
-    justify-content: center;
-    gap: 0;
+    gap: 30px;
 }
 
-.itens-navegacao a {
-    flex: 1;
-    text-align: center;
-    line-height: 60px;
+.itens-navegacao a,
+.item-barra {
     color: white;
     text-decoration: none;
     font-weight: bold;
-    transition: background-color 0.3s;
-    border-right: 1px solid rgba(255, 255, 255, 0.3);
+    position: relative;
+    cursor: pointer;
 }
 
-.itens-navegacao a:last-child {
-    border-right: none;
-}
-
-.itens-navegacao a:hover {
-    background-color: #005f8a;
+.itens-navegacao a:hover,
+.menu-button:hover,
+.busca:hover {
+    text-decoration: underline;
 }
 
 .itens-navegacao a:active {
-    background-color: #004466;
-}
-
-/* 🔍 Busca */
-.busca {
-    display: flex;
-    align-items: center;
-    gap: 10px;
+    color: #023e8a;
 }
 
 .icone-lupa {
     width: 24px;
     height: 24px;
-    cursor: pointer;
-    filter: brightness(0) invert(1); /* Deixa a imagem branca */
 }
 
-.campo-busca {
-    display: none;
-    padding: 5px 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-}
-
-/* 🔻 Linha abaixo da barra */
+/* 🔵 Linha abaixo da barra */
 .linha-barra {
     height: 3px;
     background-color: #555;
     width: 100%;
-    position: fixed;
-    top: 60px;
-    left: 0;
-    z-index: 999;
+    margin-top: 58px;
 }
 
-/* 🔵 Cabeçalho (Logo + Título) */
+/* 🔵 Cabeçalho */
 .cabecalho {
     display: flex;
     align-items: center;
-    justify-content: center;
-    gap: 20px;
+    gap: 30px;
+    margin: 40px 20px;
     flex-wrap: wrap;
-    margin-top: 100px;
 }
 
 .logo {
-    width: 120px;
+    width: 140px;
     height: auto;
-    object-fit: contain;
+}
+
+.info-cabecalho {
+    max-width: 700px;
 }
 
 .titulo {
-    font-size: 2.8rem;
-    color: #222;
-    text-align: center;
+    font-size: 3rem;
+    color: #0077b6;
+    margin-bottom: 10px;
 }
 
+.missao {
+    font-size: 1.1rem;
+    color: #555;
+}
+
+/* 🔵 Subtítulo */
+.subtitulo {
+    font-size: 2rem;
+    color: #023e8a;
+    margin: 40px 20px 20px;
+}
+
+/* 🔵 Cards Top 10 */
+.top-categorias {
+    position: relative;
+    overflow: hidden;
+    margin: 0 20px;
+}
+
+.cards {
+    display: flex;
+    gap: 20px;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+}
+
+.card {
+    min-width: 30%;
+    flex: 0 0 auto;
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 20px;
+    text-align: center;
+    font-weight: bold;
+    color: #333;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    transition: transform 0.3s;
+}
+
+.card:hover {
+    transform: scale(1.05);
+}
+
+/* 🔵 Setas */
+.seta {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: #0077b6;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+    z-index: 10;
+    font-size: 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.seta.esquerda {
+    left: 0;
+}
+
+.seta.direita {
+    right: 0;
+}
+
+.seta:hover {
+    background-color: #023e8a;
+}
