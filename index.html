@@ -8,14 +8,9 @@
 </head>
 <body>
 
-    <!-- 🔵 Barra de Navegação -->
+    <!-- 🔷 Barra de Navegação -->
     <div class="barra-navegacao">
-        <div class="menu-button item-barra">
-            <div class="bar"></div>
-            <div class="bar"></div>
-            <div class="bar"></div>
-        </div>
-
+        <div class="menu-button">☰</div>
         <nav class="itens-navegacao">
             <a href="#">Início</a>
             <a href="#">Bairros</a>
@@ -23,46 +18,103 @@
             <a href="#">Eventos</a>
             <a href="#">Anuncie Aqui</a>
         </nav>
-
-        <div class="busca item-barra">
-            <img src="imagens/lupa.png" alt="Buscar" class="icone-lupa">
+        <div class="busca">
+            <div class="icone-lupa">🔍</div>
+            <input type="text" placeholder="Buscar" class="campo-busca">
         </div>
     </div>
 
     <div class="linha-barra"></div>
 
-    <!-- 🔵 Cabeçalho -->
-    <div class="cabecalho">
+    <!-- 🔷 Cabeçalho -->
+    <header class="cabecalho">
         <img src="imagens/logotipo.png" alt="Logo Click Serra" class="logo">
-        <div class="info-cabecalho">
-            <h1 class="titulo">Click Serra Anúncios</h1>
-            <p class="missao">
-                Nossa missão é conectar pessoas, negócios e oportunidades na cidade de Serra-ES. Aqui você encontra os melhores serviços, vagas de emprego e eventos locais!
-            </p>
+        <div class="texto-cabecalho">
+            <h1>Click Serra Anúncios</h1>
+            <p>Conectando você aos melhores comércios, serviços, empregos e eventos da cidade de Serra-ES.</p>
         </div>
-    </div>
+    </header>
 
-    <!-- 🔵 Seção TOP 10 Categorias -->
-    <h2 class="subtitulo">TOP 10 Categorias</h2>
-
-    <div class="top-categorias">
-        <button class="seta esquerda">&#10094;</button>
-
-        <div class="cards">
-            <div class="card">Restaurantes</div>
-            <div class="card">Supermercados</div>
-            <div class="card">Oficinas Mecânicas</div>
-            <div class="card">Salões de Beleza</div>
-            <div class="card">Saúde</div>
-            <div class="card">Pet Shops</div>
-            <div class="card">Construção Civil</div>
-            <div class="card">Educação</div>
-            <div class="card">Eventos</div>
-            <div class="card">Empregos</div>
+    <!-- 🔷 Seção Top 10 Categorias -->
+    <section class="top-categorias">
+        <h2>TOP 10 Categorias</h2>
+        <div class="container-cards">
+            <div class="seta esquerda">◀</div>
+            <div class="cards">
+                <!-- Exemplo de card -->
+                <div class="card">
+                    <img src="imagens/mercado.jpg" alt="Mercados">
+                    <p>Mercados</p>
+                </div>
+                <div class="card">
+                    <img src="imagens/restaurante.jpg" alt="Restaurantes">
+                    <p>Restaurantes</p>
+                </div>
+                <div class="card">
+                    <img src="imagens/salão.jpg" alt="Salões de Beleza">
+                    <p>Salões de Beleza</p>
+                </div>
+                <div class="card">
+                    <img src="imagens/pet.jpg" alt="Pet Shops">
+                    <p>Pet Shops</p>
+                </div>
+                <div class="card">
+                    <img src="imagens/oficina.jpg" alt="Oficinas">
+                    <p>Oficinas</p>
+                </div>
+                <div class="card">
+                    <img src="imagens/eventos.jpg" alt="Eventos">
+                    <p>Eventos</p>
+                </div>
+                <div class="card">
+                    <img src="imagens/empregos.jpg" alt="Vagas de Emprego">
+                    <p>Vagas de Emprego</p>
+                </div>
+                <div class="card">
+                    <img src="imagens/eletricista.jpg" alt="Eletricistas">
+                    <p>Eletricistas</p>
+                </div>
+                <div class="card">
+                    <img src="imagens/encanador.jpg" alt="Encanadores">
+                    <p>Encanadores</p>
+                </div>
+                <div class="card">
+                    <img src="imagens/advogado.jpg" alt="Advogados">
+                    <p>Advogados</p>
+                </div>
+            </div>
+            <div class="seta direita">▶</div>
         </div>
+    </section>
 
-        <button class="seta direita">&#10095;</button>
-    </div>
+    <!-- 🔷 Seção Sobre os Itens da Barra -->
+    <section class="sobre-itens">
+        <div class="item">
+            <img src="imagens/bairros.jpg" alt="Bairros">
+            <h3>Bairros</h3>
+            <p>Encontre comércios e serviços nos principais bairros da Serra.</p>
+        </div>
+        <div class="item">
+            <img src="imagens/empregos.jpg" alt="Empregos">
+            <h3>Empregos</h3>
+            <p>Fique por dentro das melhores vagas de emprego da cidade.</p>
+        </div>
+        <div class="item">
+            <img src="imagens/eventos.jpg" alt="Eventos">
+            <h3>Eventos</h3>
+            <p>Não perca os eventos mais importantes da Serra-ES.</p>
+        </div>
+        <div class="item">
+            <img src="imagens/anuncie.jpg" alt="Anuncie Aqui">
+            <h3>Anuncie Aqui</h3>
+            <p>Divulgue seu comércio ou serviço diretamente para moradores da Serra.</p>
+        </div>
+    </section>
+
+    <!-- 🔷 Rodapé -->
+    <footer class="rodape">
+        <p>&copy; 2025 Click Serra Anúncios | Todos os direitos reservados</p>
+    </footer>
 
     <script src="script.js"></script>
 </body>
