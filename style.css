@@ -6,12 +6,12 @@
 }
 
 body {
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: Arial, sans-serif;
     background-color: #f9f9f9;
     color: #333;
 }
 
-/* 🔵 Barra de navegação */
+/* 🔷 Barra de Navegação */
 .barra-navegacao {
     display: flex;
     align-items: center;
@@ -20,158 +20,164 @@ body {
     padding: 10px 20px;
     position: fixed;
     top: 0;
-    left: 0;
-    right: 0;
+    width: 100%;
     z-index: 1000;
-}
-
-.menu-button, .busca {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 4px;
-    cursor: pointer;
-}
-
-.menu-button .bar {
-    width: 24px;
-    height: 3px;
-    background-color: white;
-    border-radius: 2px;
 }
 
 .itens-navegacao {
     display: flex;
-    gap: 30px;
+    flex: 1;
+    justify-content: center;
+    gap: 50px;
 }
 
-.itens-navegacao a,
-.item-barra {
-    color: white;
-    text-decoration: none;
-    font-weight: bold;
-    position: relative;
-    cursor: pointer;
-}
-
-.itens-navegacao a:hover,
-.menu-button:hover,
-.busca:hover {
-    text-decoration: underline;
-}
-
-.itens-navegacao a:active {
-    color: #023e8a;
-}
-
+.barra-navegacao a,
+.menu-button,
 .icone-lupa {
-    width: 24px;
-    height: 24px;
+    color: white;
+    font-weight: bold;
+    text-decoration: none;
+    cursor: pointer;
+    transition: color 0.3s;
 }
 
-/* 🔵 Linha abaixo da barra */
+.barra-navegacao a:hover,
+.menu-button:hover,
+.icone-lupa:hover {
+    color: #ffdd00;
+}
+
+.campo-busca {
+    display: none;
+    padding: 5px 10px;
+    border: none;
+    border-radius: 4px;
+}
+
 .linha-barra {
     height: 3px;
     background-color: #555;
     width: 100%;
-    margin-top: 58px;
+    margin-top: 60px;
 }
 
-/* 🔵 Cabeçalho */
+/* 🔷 Cabeçalho */
 .cabecalho {
     display: flex;
     align-items: center;
     gap: 30px;
-    margin: 40px 20px;
+    margin: 100px 20px 40px 20px;
     flex-wrap: wrap;
 }
 
 .logo {
-    width: 140px;
+    width: 150px;
     height: auto;
 }
 
-.info-cabecalho {
-    max-width: 700px;
+.texto-cabecalho h1 {
+    font-size: 2.8rem;
+    color: #222;
 }
 
-.titulo {
-    font-size: 3rem;
-    color: #0077b6;
-    margin-bottom: 10px;
+.texto-cabecalho p {
+    max-width: 600px;
+    font-size: 1.2rem;
 }
 
-.missao {
-    font-size: 1.1rem;
-    color: #555;
-}
-
-/* 🔵 Subtítulo */
-.subtitulo {
-    font-size: 2rem;
-    color: #023e8a;
-    margin: 40px 20px 20px;
-}
-
-/* 🔵 Cards Top 10 */
+/* 🔷 Top 10 Categorias */
 .top-categorias {
+    margin: 40px 20px;
+}
+
+.top-categorias h2 {
+    font-size: 2rem;
+    margin-bottom: 20px;
+}
+
+.container-cards {
+    display: flex;
+    align-items: center;
     position: relative;
-    overflow: hidden;
-    margin: 0 20px;
 }
 
 .cards {
     display: flex;
-    gap: 20px;
     overflow-x: auto;
     scroll-behavior: smooth;
+    gap: 20px;
 }
 
 .card {
     min-width: 30%;
     flex: 0 0 auto;
-    background-color: white;
-    border: 1px solid #ddd;
+    background-color: #fff;
     border-radius: 8px;
-    padding: 20px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.2);
     text-align: center;
-    font-weight: bold;
-    color: #333;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-    transition: transform 0.3s;
+    overflow: hidden;
 }
 
-.card:hover {
-    transform: scale(1.05);
+.card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
 }
 
-/* 🔵 Setas */
-.seta {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
+.card p {
+    padding: 10px;
     background-color: #0077b6;
     color: white;
-    border: none;
-    border-radius: 50%;
-    width: 40px;
-    height: 40px;
+    font-weight: bold;
+}
+
+.seta {
     cursor: pointer;
-    z-index: 10;
-    font-size: 1.5rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.seta.esquerda {
-    left: 0;
-}
-
-.seta.direita {
-    right: 0;
+    font-size: 2rem;
+    padding: 10px;
+    user-select: none;
 }
 
 .seta:hover {
-    background-color: #023e8a;
+    color: #0077b6;
+}
+
+/* 🔷 Seção Sobre os Itens */
+.sobre-itens {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+    margin: 50px 20px;
+}
+
+.sobre-itens .item {
+    background-color: white;
+    border-radius: 8px;
+    width: 300px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.2);
+    text-align: center;
+    overflow: hidden;
+}
+
+.sobre-itens .item img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+.sobre-itens .item h3 {
+    margin: 10px 0;
+}
+
+.sobre-itens .item p {
+    padding: 0 10px 10px;
+}
+
+/* 🔷 Rodapé */
+.rodape {
+    background-color: #0077b6;
+    color: white;
+    text-align: center;
+    padding: 15px;
 }
