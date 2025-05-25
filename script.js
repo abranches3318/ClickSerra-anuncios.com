@@ -2,10 +2,8 @@ const lupa = document.querySelector('.icone-lupa');
 const campoBusca = document.querySelector('.campo-busca');
 
 lupa.addEventListener('click', () => {
+    campoBusca.style.display = campoBusca.style.display === 'block' ? 'none' : 'block';
     if (campoBusca.style.display === 'block') {
-        campoBusca.style.display = 'none';
-    } else {
-        campoBusca.style.display = 'block';
         campoBusca.focus();
     }
 });
@@ -29,3 +27,8 @@ esquerda.addEventListener('click', () => {
 direita.addEventListener('click', () => {
     cards.scrollBy({ left: 300, behavior: 'smooth' });
 });
+
+// 🌀 Rolagem automática
+setInterval(() => {
+    cards.scrollBy({ left: 300, behavior: 'smooth' });
+}, 4000);
