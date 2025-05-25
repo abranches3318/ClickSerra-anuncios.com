@@ -8,16 +8,15 @@
 </head>
 <body>
 
-    <!-- Barra de Navegação -->
+    <!-- Conteúdo da sua página aqui -->
+    
     <div class="barra-navegacao">
-        <!-- Botão de menu -->
         <div class="menu-button">
             <div class="bar"></div>
             <div class="bar"></div>
             <div class="bar"></div>
         </div>
 
-        <!-- Itens de navegação -->
         <div class="itens-navegacao">
             <a href="#">Início</a>
             <a href="#">Bairros</a>
@@ -26,21 +25,38 @@
             <a href="#">Anuncie Aqui</a>
         </div>
 
-        <!-- Ícone de busca e campo -->
         <div class="busca">
             <img src="imagens/lupa.png" alt="Buscar" class="icone-lupa">
             <input type="text" placeholder="Buscar" class="campo-busca">
         </div>
     </div>
 
-    <!-- Linha abaixo da barra -->
     <div class="linha-barra"></div>
 
-    <!-- Logo e título principal -->
     <div class="cabecalho">
         <img src="imagens/logotipo.png" alt="Logo Click Serra" class="logo">
         <h1 class="titulo">Click Serra Anúncios</h1>
     </div>
+
+    <script>
+        const lupa = document.querySelector('.icone-lupa');
+        const campoBusca = document.querySelector('.campo-busca');
+
+        lupa.addEventListener('click', () => {
+            campoBusca.style.display = campoBusca.style.display === 'block' ? 'none' : 'block';
+            if (campoBusca.style.display === 'block') {
+                campoBusca.focus();
+            }
+        });
+
+        campoBusca.addEventListener('focus', () => {
+            campoBusca.placeholder = '';
+        });
+
+        campoBusca.addEventListener('blur', () => {
+            campoBusca.placeholder = 'Buscar';
+        });
+    </script>
 
 </body>
 </html>
