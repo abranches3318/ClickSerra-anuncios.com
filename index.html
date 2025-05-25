@@ -8,55 +8,52 @@
 </head>
 <body>
 
-    <!-- Conteúdo da sua página aqui -->
-    
+    <!-- Barra de Navegação -->
     <div class="barra-navegacao">
+        <!-- Botão hambúrguer -->
         <div class="menu-button">
             <div class="bar"></div>
             <div class="bar"></div>
             <div class="bar"></div>
         </div>
 
-        <div class="itens-navegacao">
+        <!-- Itens de navegação -->
+        <nav class="itens-navegacao">
             <a href="#">Início</a>
             <a href="#">Bairros</a>
             <a href="#">Empregos</a>
             <a href="#">Eventos</a>
             <a href="#">Anuncie Aqui</a>
-        </div>
+        </nav>
 
+        <!-- Ícone de busca -->
         <div class="busca">
             <img src="imagens/lupa.png" alt="Buscar" class="icone-lupa">
             <input type="text" placeholder="Buscar" class="campo-busca">
         </div>
     </div>
 
+    <!-- Linha abaixo da barra -->
     <div class="linha-barra"></div>
 
+    <!-- Cabeçalho -->
     <div class="cabecalho">
         <img src="imagens/logotipo.png" alt="Logo Click Serra" class="logo">
         <h1 class="titulo">Click Serra Anúncios</h1>
     </div>
 
-    <script>
-        const lupa = document.querySelector('.icone-lupa');
-        const campoBusca = document.querySelector('.campo-busca');
+    <!-- Linha decorativa -->
+    <div class="linha"></div>
 
-        lupa.addEventListener('click', () => {
-            campoBusca.style.display = campoBusca.style.display === 'block' ? 'none' : 'block';
-            if (campoBusca.style.display === 'block') {
-                campoBusca.focus();
-            }
-        });
+    <!-- Botões de navegação -->
+    <div class="botoes-navegacao">
+        <button>Início</button>
+        <button>Bairros</button>
+        <button>Empregos</button>
+        <button>Eventos</button>
+        <button>Anuncie Aqui</button>
+    </div>
 
-        campoBusca.addEventListener('focus', () => {
-            campoBusca.placeholder = '';
-        });
-
-        campoBusca.addEventListener('blur', () => {
-            campoBusca.placeholder = 'Buscar';
-        });
-    </script>
-
+    <script src="script.js"></script>
 </body>
 </html>
