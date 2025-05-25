@@ -56,12 +56,6 @@ body {
     border: none;
 }
 
-/* 🔷 Linha separadora */
-.linha-barra {
-    height: 3px;
-    background-color: #0077b6;
-}
-
 /* 🔷 Cabeçalho */
 .cabecalho {
     display: flex;
