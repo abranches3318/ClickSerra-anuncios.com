@@ -1,4 +1,4 @@
-/* 🔷 Reset básico */
+/* Reset básico */
 * {
     margin: 0;
     padding: 0;
@@ -7,88 +7,105 @@
 
 body {
     font-family: Arial, sans-serif;
-    background-color: #f9f9f9;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
 }
 
-/* 🔷 Barra de Navegação */
+/* Barra de navegação */
 .barra-navegacao {
     display: flex;
-    align-items: center;
     justify-content: space-between;
-    background-color: #0077b6;
-    padding: 10px 20px;
+    align-items: center;
+    background-color: #004aad;
     color: white;
+    padding: 10px 20px;
+    position: relative;
+}
+
+.menu-button {
+    font-size: 24px;
+    cursor: pointer;
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
 }
 
 .itens-navegacao {
     display: flex;
     flex: 1;
-    justify-content: space-around;
-    gap: 10px;
+    justify-content: center;
+    gap: 30px;
 }
 
 .itens-navegacao a {
     color: white;
     text-decoration: none;
-    padding: 8px 12px;
-    transition: background-color 0.3s;
-}
-
-.itens-navegacao a:hover {
-    background-color: rgba(255, 255, 255, 0.2);
-    border-radius: 5px;
-}
-
-.menu-button {
-    cursor: pointer;
-    margin-right: 10px;
+    font-weight: bold;
 }
 
 .busca {
     display: flex;
     align-items: center;
-    gap: 5px;
+    gap: 8px;
+}
+
+.icone-lupa {
+    cursor: pointer;
 }
 
 .campo-busca {
-    padding: 5px;
-    border-radius: 5px;
+    display: none;
+    padding: 4px 8px;
+    border-radius: 4px;
     border: none;
 }
 
-/* 🔷 Cabeçalho */
+.linha-barra {
+    height: 4px;
+    background-color: #f1c40f;
+}
+
+/* Cabeçalho */
 .cabecalho {
     display: flex;
     align-items: center;
-    justify-content: center;
     gap: 20px;
     padding: 20px;
-    background-color: white;
+    background-color: #ffffff;
 }
 
 .cabecalho .logo {
-    width: 100px;
+    width: 80px;
+    height: 80px;
+    object-fit: contain;
+}
+
+.texto-cabecalho {
+    text-align: left;
 }
 
 .texto-cabecalho h1 {
-    color: #0077b6;
+    font-size: 28px;
+    color: #004aad;
 }
 
 .texto-cabecalho p {
     color: #333;
+    max-width: 600px;
 }
 
-/* 🔷 Seção Top Categorias - Carrossel Infinito */
+/* Top 10 Categorias */
 .top-categorias {
-    background-color: white;
     padding: 20px;
-    overflow: hidden;
+    background-color: #f9f9f9;
 }
 
 .top-categorias h2 {
-    text-align: center;
-    color: #0077b6;
     margin-bottom: 15px;
+    color: #004aad;
+    text-align: left;
 }
 
 .container-cards {
@@ -99,76 +116,83 @@ body {
 .cards {
     display: flex;
     gap: 20px;
-    animation: deslizar 40s linear infinite;
 }
 
-.card {
-    min-width: 200px;
-    flex: 0 0 auto;
-    background-color: #f1f1f1;
-    border-radius: 10px;
-    text-align: center;
-    padding: 10px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+/* Animação para carrossel infinito */
+.animacao-carrossel {
+    animation: deslizar 30s linear infinite;
 }
 
-.card img {
-    width: 100%;
-    border-radius: 10px;
-}
-
-.card p {
-    margin-top: 8px;
-    color: #0077b6;
-    font-weight: bold;
-}
-
-/* 🔷 Animação do Carrossel */
 @keyframes deslizar {
     0% { transform: translateX(0); }
     100% { transform: translateX(-50%); }
 }
 
-/* 🔷 Oculta setas */
+.card {
+    min-width: 200px;
+    background-color: white;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    text-align: center;
+}
+
+.card img {
+    width: 100%;
+    height: 120px;
+    object-fit: cover;
+}
+
+.card p {
+    padding: 10px;
+    font-weight: bold;
+    color: #333;
+}
+
 .seta {
     display: none;
 }
 
-/* 🔷 Seção Sobre Itens */
+/* Sobre os itens da barra */
 .sobre-itens {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
     gap: 20px;
-    padding: 20px;
+    padding: 30px 20px;
 }
 
 .sobre-itens .item {
-    background-color: white;
-    border-radius: 10px;
-    padding: 15px;
+    flex: 1 1 220px;
+    background-color: #fff;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
     text-align: center;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    padding: 10px;
 }
 
 .sobre-itens .item img {
     width: 100%;
-    border-radius: 10px;
+    height: 150px;
+    object-fit: cover;
 }
 
 .sobre-itens .item h3 {
     margin-top: 10px;
-    color: #0077b6;
+    color: #004aad;
 }
 
 .sobre-itens .item p {
-    margin-top: 5px;
-    color: #333;
+    padding: 10px;
+    color: #555;
 }
 
-/* 🔷 Rodapé */
+/* Rodapé fixo no final */
 .rodape {
-    background-color: #0077b6;
+    background-color: #004aad;
     color: white;
     text-align: center;
     padding: 15px;
+    margin-top: auto;
 }
