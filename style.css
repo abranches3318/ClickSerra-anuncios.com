@@ -10,49 +10,81 @@ body {
     min-height: 100vh;
     display: flex;
     flex-direction: column;
+    background-color: #fff;
+    color: #000;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+/* Dark Mode */
+body.dark {
+    background-color: #121212;
+    color: #f0f0f0;
+}
+
+body.dark .barra-navegacao {
+    background-color: #1e1e1e;
+}
+
+body.dark .linha-barra {
+    background-color: #f1c40f;
+}
+
+body.dark .itens-navegacao a {
+    color: #f0f0f0;
+}
+
+body.dark .card {
+    background-color: #1e1e1e;
+    color: white;
+}
+
+body.dark .rodape {
+    background-color: #1e1e1e;
 }
 
 /* Barra de navegação */
 .barra-navegacao {
+    width: 100%;
     display: flex;
     justify-content: space-between;
     align-items: center;
     background-color: #004aad;
     color: white;
-    padding: 10px 20px;
-    position: relative;
+    padding: 10px 30px;
 }
 
 .menu-button {
     font-size: 24px;
     cursor: pointer;
-    position: absolute;
-    left: 10px;
-    top: 50%;
-    transform: translateY(-50%);
 }
 
 .itens-navegacao {
     display: flex;
     flex: 1;
     justify-content: center;
-    gap: 30px;
+    gap: 50px;
 }
 
 .itens-navegacao a {
     color: white;
     text-decoration: none;
     font-weight: bold;
+    transition: color 0.3s;
+}
+
+.itens-navegacao a:hover {
+    color: #f1c40f;
 }
 
 .busca {
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 10px;
 }
 
 .icone-lupa {
     cursor: pointer;
+    font-size: 20px;
 }
 
 .campo-busca {
@@ -62,9 +94,11 @@ body {
     border: none;
 }
 
+/* Linha abaixo da barra */
 .linha-barra {
     height: 4px;
     background-color: #f1c40f;
+    width: 100%;
 }
 
 /* Cabeçalho */
@@ -82,10 +116,6 @@ body {
     object-fit: contain;
 }
 
-.texto-cabecalho {
-    text-align: left;
-}
-
 .texto-cabecalho h1 {
     font-size: 50px;
     color: #004aad;
@@ -96,13 +126,14 @@ body {
     max-width: 600px;
 }
 
-/* Top 10 Categorias */
+/* Top Categorias */
 .top-categorias {
     padding: 20px;
     background-color: #f9f9f9;
+    position: relative;
 }
 
-
+/* Carrossel */
 .container-cards {
     position: relative;
     overflow: hidden;
@@ -113,9 +144,8 @@ body {
     gap: 20px;
 }
 
-/* Animação para carrossel infinito */
 .animacao-carrossel {
-    animation: deslizar 30s linear infinite;
+    animation: deslizar 15s linear infinite;
 }
 
 @keyframes deslizar {
@@ -130,6 +160,12 @@ body {
     overflow: hidden;
     box-shadow: 0 2px 8px rgba(0,0,0,0.1);
     text-align: center;
+    cursor: pointer;
+    transition: transform 0.3s;
+}
+
+.card:hover {
+    transform: scale(1.05);
 }
 
 .card img {
@@ -144,12 +180,51 @@ body {
     color: #333;
 }
 
+/* Setas do carrossel */
 .seta {
-    display: none;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(0,0,0,0.6);
+    color: white;
+    border: none;
+    font-size: 24px;
+    padding: 10px;
+    cursor: pointer;
+    z-index: 10;
+    border-radius: 50%;
 }
 
+.seta.esquerda {
+    left: 10px;
+}
 
-/* Rodapé fixo no final */
+.seta.direita {
+    right: 10px;
+}
+
+/* Botão voltar ao topo */
+#btnTopo {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: #004aad;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 18px;
+    display: none;
+    z-index: 999;
+}
+
+#btnTopo:hover {
+    background-color: #f1c40f;
+    color: #004aad;
+}
+
+/* Rodapé */
 .rodape {
     background-color: #004aad;
     color: white;
