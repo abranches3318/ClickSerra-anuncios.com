@@ -1,56 +1,63 @@
-// Toggle busca
+/ 🔍 Funcionalidade da lupa
 const lupa = document.querySelector('.icone-lupa');
 const campoBusca = document.querySelector('.campo-busca');
 
 lupa.addEventListener('click', () => {
     campoBusca.style.display = campoBusca.style.display === 'block' ? 'none' : 'block';
+    if (campoBusca.style.display === 'block') {
+        campoBusca.focus();
+    }
 });
 
-// Dark Mode
-const darkButton = document.createElement('button');
-darkButton.textContent = '🌙';
-darkButton.style.background = 'none';
-darkButton.style.border = 'none';
-darkButton.style.color = 'white';
-darkButton.style.cursor = 'pointer';
-darkButton.style.fontSize = '20px';
-document.querySelector('.barra-navegacao').appendChild(darkButton);
+campoBusca.addEventListener('focus', () => {
+    campoBusca.placeholder = '';
+});
 
-darkButton.addEventListener('click', () => {
+campoBusca.addEventListener('blur', () => {
+    campoBusca.placeholder = 'Buscar';
+});
+
+// 🌙 Dark Mode
+const darkToggle = document.getElementById('darkModeToggle');
+darkToggle.addEventListener('click', () => {
     document.body.classList.toggle('dark');
 });
 
-// Voltar ao topo
-const btnTopo = document.getElementById('btnTopo');
-
-window.onscroll = function() {
-    if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
-        btnTopo.style.display = "block";
-    } else {
-        btnTopo.style.display = "none";
-    }
-};
-
+// 🔼 Voltar ao topo
+const btnTopo = document.getElementById('voltar-topo');
+window.addEventListener('scroll', () => {
+    btnTopo.style.display = window.scrollY > 300 ? 'block' : 'none';
+});
 btnTopo.addEventListener('click', () => {
-    document.body.scrollTop = 0;
-    document.documentElement.scrollTop = 0;
+    window.scrollTo({ top: 0, behavior: 'smooth' });
 });
 
-// Setas do carrossel
-const container = document.querySelector('.cards');
-const btnEsquerda = document.querySelector('.seta.esquerda');
-const btnDireita = document.querySelector('.seta.direita');
+// 🌀 Carrossel infinito com setas
+const cardsContainer = document.querySelector('.cards');
+const cards = Array.from(cardsContainer.children);
 
-btnEsquerda.addEventListener('click', () => {
-    container.scrollBy({
-        left: -220,
-        behavior: 'smooth'
-    });
+cards.forEach(card => {
+    const clone = card.cloneNode(true);
+    cardsContainer.appendChild(clone);
 });
 
-btnDireita.addEventListener('click', () => {
-    container.scrollBy({
-        left: 220,
-        behavior: 'smooth'
-    });
+cardsContainer.classList.add('animacao-carrossel');
+
+// ➕ Pausar ao passar o mouse
+cardsContainer.addEventListener('mouseenter', () => {
+    cardsContainer.style.animationPlayState = 'paused';
+});
+cardsContainer.addEventListener('mouseleave', () => {
+    cardsContainer.style.animationPlayState = 'running';
+});
+
+// ➕ Setas para controle manual
+const esquerda = document.querySelector('.seta.esquerda');
+const direita = document.querySelector('.seta.direita');
+
+esquerda.addEventListener('click', () => {
+    cardsContainer.scrollBy({ left: -300, behavior: 'smooth' });
+});
+direita.addEventListener('click', () => {
+    cardsContainer.scrollBy({ left: 300, behavior: 'smooth' });
 });
