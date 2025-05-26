@@ -1,46 +1,56 @@
-// 🔍 Funcionalidade da lupa (busca)
+// Toggle busca
 const lupa = document.querySelector('.icone-lupa');
 const campoBusca = document.querySelector('.campo-busca');
 
 lupa.addEventListener('click', () => {
     campoBusca.style.display = campoBusca.style.display === 'block' ? 'none' : 'block';
-    if (campoBusca.style.display === 'block') {
-        campoBusca.focus();
+});
+
+// Dark Mode
+const darkButton = document.createElement('button');
+darkButton.textContent = '🌙';
+darkButton.style.background = 'none';
+darkButton.style.border = 'none';
+darkButton.style.color = 'white';
+darkButton.style.cursor = 'pointer';
+darkButton.style.fontSize = '20px';
+document.querySelector('.barra-navegacao').appendChild(darkButton);
+
+darkButton.addEventListener('click', () => {
+    document.body.classList.toggle('dark');
+});
+
+// Voltar ao topo
+const btnTopo = document.getElementById('btnTopo');
+
+window.onscroll = function() {
+    if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+        btnTopo.style.display = "block";
+    } else {
+        btnTopo.style.display = "none";
     }
+};
+
+btnTopo.addEventListener('click', () => {
+    document.body.scrollTop = 0;
+    document.documentElement.scrollTop = 0;
 });
 
-campoBusca.addEventListener('focus', () => {
-    campoBusca.placeholder = '';
+// Setas do carrossel
+const container = document.querySelector('.cards');
+const btnEsquerda = document.querySelector('.seta.esquerda');
+const btnDireita = document.querySelector('.seta.direita');
+
+btnEsquerda.addEventListener('click', () => {
+    container.scrollBy({
+        left: -220,
+        behavior: 'smooth'
+    });
 });
 
-campoBusca.addEventListener('blur', () => {
-    campoBusca.placeholder = 'Buscar';
+btnDireita.addEventListener('click', () => {
+    container.scrollBy({
+        left: 220,
+        behavior: 'smooth'
+    });
 });
-
-// 🌀 Carrossel Infinito com pausa no hover
-const cardsContainer = document.querySelector('.cards');
-const cards = Array.from(cardsContainer.children);
-
-// ➕ Duplica os cards para criar efeito de loop infinito
-cards.forEach(card => {
-    const clone = card.cloneNode(true);
-    cardsContainer.appendChild(clone);
-});
-
-// ➕ Adiciona classe de animação
-cardsContainer.classList.add('animacao-carrossel');
-
-// ➕ Pausar ao passar o mouse
-cardsContainer.addEventListener('mouseenter', () => {
-    cardsContainer.style.animationPlayState = 'paused';
-});
-
-cardsContainer.addEventListener('mouseleave', () => {
-    cardsContainer.style.animationPlayState = 'running';
-});
-
-// 🔥 Remove setas se desejar (opcional)
-const esquerda = document.querySelector('.seta.esquerda');
-const direita = document.querySelector('.seta.direita');
-if (esquerda) esquerda.style.display = 'none';
-if (direita) direita.style.display = 'none';
