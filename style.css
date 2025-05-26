@@ -10,36 +10,52 @@ body {
     min-height: 100vh;
     display: flex;
     flex-direction: column;
+    background-color: #fff;
+    color: #000;
     transition: background-color 0.3s, color 0.3s;
 }
 
+/* Dark Mode */
 body.dark {
     background-color: #121212;
+    color: #f0f0f0;
+}
+
+body.dark .barra-navegacao {
+    background-color: #1e1e1e;
+}
+
+body.dark .linha-barra {
+    background-color: #f1c40f;
+}
+
+body.dark .itens-navegacao a {
+    color: #f0f0f0;
+}
+
+body.dark .card {
+    background-color: #1e1e1e;
     color: white;
 }
 
-a {
-    text-decoration: none;
-    color: inherit;
+body.dark .rodape {
+    background-color: #1e1e1e;
 }
 
-/* 🔷 Barra de navegação */
+/* Barra de navegação */
 .barra-navegacao {
+    width: 100%;
     display: flex;
     justify-content: space-between;
     align-items: center;
     background-color: #004aad;
     color: white;
     padding: 10px 30px;
-    width: 100%;
 }
 
 .menu-button {
     font-size: 24px;
     cursor: pointer;
-    background: none;
-    border: none;
-    color: white;
 }
 
 .itens-navegacao {
@@ -51,7 +67,13 @@ a {
 
 .itens-navegacao a {
     color: white;
+    text-decoration: none;
     font-weight: bold;
+    transition: color 0.3s;
+}
+
+.itens-navegacao a:hover {
+    color: #f1c40f;
 }
 
 .busca {
@@ -60,12 +82,9 @@ a {
     gap: 10px;
 }
 
-.icone-lupa, #darkModeToggle {
+.icone-lupa {
     cursor: pointer;
-    background: none;
-    border: none;
-    color: white;
-    font-size: 18px;
+    font-size: 20px;
 }
 
 .campo-busca {
@@ -75,22 +94,25 @@ a {
     border: none;
 }
 
-/* 🔷 Cabeçalho */
+/* Linha abaixo da barra */
+.linha-barra {
+    height: 4px;
+    background-color: #f1c40f;
+    width: 100%;
+}
+
+/* Cabeçalho */
 .cabecalho {
     display: flex;
     align-items: center;
     gap: 20px;
     padding: 20px;
-    background-color: #fff;
-}
-
-body.dark .cabecalho {
-    background-color: #1e1e1e;
+    background-color: #ffffff;
 }
 
 .cabecalho .logo {
-    width: 180px;
-    height: 180px;
+    width: 200px;
+    height: 200px;
     object-fit: contain;
 }
 
@@ -99,28 +121,19 @@ body.dark .cabecalho {
     color: #004aad;
 }
 
-body.dark .texto-cabecalho h1 {
-    color: #f1c40f;
-}
-
 .texto-cabecalho p {
     color: #333;
+    max-width: 600px;
 }
 
-body.dark .texto-cabecalho p {
-    color: #ccc;
-}
-
-/* 🔷 Top Categorias */
+/* Top Categorias */
 .top-categorias {
     padding: 20px;
     background-color: #f9f9f9;
+    position: relative;
 }
 
-body.dark .top-categorias {
-    background-color: #1a1a1a;
-}
-
+/* Carrossel */
 .container-cards {
     position: relative;
     overflow: hidden;
@@ -147,12 +160,8 @@ body.dark .top-categorias {
     overflow: hidden;
     box-shadow: 0 2px 8px rgba(0,0,0,0.1);
     text-align: center;
+    cursor: pointer;
     transition: transform 0.3s;
-}
-
-body.dark .card {
-    background-color: #292929;
-    box-shadow: 0 2px 8px rgba(255,255,255,0.1);
 }
 
 .card:hover {
@@ -171,11 +180,7 @@ body.dark .card {
     color: #333;
 }
 
-body.dark .card p {
-    color: #eee;
-}
-
-/* 🔷 Setas */
+/* Setas do carrossel */
 .seta {
     position: absolute;
     top: 50%;
@@ -183,10 +188,10 @@ body.dark .card p {
     background-color: rgba(0,0,0,0.6);
     color: white;
     border: none;
-    cursor: pointer;
+    font-size: 24px;
     padding: 10px;
-    font-size: 18px;
-    z-index: 1;
+    cursor: pointer;
+    z-index: 10;
     border-radius: 50%;
 }
 
@@ -198,30 +203,32 @@ body.dark .card p {
     right: 10px;
 }
 
-/* 🔷 Rodapé */
+/* Botão voltar ao topo */
+#btnTopo {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: #004aad;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 18px;
+    display: none;
+    z-index: 999;
+}
+
+#btnTopo:hover {
+    background-color: #f1c40f;
+    color: #004aad;
+}
+
+/* Rodapé */
 .rodape {
     background-color: #004aad;
     color: white;
     text-align: center;
     padding: 15px;
     margin-top: auto;
-}
-
-/* 🔷 Botão voltar ao topo */
-#voltar-topo {
-    position: fixed;
-    bottom: 30px;
-    right: 30px;
-    background-color: #004aad;
-    color: white;
-    border: none;
-    border-radius: 50%;
-    padding: 10px 15px;
-    cursor: pointer;
-    display: none;
-}
-
-body.dark #voltar-topo {
-    background-color: #f1c40f;
-    color: #121212;
 }
