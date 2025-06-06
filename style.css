@@ -1,4 +1,3 @@
-/* Reset básico */
 * {
   margin: 0;
   padding: 0;
@@ -7,48 +6,50 @@
 
 body {
   font-family: Arial, sans-serif;
-  min-height: 100vh;
   display: flex;
   flex-direction: column;
+  min-height: 100vh;
 }
 
 .barra-navegacao {
-  background-color: #333;
+  background-color: #004aad;
   color: white;
   display: flex;
-  flex-wrap: wrap;
   align-items: center;
-  padding: 10px;
   justify-content: space-between;
+  padding: 10px;
+  flex-wrap: wrap;
   position: relative;
 }
 
-.busca {
-  display: flex;
-  align-items: center;
-}
-
-.campo-busca {
-  padding: 5px;
-  font-size: 16px;
-}
-
-.icone-lupa {
-  margin-left: 5px;
-}
-
-.menu-hamburguer {
+.menu-button {
   display: none;
   cursor: pointer;
-  padding: 10px;
 }
 
-.menu-hamburguer div {
+.hamburguer,
+.hamburguer::before,
+.hamburguer::after {
   width: 25px;
   height: 3px;
   background-color: white;
-  margin: 4px 0;
-  transition: 0.4s;
+  display: block;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.hamburguer::before,
+.hamburguer::after {
+  content: '';
+  position: absolute;
+}
+
+.hamburguer::before {
+  top: -8px;
+}
+
+.hamburguer::after {
+  top: 8px;
 }
 
 .itens-navegacao {
@@ -60,137 +61,141 @@ body {
 .itens-navegacao a {
   color: white;
   text-decoration: none;
-  padding: 8px 12px;
-  transition: background 0.3s;
+  padding: 5px 10px;
 }
 
-.itens-navegacao a:hover {
-  background-color: #444;
-  border-radius: 5px;
+.busca {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.campo-busca {
+  padding: 5px;
+  border-radius: 4px;
+  border: none;
 }
 
 .linha-barra {
-  height: 2px;
-  background-color: #ccc;
+  height: 4px;
+  background-color: #ffb700;
 }
 
 .cabecalho {
-  text-align: center;
+  display: flex;
+  align-items: center;
   padding: 20px;
+  gap: 20px;
+  flex-wrap: wrap;
+  background-color: #f5f5f5;
 }
 
 .logo {
-  max-width: 120px;
-  height: auto;
+  height: 80px;
 }
 
 .top-categorias {
+  display: flex;
+  align-items: center;
+  padding: 10px;
   position: relative;
-  padding: 20px;
   overflow: hidden;
 }
 
 .container-cards {
-  overflow-x: auto;
-  scroll-behavior: smooth;
+  overflow: hidden;
+  width: 100%;
 }
 
 .cards {
   display: flex;
   gap: 10px;
-  padding: 10px;
-  width: max-content;
+  transition: transform 0.3s ease-in-out;
 }
 
 .card {
   min-width: 150px;
   max-width: 150px;
+  flex: 0 0 auto;
+  background-color: #fff;
+  border-radius: 8px;
   text-align: center;
-  background: #f2f2f2;
-  border-radius: 10px;
+  box-shadow: 0 0 5px rgba(0,0,0,0.1);
   overflow: hidden;
-  flex-shrink: 0;
 }
 
 .card img {
   width: 100%;
-  height: 120px;
+  height: 100px;
   object-fit: cover;
 }
 
 .card p {
-  margin: 10px 0;
+  padding: 10px;
+  font-size: 14px;
+  background-color: #004aad;
+  color: white;
 }
 
 .seta {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  font-size: 24px;
-  background: rgba(0, 0, 0, 0.4);
-  color: white;
+  background-color: transparent;
   border: none;
-  padding: 8px;
+  font-size: 24px;
   cursor: pointer;
-  z-index: 2;
-}
-
-.esquerda {
-  left: 10px;
-}
-
-.direita {
-  right: 10px;
+  padding: 10px;
+  color: #004aad;
 }
 
 .rodape {
+  background-color: #004aad;
+  color: white;
   text-align: center;
   padding: 15px;
-  background-color: #333;
-  color: white;
   margin-top: auto;
 }
 
-/* Botão Voltar ao Topo */
 #btnTopo {
   position: fixed;
   bottom: 20px;
   right: 20px;
-  padding: 8px 12px;
-  font-size: 18px;
-  background-color: #333;
+  padding: 10px;
+  font-size: 16px;
+  background-color: #004aad;
   color: white;
   border: none;
   border-radius: 50%;
   display: none;
-  cursor: pointer;
-  z-index: 10;
 }
 
-/* Responsividade */
 @media (max-width: 768px) {
-  .menu-hamburguer {
-    display: block;
-  }
-
   .itens-navegacao {
     display: none;
     flex-direction: column;
+    background-color: #004aad;
     width: 100%;
-    background-color: #333;
     position: absolute;
-    top: 60px;
+    top: 50px;
     left: 0;
-    z-index: 5;
+    z-index: 10;
   }
 
-  .itens-navegacao a {
-    border-top: 1px solid #555;
-    text-align: center;
-  }
-
-  .itens-navegacao.active {
+  .itens-navegacao.ativo {
     display: flex;
+  }
+
+  .menu-button {
+    display: block;
+  }
+
+  .busca {
+    flex-grow: 1;
+    justify-content: center;
+    width: 100%;
+    margin-top: 10px;
+  }
+
+  .top-categorias {
+    flex-direction: column;
   }
 
   .cards {
@@ -198,20 +203,12 @@ body {
   }
 
   .card {
-    min-width: 120px;
-    max-width: 120px;
+    min-width: 140px;
   }
 
-  .card img {
-    height: 100px;
-  }
-
-  .barra-navegacao {
-    flex-direction: row;
-  }
-
-  .busca {
-    flex-grow: 1;
+  .cabecalho {
     justify-content: center;
+    text-align: center;
   }
 }
+
