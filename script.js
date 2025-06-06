@@ -36,9 +36,25 @@ btnTopo.addEventListener('click', () => {
     document.documentElement.scrollTop = 0;
 });
 
-//Rolagem automatica
+
+// 🌀 Carrossel infinito com setas
 const cardsContainer = document.querySelector('.cards');
 const cards = Array.from(cardsContainer.children);
+
+cards.forEach(card => {
+    const clone = card.cloneNode(true);
+    cardsContainer.appendChild(clone);
+});
+
+cardsContainer.classList.add('animacao-carrossel');
+
+// ➕ Pausar ao passar o mouse
+cardsContainer.addEventListener('mouseenter', () => {
+    cardsContainer.style.animationPlayState = 'paused';
+});
+cardsContainer.addEventListener('mouseleave', () => {
+    cardsContainer.style.animationPlayState = 'running';
+});
 
 // Setas do carrossel
 const container = document.querySelector('.cards');
