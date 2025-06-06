@@ -36,6 +36,10 @@ btnTopo.addEventListener('click', () => {
     document.documentElement.scrollTop = 0;
 });
 
+//Rolagem automatica
+const cardsContainer = document.querySelector('.cards');
+const cards = Array.from(cardsContainer.children);
+
 // Setas do carrossel
 const container = document.querySelector('.cards');
 const btnEsquerda = document.querySelector('.seta.esquerda');
