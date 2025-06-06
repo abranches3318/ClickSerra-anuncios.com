@@ -1,36 +1,43 @@
-const esquerda = document.querySelector('.seta.esquerda');
-const direita = document.querySelector('.seta.direita');
-const cards = document.querySelector('.cards');
-let scrollX = 0;
-
-direita.addEventListener('click', () => {
-  cards.scrollBy({ left: 200, behavior: 'smooth' });
-});
-
-esquerda.addEventListener('click', () => {
-  cards.scrollBy({ left: -200, behavior: 'smooth' });
-});
-
-// Carrossel automático
-setInterval(() => {
-  cards.scrollBy({ left: 200, behavior: 'smooth' });
-}, 4000);
-
-// Botão voltar ao topo
-const btnTopo = document.getElementById('btnTopo');
-
-window.addEventListener('scroll', () => {
-  btnTopo.style.display = window.scrollY > 200 ? 'block' : 'none';
-});
-
-btnTopo.addEventListener('click', () => {
+function scrollToTop() {
   window.scrollTo({ top: 0, behavior: 'smooth' });
-});
+}
 
-// Menu Hamburguer
-const menuToggle = document.getElementById('menu-toggle');
-const menu = document.getElementById('menu');
+window.onscroll = () => {
+  document.getElementById('btnTopo').style.display = window.scrollY > 200 ? 'block' : 'none';
+};
 
-menuToggle.addEventListener('click', () => {
-  menu.classList.toggle('ativo');
-});
+function toggleMenu() {
+  const nav = document.querySelector('.itens-navegacao');
+  nav.classList.toggle('active');
+}
+
+function toggleBusca() {
+  const busca = document.querySelector('.busca');
+  busca.classList.toggle('active');
+  if (busca.classList.contains('active')) {
+    busca.querySelector('input').focus();
+  }
+}
+
+function buscar() {
+  const termo = document.querySelector('.campo-busca').value.toLowerCase();
+  console.log(`Busca por: ${termo}`);
+  // Simulação de busca - adicionar lógica real
+}
+
+// Carrossel rolagem manual
+let posDestaques = 0;
+function rolarDestaques(dir) {
+  const cards = document.querySelector(".cards-destaques");
+  const largura = cards.children[0].offsetWidth + 20;
+  posDestaques += dir * largura;
+  cards.style.transform = `translateX(-${posDestaques}px)`;
+}
+
+let posCategorias = 0;
+function rolarCategorias(dir) {
+  const cards = document.querySelector(".cards");
+  const largura = cards.children[0].offsetWidth + 10;
+  posCategorias += dir * largura;
+  cards.style.transform = `translateX(-${posCategorias}px)`;
+}
