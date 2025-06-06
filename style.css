@@ -22,25 +22,24 @@ body.dark {
 }
 
 body.dark .barra-navegacao,
-body.dark .rodape {
+body.dark .rodape,
+body.dark .card {
     background-color: #1e1e1e;
+    color: white;
 }
 
 body.dark .linha-barra {
     background-color: #f1c40f;
 }
 
-body.dark .itens-navegacao a,
-body.dark .card {
+body.dark .itens-navegacao a {
     color: #f0f0f0;
-    background-color: #1e1e1e;
 }
 
 /* Barra de navegação */
 .barra-navegacao {
     width: 100%;
     display: flex;
-    flex-wrap: wrap;
     justify-content: space-between;
     align-items: center;
     background-color: #004aad;
@@ -48,9 +47,10 @@ body.dark .card {
     padding: 10px 30px;
 }
 
-.menu-button {
+.menu-button a {
     font-size: 24px;
-    cursor: pointer;
+    color: white;
+    text-decoration: none;
 }
 
 .itens-navegacao {
@@ -58,7 +58,6 @@ body.dark .card {
     flex: 1;
     justify-content: center;
     gap: 50px;
-    flex-wrap: wrap;
 }
 
 .itens-navegacao a {
@@ -103,7 +102,6 @@ body.dark .card {
     align-items: center;
     gap: 20px;
     padding: 20px;
-    flex-wrap: wrap;
     background-color: #ffffff;
 }
 
@@ -132,20 +130,19 @@ body.dark .card {
 
 /* Carrossel */
 .container-cards {
-    position: relative;
     overflow: hidden;
+    position: relative;
 }
 
 .cards {
     display: flex;
     gap: 20px;
-    transition: transform 0.3s;
-    will-change: transform;
+    transition: transform 0.5s ease;
 }
 
+/* Card individual */
 .card {
     min-width: 200px;
-    flex-shrink: 0;
     background-color: white;
     border-radius: 8px;
     overflow: hidden;
@@ -153,6 +150,7 @@ body.dark .card {
     text-align: center;
     cursor: pointer;
     transition: transform 0.3s;
+    flex-shrink: 0;
 }
 
 .card:hover {
@@ -176,7 +174,7 @@ body.dark .card {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
-    background-color: rgba(0,0,0,0.6);
+    background-color: rgba(0, 0, 0, 0.6);
     color: white;
     border: none;
     font-size: 24px;
@@ -222,20 +220,4 @@ body.dark .card {
     text-align: center;
     padding: 15px;
     margin-top: auto;
-}
-
-/* Responsividade */
-@media (max-width: 768px) {
-    .texto-cabecalho h1 {
-        font-size: 32px;
-    }
-
-    .itens-navegacao {
-        flex-direction: column;
-        gap: 20px;
-    }
-
-    .cabecalho {
-        justify-content: center;
-    }
 }
