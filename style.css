@@ -142,6 +142,7 @@ body.dark .rodape {
 .cards {
     display: flex;
     gap: 20px;
+    transition: transform 0.3s;
 }
 
 .animacao-carrossel {
