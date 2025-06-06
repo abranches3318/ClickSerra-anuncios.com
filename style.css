@@ -21,7 +21,8 @@ body.dark {
     color: #f0f0f0;
 }
 
-body.dark .barra-navegacao {
+body.dark .barra-navegacao,
+body.dark .rodape {
     background-color: #1e1e1e;
 }
 
@@ -29,16 +30,9 @@ body.dark .linha-barra {
     background-color: #f1c40f;
 }
 
-body.dark .itens-navegacao a {
-    color: #f0f0f0;
-}
-
+body.dark .itens-navegacao a,
 body.dark .card {
-    background-color: #1e1e1e;
-    color: white;
-}
-
-body.dark .rodape {
+    color: #f0f0f0;
     background-color: #1e1e1e;
 }
 
@@ -46,6 +40,7 @@ body.dark .rodape {
 .barra-navegacao {
     width: 100%;
     display: flex;
+    flex-wrap: wrap;
     justify-content: space-between;
     align-items: center;
     background-color: #004aad;
@@ -63,6 +58,7 @@ body.dark .rodape {
     flex: 1;
     justify-content: center;
     gap: 50px;
+    flex-wrap: wrap;
 }
 
 .itens-navegacao a {
@@ -107,6 +103,7 @@ body.dark .rodape {
     align-items: center;
     gap: 20px;
     padding: 20px;
+    flex-wrap: wrap;
     background-color: #ffffff;
 }
 
@@ -143,19 +140,12 @@ body.dark .rodape {
     display: flex;
     gap: 20px;
     transition: transform 0.3s;
-}
-
-.animacao-carrossel {
-    animation: deslizar 15s linear infinite;
-}
-
-@keyframes deslizar {
-    0% { transform: translateX(0); }
-    100% { transform: translateX(-50%); }
+    will-change: transform;
 }
 
 .card {
     min-width: 200px;
+    flex-shrink: 0;
     background-color: white;
     border-radius: 8px;
     overflow: hidden;
@@ -232,4 +222,20 @@ body.dark .rodape {
     text-align: center;
     padding: 15px;
     margin-top: auto;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .texto-cabecalho h1 {
+        font-size: 32px;
+    }
+
+    .itens-navegacao {
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .cabecalho {
+        justify-content: center;
+    }
 }
