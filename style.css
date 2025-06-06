@@ -6,100 +6,124 @@
 
 body {
   font-family: Arial, sans-serif;
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
+  overflow-x: hidden;
 }
 
 .barra-navegacao {
-  background-color: #004aad;
-  color: white;
+  background-color: #f5f5f5;
+  padding: 10px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 10px;
   flex-wrap: wrap;
-  position: relative;
+  position: sticky;
+  top: 0;
+  z-index: 999;
 }
 
-.menu-button {
-  display: none;
-  cursor: pointer;
+.barra-navegacao .logo img {
+  height: 50px;
+  animation: pulse 2s infinite;
 }
 
-.hamburguer,
-.hamburguer::before,
-.hamburguer::after {
-  width: 25px;
-  height: 3px;
-  background-color: white;
-  display: block;
-  transition: all 0.3s ease;
-  position: relative;
-}
-
-.hamburguer::before,
-.hamburguer::after {
-  content: '';
-  position: absolute;
-}
-
-.hamburguer::before {
-  top: -8px;
-}
-
-.hamburguer::after {
-  top: 8px;
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.1); }
 }
 
 .itens-navegacao {
   display: flex;
-  gap: 15px;
   flex-wrap: wrap;
+  gap: 10px;
 }
 
 .itens-navegacao a {
-  color: white;
   text-decoration: none;
-  padding: 5px 10px;
+  color: #333;
+  padding: 8px;
+  transition: 0.3s;
+}
+
+.itens-navegacao a:hover {
+  color: #007bff;
 }
 
 .busca {
+  display: none;
+  flex: 1;
+  justify-content: flex-end;
+}
+
+.busca.active {
   display: flex;
-  align-items: center;
-  gap: 5px;
 }
 
 .campo-busca {
   padding: 5px;
-  border-radius: 4px;
-  border: none;
+  width: 150px;
 }
 
-.linha-barra {
-  height: 4px;
-  background-color: #ffb700;
+.icone-lupa {
+  cursor: pointer;
+  font-size: 1.5em;
 }
 
+.menu-button {
+  display: none;
+  font-size: 1.5em;
+  cursor: pointer;
+}
+
+/* Cabeçalho */
 .cabecalho {
+  text-align: center;
+  padding: 20px;
+  background: #f1f1f1;
+}
+
+.titulo-secao {
+  margin: 20px 0 10px;
+  text-align: center;
+}
+
+/* Carrossel de Destaques */
+.carrossel-destaques {
   display: flex;
   align-items: center;
-  padding: 20px;
-  gap: 20px;
-  flex-wrap: wrap;
-  background-color: #f5f5f5;
+  overflow: hidden;
+  position: relative;
 }
 
-.logo {
-  height: 80px;
+.container-destaques {
+  overflow: hidden;
+  width: 100%;
 }
 
+.cards-destaques {
+  display: flex;
+  transition: transform 0.5s ease-in-out;
+}
+
+.card-destaque {
+  min-width: 300px;
+  margin: 10px;
+  text-align: center;
+  background: #fff;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+.card-destaque img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}
+
+/* Top Categorias */
 .top-categorias {
   display: flex;
   align-items: center;
-  padding: 10px;
-  position: relative;
   overflow: hidden;
+  position: relative;
 }
 
 .container-cards {
@@ -110,18 +134,13 @@ body {
 .cards {
   display: flex;
   gap: 10px;
-  transition: transform 0.3s ease-in-out;
+  animation: slide 20s linear infinite;
 }
 
 .card {
   min-width: 150px;
-  max-width: 150px;
-  flex: 0 0 auto;
-  background-color: #fff;
-  border-radius: 8px;
+  background: #fff;
   text-align: center;
-  box-shadow: 0 0 5px rgba(0,0,0,0.1);
-  overflow: hidden;
 }
 
 .card img {
@@ -130,56 +149,40 @@ body {
   object-fit: cover;
 }
 
-.card p {
-  padding: 10px;
-  font-size: 14px;
-  background-color: #004aad;
-  color: white;
-}
-
 .seta {
-  background-color: transparent;
+  background: none;
   border: none;
-  font-size: 24px;
+  font-size: 2em;
   cursor: pointer;
-  padding: 10px;
-  color: #004aad;
 }
 
 .rodape {
-  background-color: #004aad;
-  color: white;
   text-align: center;
   padding: 15px;
+  background-color: #f5f5f5;
+  position: relative;
+  bottom: 0;
+  width: 100%;
   margin-top: auto;
 }
 
 #btnTopo {
   position: fixed;
-  bottom: 20px;
-  right: 20px;
-  padding: 10px;
-  font-size: 16px;
-  background-color: #004aad;
-  color: white;
-  border: none;
-  border-radius: 50%;
+  bottom: 15px;
+  right: 15px;
+  font-size: 1.5em;
   display: none;
 }
 
+/* Responsividade */
 @media (max-width: 768px) {
   .itens-navegacao {
     display: none;
     flex-direction: column;
-    background-color: #004aad;
     width: 100%;
-    position: absolute;
-    top: 50px;
-    left: 0;
-    z-index: 10;
   }
 
-  .itens-navegacao.ativo {
+  .itens-navegacao.active {
     display: flex;
   }
 
@@ -187,28 +190,17 @@ body {
     display: block;
   }
 
-  .busca {
-    flex-grow: 1;
-    justify-content: center;
-    width: 100%;
-    margin-top: 10px;
-  }
-
-  .top-categorias {
-    flex-direction: column;
+  .card img, .card-destaque img {
+    height: auto;
   }
 
   .cards {
+    animation: none;
+    overflow-x: scroll;
+  }
+
+  .container-cards, .container-destaques {
     overflow-x: auto;
-  }
-
-  .card {
-    min-width: 140px;
-  }
-
-  .cabecalho {
-    justify-content: center;
-    text-align: center;
   }
 }
 
