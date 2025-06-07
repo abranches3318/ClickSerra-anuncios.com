@@ -1,21 +1,29 @@
-function toggleMenu() {
-  const menu = document.getElementById("menu-mobile");
-  menu.classList.toggle("oculto-mobile");
-}
+// Botão voltar ao topo
+const btnTopo = document.getElementById("btnTopo");
+window.onscroll = function () {
+  btnTopo.style.display = window.scrollY > 100 ? "block" : "none";
+};
+btnTopo.onclick = () => window.scrollTo({ top: 0, behavior: "smooth" });
 
-function toggleBusca() {
-  const campo = document.getElementById("campoBusca");
-  campo.classList.toggle("oculto");
-  campo.focus();
-}
+// Carrossel
+const cards = document.querySelector(".cards");
+const btnEsquerda = document.querySelector(".esquerda");
+const btnDireita = document.querySelector(".direita");
 
-function scrollCarrossel(id, direction) {
-  const container = document.getElementById(id);
-  const scrollAmount = direction * 300;
-  container.scrollBy({ left: scrollAmount, behavior: 'smooth' });
-}
+btnEsquerda.addEventListener("click", () => {
+  cards.scrollBy({ left: -200, behavior: "smooth" });
+});
+btnDireita.addEventListener("click", () => {
+  cards.scrollBy({ left: 200, behavior: "smooth" });
+});
 
-function buscar() {
-  const termo = document.getElementById("campoBusca").value.toLowerCase();
-  alert("Busca ainda não implementada. Você digitou: " + termo);
+// Auto-carrossel
+setInterval(() => {
+  cards.scrollBy({ left: 150, behavior: "smooth" });
+}, 4000);
+
+// Menu hambúrguer
+function toggleMenu(x) {
+  x.classList.toggle("change");
+  document.getElementById("menuMobile").classList.toggle("active");
 }
