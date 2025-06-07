@@ -1,154 +1,122 @@
-/* Reset básico */
+/* Reset e Estilos Gerais */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
-
 body {
   font-family: Arial, sans-serif;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
+}
+a {
+  text-decoration: none;
+  color: inherit;
 }
 
+/* Barra de Navegação */
 .barra-navegacao {
-  background-color: #333;
-  color: white;
   display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  padding: 10px;
   justify-content: space-between;
-  position: relative;
-}
-
-.busca {
-  display: flex;
   align-items: center;
-}
-
-.campo-busca {
-  padding: 5px;
-  font-size: 16px;
-}
-
-.icone-lupa {
-  margin-left: 5px;
-}
-
-.menu-hamburguer {
-  display: none;
-  cursor: pointer;
+  background-color: #004080;
+  color: white;
   padding: 10px;
+  flex-wrap: wrap;
 }
-
-.menu-hamburguer div {
-  width: 25px;
-  height: 3px;
-  background-color: white;
-  margin: 4px 0;
-  transition: 0.4s;
+.menu-button {
+  font-size: 24px;
+  cursor: pointer;
+  display: none;
 }
-
 .itens-navegacao {
   display: flex;
   gap: 15px;
   flex-wrap: wrap;
 }
-
 .itens-navegacao a {
   color: white;
-  text-decoration: none;
-  padding: 8px 12px;
-  transition: background 0.3s;
+  padding: 8px 10px;
 }
-
-.itens-navegacao a:hover {
-  background-color: #444;
+.busca {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+.campo-busca {
+  padding: 6px;
   border-radius: 5px;
+  border: none;
+}
+.icone-lupa {
+  font-size: 20px;
 }
 
-.linha-barra {
-  height: 2px;
-  background-color: #ccc;
-}
-
+/* Cabeçalho */
 .cabecalho {
-  text-align: center;
+  display: flex;
+  align-items: center;
   padding: 20px;
+  flex-wrap: wrap;
+  gap: 20px;
 }
-
 .logo {
-  max-width: 120px;
-  height: auto;
+  width: 100px;
+}
+.texto-cabecalho {
+  flex: 1;
 }
 
+/* Carrossel de Categorias */
 .top-categorias {
   position: relative;
   padding: 20px;
+}
+.container-cards {
   overflow: hidden;
 }
-
-.container-cards {
-  overflow-x: auto;
-  scroll-behavior: smooth;
-}
-
 .cards {
   display: flex;
-  gap: 10px;
-  padding: 10px;
-  width: max-content;
+  gap: 15px;
+  transition: transform 0.3s ease;
 }
-
 .card {
-  min-width: 150px;
-  max-width: 150px;
-  text-align: center;
-  background: #f2f2f2;
+  flex: 0 0 auto;
+  width: 150px;
+  background: #f0f0f0;
   border-radius: 10px;
+  text-align: center;
   overflow: hidden;
-  flex-shrink: 0;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
 }
-
 .card img {
   width: 100%;
-  height: 120px;
+  height: 100px;
   object-fit: cover;
 }
-
-.card p {
-  margin: 10px 0;
-}
-
 .seta {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  font-size: 24px;
-  background: rgba(0, 0, 0, 0.4);
+  background: #004080;
   color: white;
   border: none;
-  padding: 8px;
+  font-size: 24px;
+  padding: 10px;
   cursor: pointer;
-  z-index: 2;
+  z-index: 1;
+}
+.seta.esquerda {
+  left: 0;
+}
+.seta.direita {
+  right: 0;
 }
 
-.esquerda {
-  left: 10px;
-}
-
-.direita {
-  right: 10px;
-}
-
+/* Rodapé */
 .rodape {
-  text-align: center;
-  padding: 15px;
-  background-color: #333;
+  background: #004080;
   color: white;
-  margin-top: auto;
+  text-align: center;
+  padding: 10px;
 }
 
 /* Botão Voltar ao Topo */
@@ -156,62 +124,41 @@ body {
   position: fixed;
   bottom: 20px;
   right: 20px;
-  padding: 8px 12px;
-  font-size: 18px;
-  background-color: #333;
+  background: #004080;
   color: white;
   border: none;
   border-radius: 50%;
-  display: none;
+  font-size: 18px;
+  padding: 10px 15px;
   cursor: pointer;
-  z-index: 10;
+  display: none;
 }
 
 /* Responsividade */
 @media (max-width: 768px) {
-  .menu-hamburguer {
+  .menu-button {
     display: block;
   }
-
   .itens-navegacao {
     display: none;
     flex-direction: column;
     width: 100%;
-    background-color: #333;
-    position: absolute;
-    top: 60px;
-    left: 0;
-    z-index: 5;
+    background-color: #004080;
+    margin-top: 10px;
   }
-
   .itens-navegacao a {
-    border-top: 1px solid #555;
-    text-align: center;
+    padding: 10px;
+    border-top: 1px solid #003060;
   }
-
-  .itens-navegacao.active {
-    display: flex;
-  }
-
   .cards {
     overflow-x: auto;
+    scroll-snap-type: x mandatory;
   }
-
   .card {
-    min-width: 120px;
-    max-width: 120px;
+    scroll-snap-align: start;
+    width: 120px;
   }
-
   .card img {
-    height: 100px;
-  }
-
-  .barra-navegacao {
-    flex-direction: row;
-  }
-
-  .busca {
-    flex-grow: 1;
-    justify-content: center;
+    height: 80px;
   }
 }
