@@ -7,18 +7,18 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
+
   <!-- Barra de Navegação -->
   <div class="barra-navegacao">
-    <div class="logo animar-logo">
-      <img src="imagens/logo.png" alt="Logo Click Serra" />
-    </div>
-    <div class="icone-lupa" onclick="toggleBusca()">🔍</div>
-    <div class="busca">
-      <input type="text" class="campo-busca" placeholder="Buscar..." oninput="buscar()">
-    </div>
     <div class="menu-button" onclick="toggleMenu()">☰</div>
-    <div class="itens-navegacao">
-    
+
+    <div class="busca-wrapper">
+      <div class="icone-lupa" onclick="toggleBusca()">🔍</div>
+      <input type="text" id="campoBusca" class="campo-busca oculto" placeholder="Buscar..." onkeyup="buscar()"/>
+    </div>
+
+    <div class="itens-navegacao oculto-mobile" id="menu-mobile">
+      <a href="#">Início</a>
       <a href="#">Comércio</a>
       <a href="#">Serviços</a>
       <a href="#">Empregos</a>
@@ -29,62 +29,52 @@
   </div>
 
   <!-- Cabeçalho -->
-  <div class="cabecalho">
-    <h1>Click Serra Anúncios</h1>
-    <p>Divulgue seu comércio, serviços, vagas de emprego e eventos na cidade de Serra - ES.</p>
-  </div>
+  <header class="cabecalho">
+    <img src="imagens/logo.png" alt="Logo Click Serra" class="logo animar-logo"/>
+    <div class="texto-cabecalho">
+      <h1>Click Serra Anúncios</h1>
+      <p>Divulgue seu comércio, serviços, vagas de emprego e eventos na cidade de Serra - ES.</p>
+    </div>
+  </header>
 
   <!-- Carrossel de Destaques -->
-  <h2 class="titulo-secao">Destaques</h2>
-  <div class="carrossel-destaques">
-    <button class="seta esquerda" onclick="rolarDestaques(-1)">❮</button>
-    <div class="container-destaques">
-      <div class="cards-destaques">
-        <!-- 10 Cards Genéricos -->
-        <div class="card-destaque">
-          <img src="imagens/destaque1.jpg" alt="Destaque 1" />
-          <h3>Título do Destaque 1</h3>
-        </div>
-        <div class="card-destaque">
-          <img src="imagens/destaque2.jpg" alt="Destaque 2" />
-          <h3>Título do Destaque 2</h3>
-        </div>
-        <div class="card-destaque">
-          <img src="imagens/destaque3.jpg" alt="Destaque 3" />
-          <h3>Título do Destaque 3</h3>
-        </div>
-        <div class="card-destaque">
-          <img src="imagens/destaque4.jpg" alt="Destaque 4" />
-          <h3>Título do Destaque 4</h3>
-        </div>
-        <div class="card-destaque">
-          <img src="imagens/destaque5.jpg" alt="Destaque 5" />
-          <h3>Título do Destaque 5</h3>
-        </div>
-        <div class="card-destaque">
-          <img src="imagens/destaque6.jpg" alt="Destaque 6" />
-          <h3>Título do Destaque 6</h3>
-        </div>
-        <div class="card-destaque">
-          <img src="imagens/destaque7.jpg" alt="Destaque 7" />
-          <h3>Título do Destaque 7</h3>
-        </div>
-        <div class="card-destaque">
-          <img src="imagens/destaque8.jpg" alt="Destaque 8" />
-          <h3>Título do Destaque 8</h3>
-        </div>
-        <div class="card-destaque">
-          <img src="imagens/destaque9.jpg" alt="Destaque 9" />
-          <h3>Título do Destaque 9</h3>
-        </div>
-        <div class="card-destaque">
-          <img src="imagens/destaque10.jpg" alt="Destaque 10" />
-          <h3>Título do Destaque 10</h3>
-        </div>
-      </div>
+  <section class="destaques">
+    <h2>Destaques</h2>
+    <button class="seta esquerda" onclick="scrollCarrossel('destaqueCards', -1)">❮</button>
+    <div class="container-cards" id="destaqueCards">
+      <!-- 10 cards genéricos -->
+      <div class="card destaque"><h3>Card 1</h3></div>
+      <div class="card destaque"><h3>Card 2</h3></div>
+      <div class="card destaque"><h3>Card 3</h3></div>
+      <div class="card destaque"><h3>Card 4</h3></div>
+      <div class="card destaque"><h3>Card 5</h3></div>
+      <div class="card destaque"><h3>Card 6</h3></div>
+      <div class="card destaque"><h3>Card 7</h3></div>
+      <div class="card destaque"><h3>Card 8</h3></div>
+      <div class="card destaque"><h3>Card 9</h3></div>
+      <div class="card destaque"><h3>Card 10</h3></div>
     </div>
-    <button class="seta direita" onclick="rolarDestaques(1)">❯</button>
-  </div>
+    <button class="seta direita" onclick="scrollCarrossel('destaqueCards', 1)">❯</button>
+  </section>
+
+  <!-- Carrossel Top Categorias -->
+  <section class="top-categorias">
+    <h2>Top Categorias</h2>
+    <button class="seta esquerda" onclick="scrollCarrossel('categoriaCards', -1)">❮</button>
+    <div class="container-cards" id="categoriaCards">
+      <div class="card"><a href="alimentacao.html"><img src="imagens/comida.png" alt=""><p>Alimentação</p></a></div>
+      <div class="card"><a href="beleza.html"><img src="imagens/beleza.png" alt=""><p>Beleza</p></a></div>
+      <div class="card"><a href="educacao.html"><img src="imagens/educacao.png" alt=""><p>Educação</p></a></div>
+      <div class="card"><a href="saude.html"><img src="imagens/saude.jpg" alt=""><p>Saúde</p></a></div>
+      <div class="card"><a href="imoveis.html"><img src="imagens/imoveis.png" alt=""><p>Imóveis</p></a></div>
+      <div class="card"><a href="automoveis.html"><img src="imagens/automoveis.png" alt=""><p>Automóveis</p></a></div>
+      <div class="card"><a href="pet.html"><img src="imagens/pet.jpg" alt=""><p>Pet</p></a></div>
+      <div class="card"><a href="construcao.html"><img src="imagens/contrucao.jpg" alt=""><p>Construção</p></a></div>
+      <div class="card"><a href="festas.html"><img src="imagens/festas.jpg" alt=""><p>Festas</p></a></div>
+      <div class="card"><a href="oficinas.html"><img src="imagens/oficina.jpg" alt=""><p>Oficinas</p></a></div>
+    </div>
+    <button class="seta direita" onclick="scrollCarrossel('categoriaCards', 1)">❯</button>
+  </section>
 
   <!-- Rodapé -->
   <footer class="rodape">
@@ -94,5 +84,3 @@
   <script src="script.js"></script>
 </body>
 </html>
-
-
