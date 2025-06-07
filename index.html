@@ -7,20 +7,14 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-
   <!-- Barra de Navegação -->
   <div class="barra-navegacao">
-    <div class="logo-mobile">
-      <a href="index.html">☰</a>
+    <div class="menu-button" onclick="toggleMenu()">☰</div>
+    <div class="busca">
+      <input type="text" class="campo-busca" placeholder="Buscar..." />
+      <div class="icone-lupa">🔍</div>
     </div>
-
-    <div class="menu-button" onclick="toggleMenu(this)">
-      <div class="bar1"></div>
-      <div class="bar2"></div>
-      <div class="bar3"></div>
-    </div>
-
-    <div class="itens-navegacao" id="menu">
+    <div class="itens-navegacao" id="menuNavegacao">
       <a href="index.html">Início</a>
       <a href="comercio.html">Comércio</a>
       <a href="servicos.html">Serviços</a>
@@ -29,18 +23,12 @@
       <a href="sobre.html">Sobre</a>
       <a href="contato.html">Contato</a>
     </div>
-
-    <div class="busca">
-      <input type="text" class="campo-busca" placeholder="Buscar..." />
-      <div class="icone-lupa">🔍</div>
-    </div>
   </div>
-
   <div class="linha-barra"></div>
 
   <!-- Cabeçalho -->
   <div class="cabecalho">
-    <img src="imagens/logo.png" alt="Logo Click Serra" class="logo"/>
+    <img src="imagens/logo.png" alt="Logo Click Serra" class="logo" />
     <div class="texto-cabecalho">
       <h1>Click Serra Anúncios</h1>
       <p>Divulgue seu comércio, serviços, vagas de emprego e eventos na cidade de Serra - ES.</p>
@@ -50,9 +38,9 @@
   <!-- Seção Top Categorias -->
   <div class="top-categorias">
     <button class="seta esquerda">❮</button>
-
     <div class="container-cards">
       <div class="cards animacao-carrossel">
+        <!-- Cards -->
         <div class="card"><a href="alimentacao.html"><img src="imagens/comida.png" alt="Alimentação"/><p>Alimentação</p></a></div>
         <div class="card"><a href="beleza.html"><img src="imagens/beleza.png" alt="Beleza e Estética"/><p>Beleza e Estética</p></a></div>
         <div class="card"><a href="educacao.html"><img src="imagens/educacao.png" alt="Educação"/><p>Educação</p></a></div>
@@ -65,14 +53,13 @@
         <div class="card"><a href="oficinas.html"><img src="imagens/oficina.jpg" alt="Oficinas"/><p>Oficinas</p></a></div>
       </div>
     </div>
-
     <button class="seta direita">❯</button>
   </div>
 
   <!-- Rodapé -->
-  <footer class="rodape">
+  <div class="rodape">
     &copy; 2025 Click Serra Anúncios - Todos os direitos reservados.
-  </footer>
+  </div>
 
   <!-- Botão Voltar ao Topo -->
   <button id="btnTopo">↑</button>
