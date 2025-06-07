@@ -1,29 +1,34 @@
-// Botão voltar ao topo
-const btnTopo = document.getElementById("btnTopo");
-window.onscroll = function () {
-  btnTopo.style.display = window.scrollY > 100 ? "block" : "none";
-};
-btnTopo.onclick = () => window.scrollTo({ top: 0, behavior: "smooth" });
-
 // Carrossel
-const cards = document.querySelector(".cards");
-const btnEsquerda = document.querySelector(".esquerda");
-const btnDireita = document.querySelector(".direita");
+const setaEsquerda = document.querySelector('.seta.esquerda');
+const setaDireita = document.querySelector('.seta.direita');
+const cards = document.querySelector('.cards');
 
-btnEsquerda.addEventListener("click", () => {
-  cards.scrollBy({ left: -200, behavior: "smooth" });
+let scrollAmount = 0;
+const scrollStep = 200;
+
+setaEsquerda.addEventListener('click', () => {
+  cards.scrollBy({ left: -scrollStep, behavior: 'smooth' });
 });
-btnDireita.addEventListener("click", () => {
-  cards.scrollBy({ left: 200, behavior: "smooth" });
+setaDireita.addEventListener('click', () => {
+  cards.scrollBy({ left: scrollStep, behavior: 'smooth' });
 });
 
-// Auto-carrossel
+// Auto-scroll
 setInterval(() => {
-  cards.scrollBy({ left: 150, behavior: "smooth" });
+  cards.scrollBy({ left: scrollStep, behavior: 'smooth' });
 }, 4000);
 
-// Menu hambúrguer
-function toggleMenu(x) {
-  x.classList.toggle("change");
-  document.getElementById("menuMobile").classList.toggle("active");
+// Botão Voltar ao Topo
+const btnTopo = document.getElementById('btnTopo');
+window.addEventListener('scroll', () => {
+  btnTopo.style.display = window.scrollY > 100 ? 'block' : 'none';
+});
+btnTopo.addEventListener('click', () => {
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+});
+
+// Menu Hambúrguer
+function toggleMenu() {
+  const menu = document.getElementById('menuNavegacao');
+  menu.style.display = menu.style.display === 'flex' ? 'none' : 'flex';
 }
