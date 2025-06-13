@@ -1,75 +1,93 @@
-* {
-  box-sizing: border-box;
+body {
   margin: 0;
   padding: 0;
-  font-family: Arial, sans-serif;
-}
-
-body {
-  background-color: #f4f4f4;
+  font-family: 'Segoe UI', sans-serif;
+  background: url('imagens/fundo-login.jpg') no-repeat center center fixed;
+  background-size: cover;
   display: flex;
-  align-items: center;
   justify-content: center;
+  align-items: center;
   height: 100vh;
 }
 
-.container-login {
-  background-color: #fff;
-  padding: 30px;
+.container {
+  background-color: rgba(255, 255, 255, 0.96);
+  padding: 40px;
   border-radius: 10px;
-  width: 100%;
-  max-width: 400px;
-  box-shadow: 0 0 10px rgba(0,0,0,0.1);
-}
-
-.container-login h2 {
+  box-shadow: 0 0 12px rgba(0, 0, 0, 0.25);
   text-align: center;
-  margin-bottom: 20px;
-  color: #333;
+  width: 90%;
+  max-width: 360px;
 }
 
-form label {
-  display: block;
-  margin-bottom: 5px;
-  font-weight: bold;
-  color: #555;
+.logo {
+  width: 100px;
+  margin-bottom: 10px;
+}
+
+h2 {
+  margin: 0 0 20px;
+  color: #2c3e50;
 }
 
 form input {
   width: 100%;
-  padding: 10px;
+  padding: 12px;
   margin-bottom: 15px;
-  border: 1px solid #ccc;
   border-radius: 5px;
+  border: 1px solid #ccc;
 }
 
 form button {
   width: 100%;
   padding: 12px;
-  background-color: #28a745;
-  border: none;
+  background-color: #1e90ff;
   color: white;
-  font-size: 16px;
+  border: none;
   border-radius: 5px;
+  font-weight: bold;
   cursor: pointer;
-  transition: background 0.3s ease;
 }
 
 form button:hover {
-  background-color: #1e7e34;
+  background-color: #0f75d1;
 }
 
-.link-cadastro {
-  text-align: center;
-  margin-top: 15px;
+.ou {
+  margin: 20px 0 10px;
   color: #555;
 }
 
-.link-cadastro a {
-  color: #28a745;
+.social-login button {
+  width: 100%;
+  padding: 10px;
+  margin: 5px 0;
+  border: none;
+  border-radius: 5px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.google {
+  background-color: #db4437;
+  color: white;
+}
+
+.facebook {
+  background-color: #3b5998;
+  color: white;
+}
+
+.troca-tela {
+  margin-top: 20px;
+  font-size: 14px;
+}
+
+.troca-tela a {
+  color: #1e90ff;
   text-decoration: none;
 }
 
-.link-cadastro a:hover {
+.troca-tela a:hover {
   text-decoration: underline;
 }
