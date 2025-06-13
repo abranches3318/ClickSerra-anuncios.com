@@ -4,28 +4,22 @@ document.getElementById('formLogin').addEventListener('submit', function (e) {
   const email = document.getElementById('email').value.trim();
   const senha = document.getElementById('senha').value;
 
-  // Aqui futuramente vai a requisição para o backend (ex: fetch/login)
-  console.log({ email, senha });
+  // Simulação de verificação (em um projeto real, aqui entraria o fetch pro backend)
+  if (email && senha) {
+    // Marca como logado no localStorage
+    localStorage.setItem('usuarioLogado', 'true');
 
-  // Simula login bem-sucedido
-  localStorage.setItem('usuarioLogado', 'true');
+    // Verifica se o usuário tentou acessar uma página antes de logar
+    const destino = localStorage.getItem('destinoAposLogin') || 'index.html';
 
-  alert('Login realizado com sucesso!');
-  this.reset();
+    // Limpa o redirecionamento salvo
+    localStorage.removeItem('destinoAposLogin');
 
-  // Redirecionamento inteligente
-  const destino = localStorage.getItem('destinoAposLogin') || 'index.html';
-  localStorage.removeItem('destinoAposLogin');
-  window.location.href = destino;
-});
+    alert('Login realizado com sucesso!');
 
-function irParaAnuncio() {
-  const logado = localStorage.getItem('usuarioLogado');
-
-  if (logado) {
-    window.location.href = 'criar-anuncio.html';
+    // Redireciona para a página de destino
+    window.location.href = destino;
   } else {
-    localStorage.setItem('destinoAposLogin', 'criar-anuncio.html');
-    window.location.href = 'login.html';
+    alert('Preencha e-mail e senha corretamente.');
   }
-}
+});
