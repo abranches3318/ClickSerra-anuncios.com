@@ -1,72 +1,67 @@
-// Menu hambúrguer e busca
+// Toggle menu
 function toggleMenu() {
   const menu = document.getElementById('menuNavegacao');
   menu.style.display = menu.style.display === 'flex' ? 'none' : 'flex';
 }
 
+// Toggle busca (não usada mais diretamente)
 function toggleBusca() {
-  const busca = document.querySelector('.busca-ativa');
-  busca.style.display = busca.style.display === 'flex' ? 'none' : 'flex';
-  if (busca.style.display === 'flex') {
-    document.getElementById('menuNavegacao').style.display = 'none';
-  }
+  const busca = document.querySelector('.campo-busca');
+  busca.focus();
 }
 
 // Carrossel categorias
+const cards = document.querySelector('.top-categorias .cards');
 const setaEsquerda = document.querySelector('.seta.esquerda');
 const setaDireita = document.querySelector('.seta.direita');
-const cards = document.querySelector('.top-categorias .cards');
-const cardsConteudo = cards.innerHTML;
-cards.innerHTML += cardsConteudo;
-
 let posScroll = 0;
-const passoScroll = 160;
+const passo = 160;
+const maxScroll = cards.scrollWidth / 2;
 
-setaEsquerda.addEventListener('click', () => {
-  posScroll -= passoScroll;
-  if (posScroll < 0) posScroll = cards.scrollWidth / 2;
-  cards.style.transform = `translateX(${-posScroll}px)`;
-});
+cards.innerHTML += cards.innerHTML; // efeito infinito
 
-setaDireita.addEventListener('click', () => {
-  posScroll += passoScroll;
-  if (posScroll >= cards.scrollWidth / 2) posScroll = 0;
-  cards.style.transform = `translateX(${-posScroll}px)`;
-});
+setaDireita.onclick = () => {
+  posScroll += passo;
+  if (posScroll >= maxScroll) posScroll = 0;
+  cards.style.transform = `translateX(-${posScroll}px)`;
+};
+
+setaEsquerda.onclick = () => {
+  posScroll -= passo;
+  if (posScroll < 0) posScroll = maxScroll;
+  cards.style.transform = `translateX(-${posScroll}px)`;
+};
 
 setInterval(() => {
-  posScroll += passoScroll;
-  if (posScroll >= cards.scrollWidth / 2) posScroll = 0;
-  cards.style.transform = `translateX(${-posScroll}px)`;
+  setaDireita.click();
 }, 4000);
 
-// Carrossel destaques
+// Destaques
 const cardsDestaque = document.querySelector('.cards-destaque');
-const btnEsqDest = document.querySelector('.destaque-esquerda');
-const btnDirDest = document.querySelector('.destaque-direita');
-let indexDestaque = 0;
-const totalDestaques = cardsDestaque.children.length;
+const btnEsquerdaD = document.querySelector('.destaque-esquerda');
+const btnDireitaD = document.querySelector('.destaque-direita');
+let indexD = 0;
+const totalD = cardsDestaque.children.length;
 
 function atualizaDestaque() {
-  cardsDestaque.style.transform = `translateX(-${indexDestaque * 100}%)`;
+  cardsDestaque.style.transform = `translateX(-${indexD * 100}%)`;
 }
 
-btnEsqDest.addEventListener('click', () => {
-  indexDestaque = (indexDestaque - 1 + totalDestaques) % totalDestaques;
+btnEsquerdaD.onclick = () => {
+  indexD = (indexD - 1 + totalD) % totalD;
   atualizaDestaque();
-});
+};
 
-btnDirDest.addEventListener('click', () => {
-  indexDestaque = (indexDestaque + 1) % totalDestaques;
+btnDireitaD.onclick = () => {
+  indexD = (indexD + 1) % totalD;
   atualizaDestaque();
-});
+};
 
 setInterval(() => {
-  indexDestaque = (indexDestaque + 1) % totalDestaques;
-  atualizaDestaque();
+  btnDireitaD.click();
 }, 5000);
 
-// Botão topo
+// Botão voltar ao topo
 const btnTopo = document.getElementById('btnTopo');
 window.addEventListener('scroll', () => {
   btnTopo.style.display = window.scrollY > 100 ? 'block' : 'none';
