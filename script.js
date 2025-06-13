@@ -1,30 +1,86 @@
-// Carrossel padrão (categorias)
+// Menu hambúrguer e busca
+function toggleMenu() {
+  const menu = document.getElementById('menuNavegacao');
+  if (menu.style.display === 'flex') {
+    menu.style.display = 'none';
+  } else {
+    menu.style.display = 'flex';
+  }
+}
+
+function toggleBusca() {
+  const busca = document.querySelector('.busca-ativa');
+  busca.style.display = busca.style.display === 'flex' ? 'none' : 'flex';
+
+  // Se mostrar busca, esconder menu
+  if (busca.style.display === 'flex') {
+    document.getElementById('menuNavegacao').style.display = 'none';
+  }
+}
+
+// Carrossel Categorias - rolagem infinita
 const setaEsquerda = document.querySelector('.seta.esquerda');
 const setaDireita = document.querySelector('.seta.direita');
-const cards = document.querySelector('.cards');
-const scrollStep = 200;
+const cards = document.querySelector('.top-categorias .cards');
 
-cards.innerHTML += cards.innerHTML; // rolagem infinita
+// Duplicar cards para efeito infinito
+const cardsConteudo = cards.innerHTML;
+cards.innerHTML += cardsConteudo;
+
+let posScroll = 0;
+const passoScroll = 160; // considerando card + gap
 
 setaEsquerda.addEventListener('click', () => {
-  cards.scrollBy({ left: -scrollStep, behavior: 'smooth' });
-});
-setaDireita.addEventListener('click', () => {
-  cards.scrollBy({ left: scrollStep, behavior: 'smooth' });
+  posScroll -= passoScroll;
+  if (posScroll < 0) {
+    posScroll = cards.scrollWidth / 2;
+  }
+  cards.style.transform = `translateX(${-posScroll}px)`;
 });
 
-setInterval(() => {
-  cards.scrollBy({ left: scrollStep, behavior: 'smooth' });
-  if (cards.scrollLeft + cards.clientWidth >= cards.scrollWidth - scrollStep) {
-    cards.scrollLeft = 0;
+setaDireita.addEventListener('click', () => {
+  posScroll += passoScroll;
+  if (posScroll >= cards.scrollWidth / 2) {
+    posScroll = 0;
   }
+  cards.style.transform = `translateX(${-posScroll}px)`;
+});
+
+// Auto scroll categorias
+setInterval(() => {
+  posScroll += passoScroll;
+  if (posScroll >= cards.scrollWidth / 2) {
+    posScroll = 0;
+  }
+  cards.style.transform = `translateX(${-posScroll}px)`;
 }, 4000);
 
-cards.addEventListener('scroll', () => {
-  if (cards.scrollLeft >= cards.scrollWidth / 2) {
-    cards.scrollLeft = 0;
-  }
+// Carrossel Destaques - 100% width por card
+const cardsDestaque = document.querySelector('.cards-destaque');
+const btnEsquerdaDestaque = document.querySelector('.seta.destaque-esquerda');
+const btnDireitaDestaque = document.querySelector('.seta.destaque-direita');
+const totalDestaques = cardsDestaque.children.length;
+let indexDestaque = 0;
+
+function atualizaDestaque() {
+  cardsDestaque.style.transform = `translateX(-${indexDestaque * 100}%)`;
+}
+
+btnEsquerdaDestaque.addEventListener('click', () => {
+  indexDestaque = (indexDestaque - 1 + totalDestaques) % totalDestaques;
+  atualizaDestaque();
 });
+
+btnDireitaDestaque.addEventListener('click', () => {
+  indexDestaque = (indexDestaque + 1) % totalDestaques;
+  atualizaDestaque();
+});
+
+// Auto scroll Destaques
+setInterval(() => {
+  indexDestaque = (indexDestaque + 1) % totalDestaques;
+  atualizaDestaque();
+}, 5000);
 
 // Botão voltar ao topo
 const btnTopo = document.getElementById('btnTopo');
@@ -34,42 +90,3 @@ window.addEventListener('scroll', () => {
 btnTopo.addEventListener('click', () => {
   window.scrollTo({ top: 0, behavior: 'smooth' });
 });
-
-// Menu hambúrguer
-function toggleMenu() {
-  const menu = document.getElementById("menuNavegacao");
-  menu.style.display = (menu.style.display === "flex") ? "none" : "flex";
-}
-
-// Mostrar/ocultar busca
-function toggleBusca() {
-  const busca = document.getElementById("buscaAtiva");
-  busca.style.display = (busca.style.display === "block") ? "none" : "block";
-}
-
-// Carrossel Destaque
-const cardsDestaque = document.querySelector('.cards-destaque');
-const setaDestaqueEsquerda = document.querySelector('.destaque-esquerda');
-const setaDestaqueDireita = document.querySelector('.destaque-direita');
-
-let destaqueIndex = 0;
-const totalDestaques = document.querySelectorAll('.card-destaque').length;
-
-function atualizarCarrosselDestaque() {
-  cardsDestaque.style.transform = `translateX(-${destaqueIndex * 100}%)`;
-}
-
-setaDestaqueDireita.addEventListener('click', () => {
-  destaqueIndex = (destaqueIndex + 1) % totalDestaques;
-  atualizarCarrosselDestaque();
-});
-
-setaDestaqueEsquerda.addEventListener('click', () => {
-  destaqueIndex = (destaqueIndex - 1 + totalDestaques) % totalDestaques;
-  atualizarCarrosselDestaque();
-});
-
-setInterval(() => {
-  destaqueIndex = (destaqueIndex + 1) % totalDestaques;
-  atualizarCarrosselDestaque();
-}, 6000);
