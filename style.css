@@ -1,4 +1,3 @@
-/* Reset e Estilos Gerais */
 * {
   margin: 0;
   padding: 0;
@@ -8,95 +7,88 @@ body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   background-color: #f9f9f9;
   color: #333;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 a {
   text-decoration: none;
   color: inherit;
 }
 
-/* Barra de Navegação */
 .barra-navegacao {
   display: flex;
   align-items: center;
+  justify-content: space-between;
   background-color: #004080;
   color: white;
   padding: 10px 20px;
-  gap: 10px;
   position: relative;
 }
-.menu-button {
+
+.menu-button, .icone-lupa {
   font-size: 26px;
   cursor: pointer;
   user-select: none;
 }
-.icone-lupa {
-  font-size: 22px;
-  cursor: pointer;
-  user-select: none;
-}
+
 .busca-ativa {
-  flex: 1;
   display: none;
+  position: absolute;
+  top: 60px;
+  left: 10px;
+  right: 10px;
+  z-index: 20;
 }
 .campo-busca {
   width: 100%;
-  padding: 8px 12px;
-  border-radius: 6px;
-  border: none;
+  padding: 10px 12px;
   font-size: 16px;
+  border: none;
+  border-radius: 8px;
   outline: none;
 }
 
-/* Menu Navegação */
 .itens-navegacao {
   display: none;
   flex-direction: column;
-  gap: 8px;
+  gap: 10px;
+  background: #003060;
+  padding: 15px 20px;
   position: absolute;
-  top: 50px;
+  top: 60px;
   left: 0;
   width: 100%;
-  background-color: #003060;
-  padding: 10px 0;
-  z-index: 10;
+  z-index: 15;
 }
 .itens-navegacao a {
   color: white;
-  padding: 10px 20px;
-  transition: background-color 0.3s ease;
-}
-.itens-navegacao a:hover {
-  background-color: #002050;
+  font-size: 1.1rem;
 }
 
-/* Cabeçalho */
 .cabecalho {
   display: flex;
   align-items: center;
-  padding: 25px 20px;
+  padding: 20px;
   gap: 20px;
-  flex-wrap: wrap;
   background: white;
+  flex-wrap: wrap;
 }
 .logo {
   width: 120px;
 }
 .texto-cabecalho h1 {
-  font-size: 2.2rem;
   color: #004080;
+  font-size: 2rem;
 }
 .texto-cabecalho p {
-  font-size: 1rem;
   color: #555;
-  margin-top: 6px;
 }
 
-/* Carrossel Categorias */
 .top-categorias {
-  position: relative;
-  padding: 30px 20px 40px;
+  padding: 30px 20px;
   background: white;
-  margin-bottom: 40px;
+  position: relative;
   overflow: hidden;
 }
 .container-cards {
@@ -105,23 +97,17 @@ a {
 .cards {
   display: flex;
   gap: 15px;
-  will-change: transform;
   transition: transform 0.4s ease;
+  will-change: transform;
 }
 .card {
   flex: 0 0 auto;
   width: 150px;
-  background: #f0f0f0;
-  border-radius: 12px;
+  background: #eee;
+  border-radius: 10px;
+  overflow: hidden;
   box-shadow: 0 2px 8px rgba(0,0,0,0.1);
   text-align: center;
-  overflow: hidden;
-  cursor: pointer;
-  transition: transform 0.3s ease;
-}
-.card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 6px 15px rgba(0,0,0,0.15);
 }
 .card img {
   width: 100%;
@@ -129,12 +115,10 @@ a {
   object-fit: cover;
 }
 .card p {
-  padding: 12px 8px;
-  font-weight: 600;
+  padding: 10px;
+  font-weight: bold;
   color: #004080;
 }
-
-/* Botões setas carrossel categorias */
 .seta {
   position: absolute;
   top: 50%;
@@ -142,17 +126,11 @@ a {
   background: #004080;
   color: white;
   border: none;
-  font-size: 28px;
-  padding: 14px;
-  cursor: pointer;
+  font-size: 24px;
+  padding: 10px;
   border-radius: 50%;
-  user-select: none;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
-  transition: background-color 0.3s ease;
+  cursor: pointer;
   z-index: 5;
-}
-.seta:hover {
-  background-color: #002d66;
 }
 .seta.esquerda {
   left: 10px;
@@ -161,73 +139,48 @@ a {
   right: 10px;
 }
 
-/* Seção Destaques */
 #destaques {
   background: white;
-  padding: 30px 0 50px;
-  position: relative;
-  margin-bottom: 40px;
+  padding: 30px 0;
 }
 .titulo-secao {
   text-align: center;
   font-size: 2rem;
   color: #004080;
-  margin-bottom: 25px;
-  font-weight: 700;
+  margin-bottom: 20px;
 }
-
-/* Carrossel Destaques */
 .carrossel-destaque {
   display: flex;
   align-items: center;
-  position: relative;
-  max-width: 100%;
   overflow: hidden;
 }
 .container-destaque {
-  overflow: hidden;
   flex: 1;
+  overflow: hidden;
 }
 .cards-destaque {
   display: flex;
   transition: transform 0.5s ease;
-  will-change: transform;
 }
 .card-destaque {
   min-width: 100%;
-  padding: 30px;
-  box-sizing: border-box;
-  background: #004080;
-  color: white;
-  font-size: 1.5rem;
-  font-weight: 600;
-  text-align: center;
+}
+.card-destaque img {
+  width: 100%;
+  height: 250px;
+  object-fit: cover;
   border-radius: 16px;
-  user-select: none;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.3);
 }
 
-/* Botões setas carrossel destaques */
-.seta.destaque-esquerda {
-  margin-right: 10px;
-}
-.seta.destaque-direita {
-  margin-left: 10px;
-}
-
-/* Rodapé */
 .rodape {
   background-color: #002d66;
   color: white;
   text-align: center;
   padding: 20px 10px;
   font-size: 0.9rem;
-  position: relative;
-  bottom: 0;
-  width: 100%;
+  margin-top: auto;
 }
 
-/* Botão voltar ao topo */
 #btnTopo {
   position: fixed;
   bottom: 30px;
@@ -242,30 +195,8 @@ a {
   display: none;
   box-shadow: 0 3px 12px rgba(0,0,0,0.3);
   user-select: none;
-  transition: background-color 0.3s ease;
-}
-#btnTopo:hover {
-  background-color: #002d66;
 }
 
-/* Responsividade */
-@media (min-width: 768px) {
-  .itens-navegacao {
-    display: flex !important;
-    flex-direction: row;
-    position: static;
-    width: auto;
-    background: transparent;
-    gap: 20px;
-    padding: 0;
-  }
-  .busca-ativa {
-    display: flex !important;
-  }
-  .menu-button {
-    display: none;
-  }
-  .barra-navegacao {
-    gap: 20px;
-  }
+#btnTopo:hover {
+  background-color: #002d66;
 }
