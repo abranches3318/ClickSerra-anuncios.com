@@ -1,25 +1,21 @@
-// Menu hambúrguer
+// Menu hambúrguer e busca
 function toggleMenu() {
   const menu = document.getElementById('menuNavegacao');
   menu.style.display = menu.style.display === 'flex' ? 'none' : 'flex';
 }
 
-// Busca
 function toggleBusca() {
   const busca = document.querySelector('.busca-ativa');
   busca.style.display = busca.style.display === 'flex' ? 'none' : 'flex';
-
-  // Se mostrar busca, esconder menu
   if (busca.style.display === 'flex') {
     document.getElementById('menuNavegacao').style.display = 'none';
   }
 }
 
-// Carrossel Categorias
+// Carrossel categorias
 const setaEsquerda = document.querySelector('.seta.esquerda');
 const setaDireita = document.querySelector('.seta.direita');
 const cards = document.querySelector('.top-categorias .cards');
-
 const cardsConteudo = cards.innerHTML;
 cards.innerHTML += cardsConteudo;
 
@@ -31,35 +27,40 @@ setaEsquerda.addEventListener('click', () => {
   if (posScroll < 0) posScroll = cards.scrollWidth / 2;
   cards.style.transform = `translateX(${-posScroll}px)`;
 });
+
 setaDireita.addEventListener('click', () => {
   posScroll += passoScroll;
   if (posScroll >= cards.scrollWidth / 2) posScroll = 0;
   cards.style.transform = `translateX(${-posScroll}px)`;
 });
+
 setInterval(() => {
   posScroll += passoScroll;
   if (posScroll >= cards.scrollWidth / 2) posScroll = 0;
   cards.style.transform = `translateX(${-posScroll}px)`;
 }, 4000);
 
-// Carrossel Destaques
+// Carrossel destaques
 const cardsDestaque = document.querySelector('.cards-destaque');
-const btnEsquerdaDestaque = document.querySelector('.destaque-esquerda');
-const btnDireitaDestaque = document.querySelector('.destaque-direita');
-const totalDestaques = cardsDestaque.children.length;
+const btnEsqDest = document.querySelector('.destaque-esquerda');
+const btnDirDest = document.querySelector('.destaque-direita');
 let indexDestaque = 0;
+const totalDestaques = cardsDestaque.children.length;
 
 function atualizaDestaque() {
   cardsDestaque.style.transform = `translateX(-${indexDestaque * 100}%)`;
 }
-btnEsquerdaDestaque.addEventListener('click', () => {
+
+btnEsqDest.addEventListener('click', () => {
   indexDestaque = (indexDestaque - 1 + totalDestaques) % totalDestaques;
   atualizaDestaque();
 });
-btnDireitaDestaque.addEventListener('click', () => {
+
+btnDirDest.addEventListener('click', () => {
   indexDestaque = (indexDestaque + 1) % totalDestaques;
   atualizaDestaque();
 });
+
 setInterval(() => {
   indexDestaque = (indexDestaque + 1) % totalDestaques;
   atualizaDestaque();
