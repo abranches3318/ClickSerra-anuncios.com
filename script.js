@@ -1,12 +1,15 @@
-// Menu hambúrguer e busca
+// Menu hambúrguer
 function toggleMenu() {
   const menu = document.getElementById('menuNavegacao');
-  menu.style.display = (menu.style.display === 'flex') ? 'none' : 'flex';
+  menu.style.display = menu.style.display === 'flex' ? 'none' : 'flex';
 }
 
+// Busca
 function toggleBusca() {
   const busca = document.querySelector('.busca-ativa');
-  busca.style.display = (busca.style.display === 'flex') ? 'none' : 'flex';
+  busca.style.display = busca.style.display === 'flex' ? 'none' : 'flex';
+
+  // Se mostrar busca, esconder menu
   if (busca.style.display === 'flex') {
     document.getElementById('menuNavegacao').style.display = 'none';
   }
@@ -16,6 +19,7 @@ function toggleBusca() {
 const setaEsquerda = document.querySelector('.seta.esquerda');
 const setaDireita = document.querySelector('.seta.direita');
 const cards = document.querySelector('.top-categorias .cards');
+
 const cardsConteudo = cards.innerHTML;
 cards.innerHTML += cardsConteudo;
 
@@ -32,7 +36,6 @@ setaDireita.addEventListener('click', () => {
   if (posScroll >= cards.scrollWidth / 2) posScroll = 0;
   cards.style.transform = `translateX(${-posScroll}px)`;
 });
-
 setInterval(() => {
   posScroll += passoScroll;
   if (posScroll >= cards.scrollWidth / 2) posScroll = 0;
@@ -62,7 +65,7 @@ setInterval(() => {
   atualizaDestaque();
 }, 5000);
 
-// Botão voltar ao topo
+// Botão topo
 const btnTopo = document.getElementById('btnTopo');
 window.addEventListener('scroll', () => {
   btnTopo.style.display = window.scrollY > 100 ? 'block' : 'none';
