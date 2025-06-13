@@ -1,142 +1,119 @@
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
 body {
-  font-family: "Segoe UI", sans-serif;
-  background: #f9f9f9;
+  margin: 0;
+  font-family: 'Segoe UI', sans-serif;
+  background: #fdfdfd;
   color: #333;
-  min-height: 100vh;
-  position: relative;
-  padding-bottom: 60px; /* espaço para o rodapé fixo */
 }
 
 .barra-navegacao {
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  background-color: #005288;
+  justify-content: space-between;
+  background-color: #004080;
   color: white;
-  padding: 10px 15px;
-  position: fixed;
-  width: 100%;
+  padding: 10px 20px;
+  position: sticky;
   top: 0;
-  z-index: 999;
+  z-index: 1000;
 }
 
 .menu-button {
   font-size: 24px;
   cursor: pointer;
+  flex: 1;
 }
 
-.busca-central {
+.busca-area {
   display: flex;
   align-items: center;
-  flex: 1;
   justify-content: center;
-  gap: 8px;
+  flex: 2;
+  position: relative;
 }
 
 .icone-lupa {
   font-size: 20px;
+  margin-right: 8px;
   cursor: pointer;
 }
 
 .campo-busca {
-  display: block;
-  width: 60%;
-  max-width: 400px;
-  padding: 6px 12px;
+  padding: 6px 10px;
+  border-radius: 20px;
   border: none;
-  border-radius: 4px;
-  font-size: 15px;
+  width: 100%;
+  max-width: 300px;
+  transition: all 0.3s ease;
 }
 
 .botao-login {
   background-color: white;
-  color: #005288;
-  padding: 6px 14px;
-  border-radius: 4px;
-  font-weight: bold;
+  color: #004080;
+  padding: 6px 15px;
+  border-radius: 20px;
   text-decoration: none;
-  transition: background 0.3s;
-}
-
-.botao-login:hover {
-  background-color: #ddd;
+  font-weight: bold;
+  font-size: 14px;
+  flex: 1;
+  text-align: right;
 }
 
 .itens-navegacao {
   display: none;
   flex-direction: column;
-  background-color: #005288;
+  background-color: #004080;
   padding: 10px;
-  position: absolute;
-  top: 50px;
-  left: 10px;
-  z-index: 1000;
 }
 
 .itens-navegacao a {
   color: white;
   text-decoration: none;
-  margin: 5px 0;
-}
-
-.cabecalho {
-  padding: 100px 20px 20px;
-  text-align: center;
-  background-color: #e6f0f5;
+  padding: 8px 0;
 }
 
 .logo {
-  max-width: 80px;
+  max-width: 100px;
+}
+
+.cabecalho {
+  display: flex;
+  align-items: center;
+  padding: 20px;
+  gap: 20px;
+  background: #e9f1ff;
 }
 
 .texto-cabecalho h1 {
-  font-size: 24px;
-  margin: 10px 0 5px;
+  margin: 0;
+  color: #004080;
 }
 
-.texto-cabecalho p {
-  font-size: 14px;
-  color: #555;
-}
-
-/* Carrossel de Categorias */
 .top-categorias {
   display: flex;
   align-items: center;
-  margin: 20px 10px;
-}
-
-.seta {
-  background: none;
-  border: none;
-  font-size: 24px;
-  cursor: pointer;
+  padding: 20px;
+  overflow: hidden;
+  position: relative;
 }
 
 .container-cards {
   overflow: hidden;
-  flex: 1;
+  width: 100%;
 }
 
 .cards {
   display: flex;
-  transition: transform 0.3s ease-in-out;
+  transition: transform 0.5s ease-in-out;
   gap: 10px;
 }
 
 .card {
   min-width: 140px;
   background: white;
-  padding: 10px;
-  border-radius: 6px;
+  border-radius: 10px;
+  box-shadow: 0 2px 5px #ccc;
   text-align: center;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  padding: 10px;
 }
 
 .card img {
@@ -145,67 +122,71 @@ body {
   object-fit: cover;
 }
 
-/* Destaques */
+.seta {
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  color: #004080;
+}
+
 #destaques {
-  margin: 30px 10px;
-  text-align: center;
+  padding: 20px;
+  background: #f5f9ff;
+}
+
+.titulo-secao {
+  color: #004080;
 }
 
 .carrossel-destaque {
-  position: relative;
+  display: flex;
+  align-items: center;
   overflow: hidden;
 }
 
 .container-destaque {
-  width: 100%;
   overflow: hidden;
+  width: 100%;
 }
 
 .cards-destaque {
   display: flex;
-  transition: transform 0.5s ease;
+  transition: transform 0.5s ease-in-out;
+  width: 100%;
 }
 
 .card-destaque {
   min-width: 100%;
+  height: 200px;
+  background: #ddd;
 }
 
 .card-destaque img {
   width: 100%;
-  height: auto;
-  display: block;
+  height: 100%;
+  object-fit: cover;
 }
 
-/* Rodapé fixo */
 .rodape {
+  background-color: #004080;
+  color: white;
+  text-align: center;
+  padding: 15px;
   position: fixed;
   bottom: 0;
   width: 100%;
-  height: 50px;
-  background-color: #005288;
-  color: white;
-  display: flex;
-  align-items: center;
-  justify-content: center;
 }
 
-/* Botão Topo */
 #btnTopo {
   position: fixed;
   bottom: 60px;
   right: 15px;
-  background-color: #005288;
+  background-color: #004080;
   color: white;
   border: none;
   border-radius: 50%;
-  font-size: 20px;
-  padding: 10px;
+  padding: 10px 15px;
   cursor: pointer;
   display: none;
-}
-
-@media (max-width: 768px) {
-  .campo-busca {
-    width: 50%;
-  }
 }
