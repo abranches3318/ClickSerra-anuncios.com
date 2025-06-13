@@ -1,99 +1,108 @@
-body {
+/* Reset */
+* {
   margin: 0;
-  font-family: 'Segoe UI', sans-serif;
-  background: #fdfdfd;
-  color: #333;
+  padding: 0;
+  box-sizing: border-box;
 }
 
+/* Barra de Navegação */
 .barra-navegacao {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background-color: #004080;
-  color: white;
-  padding: 10px 20px;
+  background-color: #ffffff;
+  padding: 10px 16px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
   position: sticky;
   top: 0;
   z-index: 1000;
 }
 
 .menu-button {
-  font-size: 24px;
+  font-size: 22px;
   cursor: pointer;
-  flex: 1;
+  padding: 8px;
 }
 
-.busca-area {
+.busca-container {
   display: flex;
   align-items: center;
-  justify-content: center;
-  flex: 2;
-  position: relative;
+  flex: 1;
+  margin: 0 16px;
+  max-width: 600px;
+  background-color: #f1f1f1;
+  padding: 6px 12px;
+  border-radius: 20px;
 }
 
 .icone-lupa {
-  font-size: 20px;
+  font-size: 18px;
   margin-right: 8px;
-  cursor: pointer;
 }
 
 .campo-busca {
-  padding: 6px 10px;
-  border-radius: 20px;
   border: none;
-  width: 100%;
-  max-width: 300px;
-  transition: all 0.3s ease;
+  background: transparent;
+  outline: none;
+  flex: 1;
+  font-size: 16px;
 }
 
 .botao-login {
-  background-color: white;
-  color: #004080;
-  padding: 6px 15px;
+  background-color: #f49f1c;
+  color: #fff;
+  padding: 8px 16px;
   border-radius: 20px;
   text-decoration: none;
   font-weight: bold;
   font-size: 14px;
-  flex: 1;
-  text-align: right;
 }
 
+/* Menu Lateral */
 .itens-navegacao {
   display: none;
   flex-direction: column;
-  background-color: #004080;
-  padding: 10px;
+  position: absolute;
+  top: 60px;
+  left: 0;
+  width: 100%;
+  background: #fff;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
 }
 
 .itens-navegacao a {
-  color: white;
+  padding: 12px 20px;
+  border-top: 1px solid #ddd;
   text-decoration: none;
-  padding: 8px 0;
+  color: #333;
+  font-size: 16px;
 }
 
-.logo {
-  max-width: 100px;
-}
-
+/* Conteúdo */
 .cabecalho {
-  display: flex;
-  align-items: center;
-  padding: 20px;
-  gap: 20px;
-  background: #e9f1ff;
+  text-align: center;
+  padding: 20px 10px;
+  background-color: #f8f8f8;
 }
 
 .texto-cabecalho h1 {
-  margin: 0;
-  color: #004080;
+  font-size: 28px;
+  color: #333;
 }
 
+.texto-cabecalho p {
+  font-size: 16px;
+  color: #666;
+  margin-top: 8px;
+}
+
+/* Categorias */
 .top-categorias {
   display: flex;
   align-items: center;
-  padding: 20px;
   overflow: hidden;
   position: relative;
+  margin-top: 20px;
 }
 
 .container-cards {
@@ -103,46 +112,53 @@ body {
 
 .cards {
   display: flex;
-  transition: transform 0.5s ease-in-out;
-  gap: 10px;
+  transition: transform 0.4s ease-in-out;
 }
 
 .card {
-  min-width: 140px;
-  background: white;
-  border-radius: 10px;
-  box-shadow: 0 2px 5px #ccc;
+  flex: 0 0 auto;
+  width: 140px;
+  margin: 0 10px;
   text-align: center;
-  padding: 10px;
 }
 
 .card img {
   width: 100%;
-  height: 80px;
-  object-fit: cover;
+  height: auto;
+  border-radius: 12px;
+}
+
+.card p {
+  margin-top: 6px;
+  font-size: 14px;
 }
 
 .seta {
   background: none;
   border: none;
-  font-size: 24px;
+  font-size: 26px;
   cursor: pointer;
-  color: #004080;
+  padding: 10px;
+  color: #555;
 }
 
+/* Destaques */
 #destaques {
-  padding: 20px;
-  background: #f5f9ff;
+  margin: 40px 0;
+  padding: 0 16px;
 }
 
 .titulo-secao {
-  color: #004080;
+  text-align: center;
+  font-size: 22px;
+  margin-bottom: 20px;
 }
 
 .carrossel-destaque {
   display: flex;
   align-items: center;
   overflow: hidden;
+  position: relative;
 }
 
 .container-destaque {
@@ -152,41 +168,63 @@ body {
 
 .cards-destaque {
   display: flex;
-  transition: transform 0.5s ease-in-out;
+  transition: transform 0.4s ease-in-out;
   width: 100%;
 }
 
 .card-destaque {
-  min-width: 100%;
-  height: 200px;
-  background: #ddd;
+  flex: 0 0 100%;
+  padding: 0 10px;
 }
 
 .card-destaque img {
   width: 100%;
-  height: 100%;
-  object-fit: cover;
+  height: auto;
+  border-radius: 10px;
 }
 
+/* Rodapé */
 .rodape {
-  background-color: #004080;
-  color: white;
+  background-color: #222;
+  color: #fff;
   text-align: center;
-  padding: 15px;
+  padding: 12px 0;
   position: fixed;
-  bottom: 0;
   width: 100%;
+  bottom: 0;
 }
 
+/* Botão Voltar ao Topo */
 #btnTopo {
+  display: none;
   position: fixed;
   bottom: 60px;
-  right: 15px;
-  background-color: #004080;
-  color: white;
+  right: 20px;
+  background-color: #f49f1c;
+  color: #fff;
   border: none;
   border-radius: 50%;
-  padding: 10px 15px;
+  font-size: 20px;
+  padding: 12px;
   cursor: pointer;
-  display: none;
+}
+
+/* Responsivo */
+@media (min-width: 768px) {
+  .barra-navegacao {
+    justify-content: space-between;
+  }
+
+  .itens-navegacao {
+    position: static;
+    display: flex;
+    flex-direction: row;
+    background: none;
+    box-shadow: none;
+  }
+
+  .itens-navegacao a {
+    border: none;
+    margin: 0 12px;
+  }
 }
