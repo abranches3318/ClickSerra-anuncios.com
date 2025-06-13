@@ -1,23 +1,92 @@
-<!-- Seção Destaques -->
-<section id="destaques">
-  <h2 class="titulo-secao">Destaques</h2>
-  <div class="carrossel-destaque">
-    <button class="seta destaque-esquerda">❮</button>
-    <div class="container-destaque">
-      <div class="cards-destaque">
-        <!-- 10 Cards de Destaque -->
-        <div class="card-destaque">Destaque 1</div>
-        <div class="card-destaque">Destaque 2</div>
-        <div class="card-destaque">Destaque 3</div>
-        <div class="card-destaque">Destaque 4</div>
-        <div class="card-destaque">Destaque 5</div>
-        <div class="card-destaque">Destaque 6</div>
-        <div class="card-destaque">Destaque 7</div>
-        <div class="card-destaque">Destaque 8</div>
-        <div class="card-destaque">Destaque 9</div>
-        <div class="card-destaque">Destaque 10</div>
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Click Serra Anúncios</title>
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <!-- Barra de Navegação -->
+  <div class="barra-navegacao">
+    <div class="menu-button" onclick="toggleMenu()">☰</div>
+    <div class="busca-ativa" id="buscaAtiva">
+      <input type="text" id="campoBusca" class="campo-busca" placeholder="Digite algo para buscar..." />
+    </div>
+    <div class="icone-lupa" onclick="toggleBusca()">🔍</div>
+  </div>
+  <div class="itens-navegacao" id="menuNavegacao">
+    <a href="index.html">Início</a>
+    <a href="comercio.html">Comércio</a>
+    <a href="servicos.html">Serviços</a>
+    <a href="empregos.html">Empregos</a>
+    <a href="eventos.html">Eventos</a>
+    <a href="sobre.html">Sobre</a>
+    <a href="contato.html">Contato</a>
+  </div>
+
+  <main class="conteudo">
+    <!-- Cabeçalho -->
+    <div class="cabecalho">
+      <img src="imagens/logo.png" alt="Logo Click Serra" class="logo" />
+      <div class="texto-cabecalho">
+        <h1>Click Serra Anúncios</h1>
+        <p>Divulgue seu comércio, serviços, vagas de emprego e eventos na cidade de Serra - ES.</p>
       </div>
     </div>
-    <button class="seta destaque-direita">❯</button>
-  </div>
-</section>
+
+    <!-- Seção Top Categorias -->
+    <div class="top-categorias">
+      <button class="seta esquerda">❮</button>
+      <div class="container-cards">
+        <div class="cards animacao-carrossel">
+          <div class="card"><a href="#"><img src="imagens/comida.png"><p>Alimentação</p></a></div>
+          <div class="card"><a href="#"><img src="imagens/beleza.png"><p>Beleza</p></a></div>
+          <div class="card"><a href="#"><img src="imagens/educacao.png"><p>Educação</p></a></div>
+          <div class="card"><a href="#"><img src="imagens/saude.jpg"><p>Saúde</p></a></div>
+          <div class="card"><a href="#"><img src="imagens/imoveis.png"><p>Imóveis</p></a></div>
+          <div class="card"><a href="#"><img src="imagens/automoveis.png"><p>Automóveis</p></a></div>
+          <div class="card"><a href="#"><img src="imagens/pet.jpg"><p>Pet</p></a></div>
+          <div class="card"><a href="#"><img src="imagens/contrucao.jpg"><p>Construção</p></a></div>
+          <div class="card"><a href="#"><img src="imagens/festas.jpg"><p>Festas</p></a></div>
+          <div class="card"><a href="#"><img src="imagens/oficina.jpg"><p>Oficinas</p></a></div>
+        </div>
+      </div>
+      <button class="seta direita">❯</button>
+    </div>
+
+    <!-- Seção Destaques -->
+    <section id="destaques">
+      <h2 class="titulo-secao">Destaques</h2>
+      <div class="carrossel-destaque">
+        <button class="seta destaque-esquerda">❮</button>
+        <div class="container-destaque">
+          <div class="cards-destaque">
+            <div class="card-destaque">Destaque 1</div>
+            <div class="card-destaque">Destaque 2</div>
+            <div class="card-destaque">Destaque 3</div>
+            <div class="card-destaque">Destaque 4</div>
+            <div class="card-destaque">Destaque 5</div>
+            <div class="card-destaque">Destaque 6</div>
+            <div class="card-destaque">Destaque 7</div>
+            <div class="card-destaque">Destaque 8</div>
+            <div class="card-destaque">Destaque 9</div>
+            <div class="card-destaque">Destaque 10</div>
+          </div>
+        </div>
+        <button class="seta destaque-direita">❯</button>
+      </div>
+    </section>
+  </main>
+
+  <!-- Rodapé -->
+  <footer class="rodape">
+    &copy; 2025 Click Serra Anúncios - Todos os direitos reservados.
+  </footer>
+
+  <button id="btnTopo">↑</button>
+
+  <script src="script.js"></script>
+</body>
+</html>
