@@ -8,22 +8,25 @@
 </head>
 <body>
   <!-- Barra de Navegação -->
-  <header class="barra-navegacao">
-    <div class="menu-button" onclick="toggleMenu()">☰</div>
+<header class="barra-navegacao">
+  <div class="menu-button" onclick="toggleMenu()">☰</div>
 
-    <div class="busca-central">
-      <div class="icone-lupa" onclick="toggleBusca()">🔍</div>
-      <input
-        type="text"
-        class="campo-busca"
-        placeholder="Ex: Restaurante, Oficina..."
-        onfocus="this.placeholder=''"
-        onblur="this.placeholder='Ex: Restaurante, Oficina...'"
-      />
-    </div>
+  <div class="busca-central">
+    <div class="icone-lupa" onclick="toggleBusca()">🔍</div>
+    <input
+      type="text"
+      class="campo-busca"
+      placeholder="Ex: Restaurante, Oficina..."
+      onfocus="this.placeholder=''"
+      onblur="this.placeholder='Ex: Restaurante, Oficina...'"
+    />
+  </div>
 
+  <div class="botoes-direita">
+    <button class="botao-anunciar" onclick="irParaAnuncio()">📢 Anuncie aqui</button>
     <a href="login.html" class="botao-login">Entrar</a>
-  </header>
+  </div>
+</header>
 
   <!-- Menu Lateral -->
   <nav class="itens-navegacao" id="menuNavegacao">
