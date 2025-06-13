@@ -1,67 +1,70 @@
-// Toggle menu
 function toggleMenu() {
   const menu = document.getElementById('menuNavegacao');
   menu.style.display = menu.style.display === 'flex' ? 'none' : 'flex';
 }
 
-// Toggle busca (não usada mais diretamente)
 function toggleBusca() {
-  const busca = document.querySelector('.campo-busca');
-  busca.focus();
+  const campo = document.querySelector('.campo-busca');
+  campo.style.display = campo.style.display === 'none' || campo.style.display === '' ? 'block' : 'none';
+  campo.focus();
 }
 
-// Carrossel categorias
-const cards = document.querySelector('.top-categorias .cards');
+// Carrossel Categorias
 const setaEsquerda = document.querySelector('.seta.esquerda');
 const setaDireita = document.querySelector('.seta.direita');
+const cards = document.querySelector('.top-categorias .cards');
+
+const cardsConteudo = cards.innerHTML;
+cards.innerHTML += cardsConteudo;
+
 let posScroll = 0;
-const passo = 160;
-const maxScroll = cards.scrollWidth / 2;
+const passoScroll = 160;
 
-cards.innerHTML += cards.innerHTML; // efeito infinito
+setaEsquerda.addEventListener('click', () => {
+  posScroll -= passoScroll;
+  if (posScroll < 0) posScroll = cards.scrollWidth / 2;
+  cards.style.transform = `translateX(${-posScroll}px)`;
+});
 
-setaDireita.onclick = () => {
-  posScroll += passo;
-  if (posScroll >= maxScroll) posScroll = 0;
-  cards.style.transform = `translateX(-${posScroll}px)`;
-};
-
-setaEsquerda.onclick = () => {
-  posScroll -= passo;
-  if (posScroll < 0) posScroll = maxScroll;
-  cards.style.transform = `translateX(-${posScroll}px)`;
-};
+setaDireita.addEventListener('click', () => {
+  posScroll += passoScroll;
+  if (posScroll >= cards.scrollWidth / 2) posScroll = 0;
+  cards.style.transform = `translateX(${-posScroll}px)`;
+});
 
 setInterval(() => {
-  setaDireita.click();
+  posScroll += passoScroll;
+  if (posScroll >= cards.scrollWidth / 2) posScroll = 0;
+  cards.style.transform = `translateX(${-posScroll}px)`;
 }, 4000);
 
-// Destaques
+// Carrossel Destaques
 const cardsDestaque = document.querySelector('.cards-destaque');
-const btnEsquerdaD = document.querySelector('.destaque-esquerda');
-const btnDireitaD = document.querySelector('.destaque-direita');
-let indexD = 0;
-const totalD = cardsDestaque.children.length;
+const btnEsquerdaDestaque = document.querySelector('.seta.destaque-esquerda');
+const btnDireitaDestaque = document.querySelector('.seta.destaque-direita');
+const totalDestaques = cardsDestaque.children.length;
+let indexDestaque = 0;
 
 function atualizaDestaque() {
-  cardsDestaque.style.transform = `translateX(-${indexD * 100}%)`;
+  cardsDestaque.style.transform = `translateX(-${indexDestaque * 100}%)`;
 }
 
-btnEsquerdaD.onclick = () => {
-  indexD = (indexD - 1 + totalD) % totalD;
+btnEsquerdaDestaque.addEventListener('click', () => {
+  indexDestaque = (indexDestaque - 1 + totalDestaques) % totalDestaques;
   atualizaDestaque();
-};
+});
 
-btnDireitaD.onclick = () => {
-  indexD = (indexD + 1) % totalD;
+btnDireitaDestaque.addEventListener('click', () => {
+  indexDestaque = (indexDestaque + 1) % totalDestaques;
   atualizaDestaque();
-};
+});
 
 setInterval(() => {
-  btnDireitaD.click();
+  indexDestaque = (indexDestaque + 1) % totalDestaques;
+  atualizaDestaque();
 }, 5000);
 
-// Botão voltar ao topo
+// Botão Voltar ao Topo
 const btnTopo = document.getElementById('btnTopo');
 window.addEventListener('scroll', () => {
   btnTopo.style.display = window.scrollY > 100 ? 'block' : 'none';
