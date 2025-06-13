@@ -16,79 +16,84 @@ a {
   color: inherit;
 }
 
+/* Barra de Navegação */
 .barra-navegacao {
   display: flex;
   align-items: center;
-  justify-content: space-between;
   background-color: #004080;
   color: white;
   padding: 10px 20px;
+  gap: 10px;
   position: relative;
 }
-
-.menu-button, .icone-lupa {
+.menu-button,
+.icone-lupa {
   font-size: 26px;
   cursor: pointer;
   user-select: none;
 }
-
 .busca-ativa {
+  flex: 1;
   display: none;
-  position: absolute;
-  top: 60px;
-  left: 10px;
-  right: 10px;
-  z-index: 20;
 }
 .campo-busca {
   width: 100%;
-  padding: 10px 12px;
-  font-size: 16px;
+  padding: 8px 12px;
+  border-radius: 6px;
   border: none;
-  border-radius: 8px;
+  font-size: 16px;
   outline: none;
 }
 
+/* Menu Lateral */
 .itens-navegacao {
   display: none;
   flex-direction: column;
-  gap: 10px;
-  background: #003060;
-  padding: 15px 20px;
+  gap: 8px;
   position: absolute;
-  top: 60px;
+  top: 50px;
   left: 0;
   width: 100%;
-  z-index: 15;
+  background-color: #003060;
+  padding: 10px 0;
+  z-index: 10;
 }
 .itens-navegacao a {
   color: white;
-  font-size: 1.1rem;
+  padding: 10px 20px;
+  transition: background-color 0.3s ease;
+}
+.itens-navegacao a:hover {
+  background-color: #002050;
 }
 
+/* Cabeçalho */
 .cabecalho {
   display: flex;
   align-items: center;
-  padding: 20px;
+  padding: 25px 20px;
   gap: 20px;
-  background: white;
   flex-wrap: wrap;
+  background: white;
 }
 .logo {
   width: 120px;
 }
 .texto-cabecalho h1 {
+  font-size: 2.2rem;
   color: #004080;
-  font-size: 2rem;
 }
 .texto-cabecalho p {
+  font-size: 1rem;
   color: #555;
+  margin-top: 6px;
 }
 
+/* Carrossel Categorias */
 .top-categorias {
-  padding: 30px 20px;
-  background: white;
   position: relative;
+  padding: 30px 20px 40px;
+  background: white;
   overflow: hidden;
 }
 .container-cards {
@@ -98,16 +103,14 @@ a {
   display: flex;
   gap: 15px;
   transition: transform 0.4s ease;
-  will-change: transform;
 }
 .card {
   flex: 0 0 auto;
   width: 150px;
-  background: #eee;
-  border-radius: 10px;
-  overflow: hidden;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  background: #f0f0f0;
+  border-radius: 12px;
   text-align: center;
+  cursor: pointer;
 }
 .card img {
   width: 100%;
@@ -115,43 +118,27 @@ a {
   object-fit: cover;
 }
 .card p {
-  padding: 10px;
-  font-weight: bold;
+  padding: 12px 8px;
+  font-weight: 600;
   color: #004080;
 }
-.seta {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  background: #004080;
-  color: white;
-  border: none;
-  font-size: 24px;
-  padding: 10px;
-  border-radius: 50%;
-  cursor: pointer;
-  z-index: 5;
-}
-.seta.esquerda {
-  left: 10px;
-}
-.seta.direita {
-  right: 10px;
-}
 
+/* Carrossel Destaques */
 #destaques {
   background: white;
-  padding: 30px 0;
+  padding: 30px 0 50px;
 }
 .titulo-secao {
   text-align: center;
   font-size: 2rem;
   color: #004080;
-  margin-bottom: 20px;
+  margin-bottom: 25px;
 }
 .carrossel-destaque {
   display: flex;
   align-items: center;
+  position: relative;
+  max-width: 100%;
   overflow: hidden;
 }
 .container-destaque {
@@ -164,14 +151,42 @@ a {
 }
 .card-destaque {
   min-width: 100%;
+  height: 240px;
 }
 .card-destaque img {
   width: 100%;
-  height: 250px;
+  height: 100%;
   object-fit: cover;
-  border-radius: 16px;
 }
 
+/* Setas */
+.seta {
+  background: #004080;
+  color: white;
+  border: none;
+  font-size: 26px;
+  padding: 12px;
+  border-radius: 50%;
+  cursor: pointer;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 2;
+}
+.seta.esquerda {
+  left: 10px;
+}
+.seta.direita {
+  right: 10px;
+}
+.seta.destaque-esquerda {
+  left: 10px;
+}
+.seta.destaque-direita {
+  right: 10px;
+}
+
+/* Rodapé */
 .rodape {
   background-color: #002d66;
   color: white;
@@ -181,6 +196,7 @@ a {
   margin-top: auto;
 }
 
+/* Botão Topo */
 #btnTopo {
   position: fixed;
   bottom: 30px;
@@ -191,12 +207,16 @@ a {
   border-radius: 50%;
   font-size: 22px;
   padding: 10px 15px;
-  cursor: pointer;
   display: none;
-  box-shadow: 0 3px 12px rgba(0,0,0,0.3);
-  user-select: none;
+  cursor: pointer;
 }
 
-#btnTopo:hover {
-  background-color: #002d66;
+/* Responsivo */
+@media (min-width: 768px) {
+  .itens-navegacao {
+    position: absolute;
+    flex-direction: column;
+    width: 100%;
+    background: #003060;
+  }
 }
