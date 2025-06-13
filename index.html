@@ -8,11 +8,11 @@
 </head>
 <body>
   <!-- Barra de Navegação -->
-  <div class="barra-navegacao">
+  <header class="barra-navegacao">
     <div class="menu-button" onclick="toggleMenu()">☰</div>
-    <a href="login.html" class="botao-login">Login</a>
-    <div class="icone-lupa" onclick="toggleBusca()">🔍</div>
-    <div class="busca-ativa">
+
+    <div class="busca-central">
+      <div class="icone-lupa" onclick="toggleBusca()">🔍</div>
       <input
         type="text"
         class="campo-busca"
@@ -21,33 +21,37 @@
         onblur="this.placeholder='Ex: Restaurante, Oficina...'"
       />
     </div>
-    <div class="itens-navegacao" id="menuNavegacao">
-      <a href="index.html">Início</a>
-      <a href="comercio.html">Comércio</a>
-      <a href="servicos.html">Serviços</a>
-      <a href="empregos.html">Empregos</a>
-      <a href="eventos.html">Eventos</a>
-      <a href="sobre.html">Sobre</a>
-      <a href="contato.html">Contato</a>
-    </div>
-  </div>
+
+    <a href="login.html" class="botao-login">Entrar</a>
+  </header>
+
+  <!-- Menu Lateral -->
+  <nav class="itens-navegacao" id="menuNavegacao">
+    <a href="index.html">Início</a>
+    <a href="comercio.html">Comércio</a>
+    <a href="servicos.html">Serviços</a>
+    <a href="empregos.html">Empregos</a>
+    <a href="eventos.html">Eventos</a>
+    <a href="sobre.html">Sobre</a>
+    <a href="contato.html">Contato</a>
+  </nav>
 
   <!-- Cabeçalho -->
-  <div class="cabecalho">
+  <section class="cabecalho">
     <img src="imagens/logo.png" alt="Logo Click Serra" class="logo" />
     <div class="texto-cabecalho">
       <h1>Click Serra Anúncios</h1>
       <p>Divulgue seu comércio, serviços, vagas de emprego e eventos na cidade de Serra - ES.</p>
     </div>
-  </div>
+  </section>
 
-  <!-- Seção Top Categorias -->
-  <div class="top-categorias">
+  <!-- Top Categorias -->
+  <section class="top-categorias">
     <button class="seta esquerda">❮</button>
     <div class="container-cards">
       <div class="cards animacao-carrossel">
         <div class="card"><a href="#"><img src="imagens/comida.png" alt="Alimentação"/><p>Alimentação</p></a></div>
-        <div class="card"><a href="#"><img src="imagens/beleza.png" alt="Beleza e Estética"/><p>Beleza</p></a></div>
+        <div class="card"><a href="#"><img src="imagens/beleza.png" alt="Beleza"/><p>Beleza</p></a></div>
         <div class="card"><a href="#"><img src="imagens/educacao.png" alt="Educação"/><p>Educação</p></a></div>
         <div class="card"><a href="#"><img src="imagens/saude.jpg" alt="Saúde"/><p>Saúde</p></a></div>
         <div class="card"><a href="#"><img src="imagens/imoveis.png" alt="Imóveis"/><p>Imóveis</p></a></div>
@@ -59,19 +63,18 @@
       </div>
     </div>
     <button class="seta direita">❯</button>
-  </div>
+  </section>
 
-  <!-- Seção Destaques -->
+  <!-- Destaques -->
   <section id="destaques">
     <h2 class="titulo-secao">Destaques</h2>
     <div class="carrossel-destaque">
       <button class="seta destaque-esquerda">❮</button>
       <div class="container-destaque">
         <div class="cards-destaque">
-          <img class="card-destaque" src="imagens/destaque1.jpg" alt="Destaque 1" />
-          <img class="card-destaque" src="imagens/destaque2.jpg" alt="Destaque 2" />
-          <img class="card-destaque" src="imagens/destaque3.jpg" alt="Destaque 3" />
-          <img class="card-destaque" src="imagens/destaque4.jpg" alt="Destaque 4" />
+          <div class="card-destaque"><img src="imagens/d1.jpg" alt="Destaque 1" /></div>
+          <div class="card-destaque"><img src="imagens/d2.jpg" alt="Destaque 2" /></div>
+          <div class="card-destaque"><img src="imagens/d3.jpg" alt="Destaque 3" /></div>
         </div>
       </div>
       <button class="seta destaque-direita">❯</button>
@@ -79,11 +82,11 @@
   </section>
 
   <!-- Rodapé -->
-  <div class="rodape">
+  <footer class="rodape">
     &copy; 2025 Click Serra Anúncios - Todos os direitos reservados.
-  </div>
+  </footer>
 
-  <!-- Botão Voltar ao Topo -->
+  <!-- Botão Topo -->
   <button id="btnTopo">↑</button>
 
   <script src="script.js"></script>
