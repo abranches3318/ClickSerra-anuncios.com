@@ -9,31 +9,38 @@
 <body>
   <!-- Barra de Navegação -->
   <div class="barra-navegacao">
+    <!-- Menu -->
     <div class="menu-button" onclick="toggleMenu()">☰</div>
-    <div class="busca-area">
-      <div class="icone-lupa" onclick="toggleBusca()">🔍</div>
-      <input
-        type="text"
-        class="campo-busca"
-        placeholder="Ex: Restaurante, Oficina..."
-        onfocus="this.placeholder=''"
-        onblur="this.placeholder='Ex: Restaurante, Oficina...'"
-      />
-    </div>
-    <a href="login.html" class="botao-login">
-      👤 Entrar
-    </a>
-  </div>
 
-  <!-- Itens do Menu -->
-  <div class="itens-navegacao" id="menuNavegacao">
-    <a href="index.html">Início</a>
-    <a href="comercio.html">Comércio</a>
-    <a href="servicos.html">Serviços</a>
-    <a href="empregos.html">Empregos</a>
-    <a href="eventos.html">Eventos</a>
-    <a href="sobre.html">Sobre</a>
-    <a href="contato.html">Contato</a>
+    <!-- Centro: Lupa + Campo de busca -->
+    <div class="centro-busca">
+      <div class="icone-lupa" onclick="toggleBusca()">🔍</div>
+      <div class="busca-ativa">
+        <input
+          type="text"
+          class="campo-busca"
+          placeholder="Ex: Restaurante, Oficina..."
+          onfocus="this.placeholder=''"
+          onblur="this.placeholder='Ex: Restaurante, Oficina...'"
+        />
+      </div>
+    </div>
+
+    <!-- Botão Login -->
+    <div class="botao-login">
+      <a href="login.html">Entrar</a>
+    </div>
+
+    <!-- Menu lateral (hambúrguer) -->
+    <div class="itens-navegacao" id="menuNavegacao">
+      <a href="index.html">Início</a>
+      <a href="comercio.html">Comércio</a>
+      <a href="servicos.html">Serviços</a>
+      <a href="empregos.html">Empregos</a>
+      <a href="eventos.html">Eventos</a>
+      <a href="sobre.html">Sobre</a>
+      <a href="contato.html">Contato</a>
+    </div>
   </div>
 
   <!-- Cabeçalho -->
@@ -72,10 +79,11 @@
       <button class="seta destaque-esquerda">❮</button>
       <div class="container-destaque">
         <div class="cards-destaque">
-          <div class="card-destaque"><img src="imagens/Divertilandia.jpg." alt="Divertilandia Festas" /></div>
-          <div class="card-destaque"><img src="imagens/destaque2.jpg" alt="Destaque 2" /></div>
-          <div class="card-destaque"><img src="imagens/destaque3.jpg" alt="Destaque 3" /></div>
-          <div class="card-destaque"><img src="imagens/destaque4.jpg" alt="Destaque 4" /></div>
+          <div class="card-destaque"><img src="imagens/Divertilandia.jpg" alt="Destaque 1"></div>
+          <div class="card-destaque"><img src="imagens/destaque2.jpg" alt="Destaque 2"></div>
+          <div class="card-destaque"><img src="imagens/destaque3.jpg" alt="Destaque 3"></div>
+          <div class="card-destaque"><img src="imagens/destaque4.jpg" alt="Destaque 4"></div>
+          <div class="card-destaque"><img src="imagens/destaque5.jpg" alt="Destaque 5"></div>
         </div>
       </div>
       <button class="seta destaque-direita">❯</button>
