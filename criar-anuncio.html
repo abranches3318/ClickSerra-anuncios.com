@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Criar Anúncio</title>
+  <link rel="stylesheet" href="criar-anuncio.css" />
+</head>
+<body>
+  <main class="container">
+    <h1>Criar Anúncio</h1>
+    <form id="formAnuncio">
+      <label for="titulo">Título do Anúncio *</label>
+      <input type="text" id="titulo" name="titulo" required />
+
+      <label for="categoria">Categoria *</label>
+      <select id="categoria" name="categoria" required>
+        <option value="">Selecione uma categoria</option>
+        <option value="servicos">Serviços</option>
+        <option value="comercio">Comércio</option>
+        <option value="empregos">Empregos</option>
+      </select>
+
+      <label for="descricao">Descrição *</label>
+      <textarea id="descricao" name="descricao" rows="5" required></textarea>
+
+      <label for="telefone">Telefone principal *</label>
+      <input type="tel" id="telefone" name="telefone" required />
+
+      <label for="telefoneSecundario">Telefone secundário</label>
+      <input type="tel" id="telefoneSecundario" name="telefoneSecundario" />
+
+      <label for="cep">CEP *</label>
+      <input type="text" id="cep" name="cep" required />
+
+      <label for="endereco">Endereço completo *</label>
+      <input type="text" id="endereco" name="endereco" required />
+
+      <label for="horario">Horário de funcionamento</label>
+      <input type="text" id="horario" name="horario" placeholder="Ex: Seg a Sex - 08h às 18h" />
+
+      <label for="whatsapp">WhatsApp</label>
+      <input type="url" id="whatsapp" name="whatsapp" placeholder="https://wa.me/seunumero" />
+
+      <label for="redesSociais">Redes Sociais</label>
+      <input type="url" id="redesSociais" name="redesSociais" placeholder="https://instagram.com/seuperfil" />
+
+      <label for="fotos">Fotos</label>
+      <input type="file" id="fotos" name="fotos" accept="image/*" multiple />
+
+      <label for="videos">Vídeos</label>
+      <input type="file" id="videos" name="videos" accept="video/*" multiple />
+
+      <fieldset>
+        <legend>Escolha seu pacote *</legend>
+        <label><input type="radio" name="pacote" value="simples" required /> Anúncio Simples</label>
+        <label><input type="radio" name="pacote" value="destaque" /> Anúncio Destaque</label>
+        <label><input type="radio" name="pacote" value="premium" /> Anúncio Premium</label>
+      </fieldset>
+
+      <button type="submit">Publicar Anúncio</button>
+    </form>
+  </main>
+
+  <script src="criar-anuncio.js"></script>
+</body>
+</html>
