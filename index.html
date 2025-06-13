@@ -1,72 +1,93 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-br">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Site de Anúncios - Serra</title>
-  <link rel="stylesheet" href="style.css"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Click Serra Anúncios</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-
+  <!-- Barra de Navegação -->
   <header class="barra-navegacao">
     <div class="menu-button" onclick="toggleMenu()">☰</div>
 
-    <div class="busca-container">
-      <span class="icone-lupa">🔍</span>
-      <input type="text" class="campo-busca" placeholder="Buscar serviços..." oninput="this.placeholder = ''"/>
+    <div class="busca-central">
+      <div class="icone-lupa" onclick="toggleBusca()">🔍</div>
+      <input
+        type="text"
+        class="campo-busca"
+        placeholder="Ex: Restaurante, Oficina..."
+        onfocus="this.placeholder=''"
+        onblur="this.placeholder='Ex: Restaurante, Oficina...'"
+      />
     </div>
 
-    <a href="#" class="botao-login">Entrar</a>
+    <a href="login.html" class="botao-login">Entrar</a>
   </header>
 
-  <nav id="menuNavegacao" class="itens-navegacao">
-    <a href="#">Início</a>
-    <a href="#">Serviços</a>
-    <a href="#">Sobre</a>
-    <a href="#">Contato</a>
+  <!-- Menu Lateral -->
+  <nav class="itens-navegacao" id="menuNavegacao">
+    <a href="index.html">Início</a>
+    <a href="comercio.html">Comércio</a>
+    <a href="servicos.html">Serviços</a>
+    <a href="empregos.html">Empregos</a>
+    <a href="eventos.html">Eventos</a>
+    <a href="sobre.html">Sobre</a>
+    <a href="contato.html">Contato</a>
   </nav>
 
+  <!-- Cabeçalho -->
   <section class="cabecalho">
+    <img src="imagens/logo.png" alt="Logo Click Serra" class="logo" />
     <div class="texto-cabecalho">
-      <h1>Bem-vindo ao Serra Serviços</h1>
-      <p>Conectando você aos melhores profissionais da sua cidade</p>
+      <h1>Click Serra Anúncios</h1>
+      <p>Divulgue seu comércio, serviços, vagas de emprego e eventos na cidade de Serra - ES.</p>
     </div>
   </section>
 
+  <!-- Top Categorias -->
   <section class="top-categorias">
     <button class="seta esquerda">❮</button>
     <div class="container-cards">
-      <div class="cards">
-        <div class="card"><img src="https://via.placeholder.com/140" /><p>Elétrica</p></div>
-        <div class="card"><img src="https://via.placeholder.com/140" /><p>Encanamento</p></div>
-        <div class="card"><img src="https://via.placeholder.com/140" /><p>Limpeza</p></div>
-        <div class="card"><img src="https://via.placeholder.com/140" /><p>Reformas</p></div>
-        <div class="card"><img src="https://via.placeholder.com/140" /><p>Jardinagem</p></div>
+      <div class="cards animacao-carrossel">
+        <div class="card"><a href="#"><img src="imagens/comida.png" alt="Alimentação"/><p>Alimentação</p></a></div>
+        <div class="card"><a href="#"><img src="imagens/beleza.png" alt="Beleza"/><p>Beleza</p></a></div>
+        <div class="card"><a href="#"><img src="imagens/educacao.png" alt="Educação"/><p>Educação</p></a></div>
+        <div class="card"><a href="#"><img src="imagens/saude.jpg" alt="Saúde"/><p>Saúde</p></a></div>
+        <div class="card"><a href="#"><img src="imagens/imoveis.png" alt="Imóveis"/><p>Imóveis</p></a></div>
+        <div class="card"><a href="#"><img src="imagens/automoveis.png" alt="Automóveis"/><p>Automóveis</p></a></div>
+        <div class="card"><a href="#"><img src="imagens/pet.jpg" alt="Pet"/><p>Pet</p></a></div>
+        <div class="card"><a href="#"><img src="imagens/contrucao.jpg" alt="Construção"/><p>Construção</p></a></div>
+        <div class="card"><a href="#"><img src="imagens/festas.jpg" alt="Festas"/><p>Festas</p></a></div>
+        <div class="card"><a href="#"><img src="imagens/oficina.jpg" alt="Oficinas"/><p>Oficinas</p></a></div>
       </div>
     </div>
     <button class="seta direita">❯</button>
   </section>
 
+  <!-- Destaques -->
   <section id="destaques">
     <h2 class="titulo-secao">Destaques</h2>
     <div class="carrossel-destaque">
       <button class="seta destaque-esquerda">❮</button>
       <div class="container-destaque">
         <div class="cards-destaque">
-          <div class="card-destaque"><img src="https://via.placeholder.com/600x300" /></div>
-          <div class="card-destaque"><img src="https://via.placeholder.com/600x300" /></div>
-          <div class="card-destaque"><img src="https://via.placeholder.com/600x300" /></div>
+          <div class="card-destaque"><img src="imagens/d1.jpg" alt="Destaque 1" /></div>
+          <div class="card-destaque"><img src="imagens/d2.jpg" alt="Destaque 2" /></div>
+          <div class="card-destaque"><img src="imagens/d3.jpg" alt="Destaque 3" /></div>
         </div>
       </div>
       <button class="seta destaque-direita">❯</button>
     </div>
   </section>
 
+  <!-- Rodapé -->
   <footer class="rodape">
-    <p>&copy; 2025 Serra Serviços - Todos os direitos reservados.</p>
+    &copy; 2025 Click Serra Anúncios - Todos os direitos reservados.
   </footer>
 
-  <button id="btnTopo" title="Voltar ao topo">↑</button>
+  <!-- Botão Topo -->
+  <button id="btnTopo">↑</button>
 
   <script src="script.js"></script>
 </body>
