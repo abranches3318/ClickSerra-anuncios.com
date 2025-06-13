@@ -72,3 +72,13 @@ window.addEventListener('scroll', () => {
 btnTopo.addEventListener('click', () => {
   window.scrollTo({ top: 0, behavior: 'smooth' });
 });
+
+// Redirecionamento inteligente do botão "Anuncie aqui"
+function irParaAnuncio() {
+  const usuarioLogado = localStorage.getItem('usuarioLogado'); // Simulação
+  if (usuarioLogado) {
+    window.location.href = 'criar-anuncio.html';
+  } else {
+    window.location.href = 'login.html';
+  }
+}
