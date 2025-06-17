@@ -1,15 +1,43 @@
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js";
+import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js";
+
+const firebaseConfig = {
+
+  apiKey: "AIzaSyDhjUescYhrZ1e12M6nv5mnWxDovNcGxw0",
+
+  authDomain: "clickserra-anuncios.firebaseapp.com",
+
+  databaseURL: "https://clickserra-anuncios-default-rtdb.firebaseio.com",
+
+  projectId: "clickserra-anuncios",
+
+  storageBucket: "clickserra-anuncios.firebasestorage.app",
+
+  messagingSenderId: "251868045964",
+
+  appId: "1:251868045964:web:34f527f3d7c380746211a9",
+
+
+};
+
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+
+// Alternar menu hambúrguer
 function toggleMenu() {
   const menu = document.getElementById('menuNavegacao');
   menu.style.display = menu.style.display === 'flex' ? 'none' : 'flex';
 }
 
+// Mostrar/ocultar campo de busca
 function toggleBusca() {
   const campo = document.querySelector('.campo-busca');
   campo.style.display = campo.style.display === 'none' || campo.style.display === '' ? 'block' : 'none';
   campo.focus();
 }
 
-// Carrossel Categorias
+// Carrossel de categorias
 const setaEsquerda = document.querySelector('.seta.esquerda');
 const setaDireita = document.querySelector('.seta.direita');
 const cards = document.querySelector('.top-categorias .cards');
@@ -38,7 +66,7 @@ setInterval(() => {
   cards.style.transform = `translateX(${-posScroll}px)`;
 }, 4000);
 
-// Carrossel Destaques
+// Carrossel de destaques
 const cardsDestaque = document.querySelector('.cards-destaque');
 const btnEsquerdaDestaque = document.querySelector('.seta.destaque-esquerda');
 const btnDireitaDestaque = document.querySelector('.seta.destaque-direita');
@@ -64,7 +92,7 @@ setInterval(() => {
   atualizaDestaque();
 }, 5000);
 
-// Botão Voltar ao Topo
+// Botão "Voltar ao topo"
 const btnTopo = document.getElementById('btnTopo');
 window.addEventListener('scroll', () => {
   btnTopo.style.display = window.scrollY > 100 ? 'block' : 'none';
@@ -73,12 +101,38 @@ btnTopo.addEventListener('click', () => {
   window.scrollTo({ top: 0, behavior: 'smooth' });
 });
 
-// Redirecionamento inteligente do botão "Anuncie aqui"
-function irParaAnuncio() {
-  const usuarioLogado = localStorage.getItem('usuarioLogado'); // Simulação
-  if (usuarioLogado) {
-    window.location.href = 'criar-anuncio.html';
+// Redirecionamento botão "Anuncie aqui"
+window.irParaAnuncio = function () {
+  const usuario = auth.currentUser;
+  if (usuario) {
+    window.location.href = "criar-anuncio.html";
   } else {
-    window.location.href = 'login.html';
+    window.location.href = "login.html";
   }
-}
+};
+
+// Alternar botões da navegação com base no login
+onAuthStateChanged(auth, (user) => {
+  const btnLogin = document.getElementById("btnLogin");
+  const btnSair = document.getElementById("btnSair");
+  const btnAnunciar = document.getElementById("btnAnunciar");
+
+  if (user) {
+    if (btnLogin) btnLogin.style.display = "none";
+    if (btnSair) btnSair.style.display = "inline-block";
+    if (btnAnunciar) btnAnunciar.style.display = "inline-block";
+  } else {
+    if (btnLogin) btnLogin.style.display = "inline-block";
+    if (btnSair) btnSair.style.display = "none";
+    if (btnAnunciar) btnAnunciar.style.display = "inline-block";
+  }
+});
+
+// Função para sair
+window.fazerLogout = function () {
+  signOut(auth).then(() => {
+    window.location.href = "index.html";
+  }).catch((error) => {
+    console.error("Erro ao sair:", error);
+  });
+};
