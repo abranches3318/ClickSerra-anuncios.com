@@ -21,12 +21,13 @@ document.getElementById('formCadastro').addEventListener('submit', async functio
   }
 
   try {
+    // Cria o usuário
     const userCredential = await createUserWithEmailAndPassword(auth, email, senha);
     const user = userCredential.user;
 
-    // Aguarda autenticação estar completa
+    // Espera a autenticação estar ativa para garantir as permissões
     onAuthStateChanged(auth, async (userAuth) => {
-      if (userAuth) {
+      if (userAuth && userAuth.uid === user.uid) {
         try {
           await setDoc(doc(db, "users", user.uid), {
             nome: nome,
@@ -36,21 +37,21 @@ document.getElementById('formCadastro').addEventListener('submit', async functio
 
           alert("Cadastro realizado com sucesso!");
           window.location.href = "index.html";
-        } catch (firestoreError) {
-          console.error("Erro ao salvar no Firestore:", firestoreError.message);
-          alert("Erro ao salvar no Firestore: " + firestoreError.message);
+        } catch (erroFirestore) {
+          console.error("Erro ao salvar no Firestore:", erroFirestore);
+          alert("Erro ao salvar dados no Firestore.");
         }
       }
     });
 
   } catch (error) {
     if (error.code === "auth/email-already-in-use") {
-      alert("Este e-mail já está cadastrado. Faça login ou use outro.");
+      alert("Este e-mail já está cadastrado.");
     } else if (error.code === "auth/weak-password") {
       alert("A senha deve ter no mínimo 6 caracteres.");
     } else {
+      console.error("Erro ao cadastrar:", error);
       alert("Erro ao cadastrar: " + error.message);
     }
-    console.error("Erro ao cadastrar:", error);
   }
 });
