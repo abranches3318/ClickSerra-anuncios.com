@@ -14,84 +14,83 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 
+// Funções de menu e busca
 window.toggleMenu = function () {
-  const menu = document.getElementById('menuNavegacao');
-  menu.style.display = menu.style.display === 'flex' ? 'none' : 'flex';
-}
+  const menu = document.getElementById("menuNavegacao");
+  menu.style.display = menu.style.display === "flex" ? "none" : "flex";
+};
 
 window.toggleBusca = function () {
-  const campo = document.querySelector('.campo-busca');
-  campo.style.display = campo.style.display === 'none' || campo.style.display === '' ? 'block' : 'none';
+  const campo = document.querySelector(".campo-busca");
+  campo.style.display = campo.style.display === "none" || campo.style.display === "" ? "block" : "none";
   campo.focus();
-}
+};
 
 // Carrossel Categorias
-document.addEventListener('DOMContentLoaded', () => {
-  const setaEsquerda = document.querySelector('.seta.esquerda');
-  const setaDireita = document.querySelector('.seta.direita');
-  const cards = document.querySelector('.top-categorias .cards');
+const setaEsquerda = document.querySelector(".seta.esquerda");
+const setaDireita = document.querySelector(".seta.direita");
+const cards = document.querySelector(".top-categorias .cards");
 
-  const cardsConteudo = cards.innerHTML;
-  cards.innerHTML += cardsConteudo;
+const cardsConteudo = cards.innerHTML;
+cards.innerHTML += cardsConteudo;
 
-  let posScroll = 0;
-  const passoScroll = 160;
+let posScroll = 0;
+const passoScroll = 160;
 
-  setaEsquerda.addEventListener('click', () => {
-    posScroll -= passoScroll;
-    if (posScroll < 0) posScroll = cards.scrollWidth / 2;
-    cards.style.transform = `translateX(${-posScroll}px)`;
-  });
-
-  setaDireita.addEventListener('click', () => {
-    posScroll += passoScroll;
-    if (posScroll >= cards.scrollWidth / 2) posScroll = 0;
-    cards.style.transform = `translateX(${-posScroll}px)`;
-  });
-
-  setInterval(() => {
-    posScroll += passoScroll;
-    if (posScroll >= cards.scrollWidth / 2) posScroll = 0;
-    cards.style.transform = `translateX(${-posScroll}px)`;
-  }, 4000);
-
-  // Carrossel Destaques
-  const cardsDestaque = document.querySelector('.cards-destaque');
-  const btnEsquerdaDestaque = document.querySelector('.seta.destaque-esquerda');
-  const btnDireitaDestaque = document.querySelector('.seta.destaque-direita');
-  const totalDestaques = cardsDestaque.children.length;
-  let indexDestaque = 0;
-
-  function atualizaDestaque() {
-    cardsDestaque.style.transform = `translateX(-${indexDestaque * 100}%)`;
-  }
-
-  btnEsquerdaDestaque.addEventListener('click', () => {
-    indexDestaque = (indexDestaque - 1 + totalDestaques) % totalDestaques;
-    atualizaDestaque();
-  });
-
-  btnDireitaDestaque.addEventListener('click', () => {
-    indexDestaque = (indexDestaque + 1) % totalDestaques;
-    atualizaDestaque();
-  });
-
-  setInterval(() => {
-    indexDestaque = (indexDestaque + 1) % totalDestaques;
-    atualizaDestaque();
-  }, 5000);
-
-  // Botão Voltar ao Topo
-  const btnTopo = document.getElementById('btnTopo');
-  window.addEventListener('scroll', () => {
-    btnTopo.style.display = window.scrollY > 100 ? 'block' : 'none';
-  });
-  btnTopo.addEventListener('click', () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  });
+setaEsquerda.addEventListener("click", () => {
+  posScroll -= passoScroll;
+  if (posScroll < 0) posScroll = cards.scrollWidth / 2;
+  cards.style.transform = `translateX(-${posScroll}px)`;
 });
 
-// Alternância de visibilidade com base no login
+setaDireita.addEventListener("click", () => {
+  posScroll += passoScroll;
+  if (posScroll >= cards.scrollWidth / 2) posScroll = 0;
+  cards.style.transform = `translateX(-${posScroll}px)`;
+});
+
+setInterval(() => {
+  posScroll += passoScroll;
+  if (posScroll >= cards.scrollWidth / 2) posScroll = 0;
+  cards.style.transform = `translateX(-${posScroll}px)`;
+}, 4000);
+
+// Carrossel Destaques
+const cardsDestaque = document.querySelector(".cards-destaque");
+const btnEsquerdaDestaque = document.querySelector(".seta.destaque-esquerda");
+const btnDireitaDestaque = document.querySelector(".seta.destaque-direita");
+const totalDestaques = cardsDestaque.children.length;
+let indexDestaque = 0;
+
+function atualizaDestaque() {
+  cardsDestaque.style.transform = `translateX(-${indexDestaque * 100}%)`;
+}
+
+btnEsquerdaDestaque.addEventListener("click", () => {
+  indexDestaque = (indexDestaque - 1 + totalDestaques) % totalDestaques;
+  atualizaDestaque();
+});
+
+btnDireitaDestaque.addEventListener("click", () => {
+  indexDestaque = (indexDestaque + 1) % totalDestaques;
+  atualizaDestaque();
+});
+
+setInterval(() => {
+  indexDestaque = (indexDestaque + 1) % totalDestaques;
+  atualizaDestaque();
+}, 5000);
+
+// Botão Voltar ao Topo
+const btnTopo = document.getElementById("btnTopo");
+window.addEventListener("scroll", () => {
+  btnTopo.style.display = window.scrollY > 100 ? "block" : "none";
+});
+btnTopo.addEventListener("click", () => {
+  window.scrollTo({ top: 0, behavior: "smooth" });
+});
+
+// Login/Logout com Firebase
 onAuthStateChanged(auth, (user) => {
   const botaoEntrar = document.getElementById("botao-entrar");
   const botaoSair = document.getElementById("botao-sair");
@@ -108,16 +107,16 @@ onAuthStateChanged(auth, (user) => {
   }
 });
 
-// Função de logout
 window.logout = function () {
-  signOut(auth).then(() => {
-    window.location.href = "index.html";
-  }).catch((error) => {
-    console.error("Erro ao sair:", error);
-  });
+  signOut(auth)
+    .then(() => {
+      window.location.href = "index.html";
+    })
+    .catch((error) => {
+      console.error("Erro ao sair:", error);
+    });
 };
 
-// Redirecionamento inteligente para criação de anúncio
 window.irParaAnuncio = function () {
   const user = auth.currentUser;
   if (user) {
@@ -126,4 +125,3 @@ window.irParaAnuncio = function () {
     window.location.href = "login.html";
   }
 };
-
