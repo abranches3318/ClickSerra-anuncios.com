@@ -1,15 +1,17 @@
+// Menu Hambúrguer
 function toggleMenu() {
   const menu = document.getElementById('menuNavegacao');
   menu.style.display = menu.style.display === 'flex' ? 'none' : 'flex';
 }
 
+// Campo de Busca
 function toggleBusca() {
   const campo = document.querySelector('.campo-busca');
   campo.style.display = campo.style.display === 'none' || campo.style.display === '' ? 'block' : 'none';
   campo.focus();
 }
 
-// Carrossel Categorias
+// Carrossel de Categorias
 const setaEsquerda = document.querySelector('.seta.esquerda');
 const setaDireita = document.querySelector('.seta.direita');
 const cards = document.querySelector('.top-categorias .cards');
@@ -23,19 +25,19 @@ const passoScroll = 160;
 setaEsquerda.addEventListener('click', () => {
   posScroll -= passoScroll;
   if (posScroll < 0) posScroll = cards.scrollWidth / 2;
-  cards.style.transform = translateX(${-posScroll}px);
+  cards.style.transform = `translateX(${-posScroll}px)`;
 });
 
 setaDireita.addEventListener('click', () => {
   posScroll += passoScroll;
   if (posScroll >= cards.scrollWidth / 2) posScroll = 0;
-  cards.style.transform = translateX(${-posScroll}px);
+  cards.style.transform = `translateX(${-posScroll}px)`;
 });
 
 setInterval(() => {
   posScroll += passoScroll;
   if (posScroll >= cards.scrollWidth / 2) posScroll = 0;
-  cards.style.transform = translateX(${-posScroll}px);
+  cards.style.transform = `translateX(${-posScroll}px)`;
 }, 4000);
 
 // Carrossel Destaques
@@ -46,7 +48,7 @@ const totalDestaques = cardsDestaque.children.length;
 let indexDestaque = 0;
 
 function atualizaDestaque() {
-  cardsDestaque.style.transform = translateX(-${indexDestaque * 100}%);
+  cardsDestaque.style.transform = `translateX(-${indexDestaque * 100}%)`;
 }
 
 btnEsquerdaDestaque.addEventListener('click', () => {
@@ -73,12 +75,24 @@ btnTopo.addEventListener('click', () => {
   window.scrollTo({ top: 0, behavior: 'smooth' });
 });
 
-// Redirecionamento inteligente do botão "Anuncie aqui"
+// Verificação de login e botão "Anuncie aqui"
+function verificarLoginNaHome() {
+  const usuarioLogado = localStorage.getItem('usuarioLogado');
+  document.getElementById('botao-entrar').style.display = usuarioLogado ? 'none' : 'inline-block';
+  document.getElementById('botao-sair').style.display = usuarioLogado ? 'inline-block' : 'none';
+}
+
 function irParaAnuncio() {
-  const usuarioLogado = localStorage.getItem('usuarioLogado'); // Simulação
+  const usuarioLogado = localStorage.getItem('usuarioLogado');
   if (usuarioLogado) {
     window.location.href = 'criar-anuncio.html';
   } else {
     window.location.href = 'login.html';
   }
 }
+
+function logout() {
+  localStorage.removeItem('usuarioLogado');
+  window.location.reload();
+}
+
