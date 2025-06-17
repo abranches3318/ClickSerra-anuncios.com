@@ -8,26 +8,27 @@
 </head>
 <body>
   <!-- Barra de Navegação -->
-  <header class="barra-navegacao">
-    <div class="menu-button" onclick="toggleMenu()">☰</div>
+<header class="barra-navegacao">
+  <div class="menu-button" onclick="toggleMenu()">☰</div>
 
-    <div class="busca-central">
-      <div class="icone-lupa" onclick="toggleBusca()">🔍</div>
-      <input
-        type="text"
-        class="campo-busca"
-        placeholder="Ex: Restaurante, Oficina..."
-        onfocus="this.placeholder=''"
-        onblur="this.placeholder='Ex: Restaurante, Oficina...'"
-      />
-    </div>
+  <div class="busca-central">
+    <div class="icone-lupa" onclick="toggleBusca()">🔍</div>
+    <input
+      type="text"
+      class="campo-busca"
+      placeholder="Ex: Restaurante, Oficina..."
+      onfocus="this.placeholder=''"
+      onblur="this.placeholder='Ex: Restaurante, Oficina...'"
+    />
+  </div>
 
-    <div class="botoes-direita">
-      <a href="login.html" class="botao-login" id="botao-entrar">Entrar</a>
-      <a href="javascript:void(0)" onclick="irParaAnuncio()" class="botao-anunciar" id="botao-anuncie">📢 Anuncie aqui</a>
-      <button onclick="logout()" class="botao-login" id="botao-sair" style="display: none;">Sair</button>
-    </div>
-  </header>
+  <div class="botoes-direita">
+    <a href="javascript:void(0)" onclick="irParaAnuncio()" class="botao-login" id="botao-anuncie">
+  📢 Anuncie aqui
+</a>
+    <a href="login.html" class="botao-login">Entrar</a>
+  </div>
+</header>
 
   <!-- Menu Lateral -->
   <nav class="itens-navegacao" id="menuNavegacao">
@@ -45,11 +46,11 @@
     <img src="imagens/logo.png" alt="Logo Click Serra" class="logo" />
     <div class="texto-cabecalho">
       <h1>Click Serra Anúncios</h1>
-      <p>Click Anúncio Serra: o marketplace mais completo da região. Encontre o que precisa, a um clique de distância</p>
+      <p>Divulgue seu comércio, serviços, vagas de emprego e eventos na cidade de Serra - ES.</p>
     </div>
   </section>
 
-   <!-- Top Categorias -->
+  <!-- Top Categorias -->
   <section class="top-categorias">
     <button class="seta esquerda">❮</button>
     <div class="container-cards">
