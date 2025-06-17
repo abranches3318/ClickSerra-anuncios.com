@@ -26,11 +26,11 @@ document.getElementById('formCadastro').addEventListener('submit', async functio
     const user = userCredential.user;
 
     // Salva informações adicionais no Firestore
-    await setDoc(doc(db, "usuarios", user.uid), {
-      nome: nome,
-      email: user.email,
-      criadoEm: new Date()
-    });
+    await setDoc(doc(db, "users", user.uid), {
+  nome: nome,
+  email: user.email,
+  criadoEm: new Date()
+});
 
     alert('Cadastro realizado com sucesso!');
     this.reset();
