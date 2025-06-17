@@ -1,7 +1,5 @@
-import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
-import { app } from "./firebase-config.js";
-
-const auth = getAuth(app);
+import { signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+import { auth } from "./js/firebase-config.js";
 
 document.getElementById('formLogin').addEventListener('submit', async function (e) {
   e.preventDefault();
@@ -18,7 +16,7 @@ document.getElementById('formLogin').addEventListener('submit', async function (
     const userCredential = await signInWithEmailAndPassword(auth, email, senha);
     const user = userCredential.user;
 
-    // Redireciona para destino salvo (ou index)
+    // Redireciona para destino salvo (ou para a index.html se não houver)
     const destino = localStorage.getItem('destinoAposLogin') || 'index.html';
     localStorage.removeItem('destinoAposLogin');
 
@@ -26,12 +24,12 @@ document.getElementById('formLogin').addEventListener('submit', async function (
     window.location.href = destino;
 
   } catch (error) {
-    console.error("Erro no login:", error.message);
+    console.error("Erro no login:", error);
     alert("Erro ao fazer login: " + traduzErroFirebase(error.code));
   }
 });
 
-// Tradutor de códigos de erro do Firebase
+// Função para traduzir mensagens de erro do Firebase
 function traduzErroFirebase(codigo) {
   switch (codigo) {
     case 'auth/user-not-found':
@@ -40,6 +38,10 @@ function traduzErroFirebase(codigo) {
       return 'Senha incorreta.';
     case 'auth/invalid-email':
       return 'E-mail inválido.';
+    case 'auth/missing-password':
+      return 'Senha não informada.';
+    case 'auth/too-many-requests':
+      return 'Muitas tentativas. Tente novamente mais tarde.';
     default:
       return 'Erro desconhecido. Tente novamente.';
   }
