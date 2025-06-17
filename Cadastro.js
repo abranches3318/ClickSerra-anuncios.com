@@ -1,4 +1,13 @@
-document.getElementById('formCadastro').addEventListener('submit', function (e) {
+import { auth, db } from "./firebase-config.js";
+import {
+  createUserWithEmailAndPassword
+} from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+import {
+  setDoc,
+  doc
+} from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+document.getElementById('formCadastro').addEventListener('submit', async function (e) {
   e.preventDefault();
 
   const nome = document.getElementById('nome').value.trim();
@@ -11,13 +20,23 @@ document.getElementById('formCadastro').addEventListener('submit', function (e) 
     return;
   }
 
-  // Aqui você pode futuramente enviar os dados para o backend
-  console.log({
-    nome,
-    email,
-    senha
-  });
+  try {
+    // Cria o usuário com Firebase Auth
+    const userCredential = await createUserWithEmailAndPassword(auth, email, senha);
+    const user = userCredential.user;
 
-  alert('Cadastro realizado com sucesso!');
-  this.reset();
+    // Salva informações adicionais no Firestore
+    await setDoc(doc(db, "usuarios", user.uid), {
+      nome: nome,
+      email: user.email,
+      criadoEm: new Date()
+    });
+
+    alert('Cadastro realizado com sucesso!');
+    this.reset();
+    window.location.href = "index.html"; // redireciona para a home
+  } catch (error) {
+    console.error("Erro ao cadastrar:", error);
+    alert("Erro ao cadastrar: " + error.message);
+  }
 });
