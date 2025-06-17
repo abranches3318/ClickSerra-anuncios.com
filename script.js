@@ -81,4 +81,4 @@ function irParaAnuncio() {
   } else {
     window.location.href = 'login.html';
   }
-}aqui esta, pode alterar para atualizar
+}
