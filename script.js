@@ -1,3 +1,23 @@
+// Firebase Config
+const firebaseConfig = {
+
+  apiKey: "AIzaSyDhjUescYhrZ1e12M6nv5mnWxDovNcGxw0",
+
+  authDomain: "clickserra-anuncios.firebaseapp.com",
+
+  databaseURL: "https://clickserra-anuncios-default-rtdb.firebaseio.com",
+
+  projectId: "clickserra-anuncios",
+
+  storageBucket: "clickserra-anuncios.firebasestorage.app",
+
+  messagingSenderId: "251868045964",
+
+  appId: "1:251868045964:web:34f527f3d7c380746211a9",
+};
+firebase.initializeApp(firebaseConfig);
+const auth = firebase.auth();
+
 // Menu Hambúrguer
 function toggleMenu() {
   const menu = document.getElementById('menuNavegacao');
@@ -75,24 +95,54 @@ btnTopo.addEventListener('click', () => {
   window.scrollTo({ top: 0, behavior: 'smooth' });
 });
 
-// Verificação de login e botão "Anuncie aqui"
-function verificarLoginNaHome() {
-  const usuarioLogado = localStorage.getItem('usuarioLogado');
-  document.getElementById('botao-entrar').style.display = usuarioLogado ? 'none' : 'inline-block';
-  document.getElementById('botao-sair').style.display = usuarioLogado ? 'inline-block' : 'none';
-}
+// Gerenciar visibilidade de botões com Firebase
+auth.onAuthStateChanged(user => {
+  const btnEntrar = document.getElementById('botao-entrar');
+  const btnSair = document.getElementById('botao-sair');
 
+  if (user) {
+    if (btnEntrar) btnEntrar.style.display = 'none';
+    if (btnSair) btnSair.style.display = 'inline-block';
+
+    // Verifica se veio do botão "Anuncie aqui"
+    const redirectAnuncio = sessionStorage.getItem('redirectAnuncio');
+    if (redirectAnuncio === 'true') {
+      sessionStorage.removeItem('redirectAnuncio');
+      window.location.href = 'criar-anuncio.html';
+    }
+  } else {
+    if (btnEntrar) btnEntrar.style.display = 'inline-block';
+    if (btnSair) btnSair.style.display = 'none';
+  }
+});
+
+// Redirecionamento do botão "Anuncie Aqui"
 function irParaAnuncio() {
-  const usuarioLogado = localStorage.getItem('usuarioLogado');
-  if (usuarioLogado) {
+  const user = auth.currentUser;
+  if (user) {
     window.location.href = 'criar-anuncio.html';
   } else {
+    sessionStorage.setItem('redirectAnuncio', 'true');
     window.location.href = 'login.html';
   }
 }
 
+// Logout
 function logout() {
-  localStorage.removeItem('usuarioLogado');
-  window.location.reload();
+  auth.signOut().then(() => {
+    window.location.href = 'index.html';
+  });
 }
 
+// Login com Google (botão social)
+function loginComGoogle() {
+  const provider = new firebase.auth.GoogleAuthProvider();
+  auth.signInWithPopup(provider)
+    .then(result => {
+      // Verificação de redirecionamento será feita no onAuthStateChanged
+    })
+    .catch(error => {
+      console.error("Erro no login com Google:", error);
+      alert("Erro ao fazer login com Google.");
+    });
+}
