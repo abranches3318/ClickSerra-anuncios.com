@@ -112,17 +112,6 @@ form button:hover {
   box-shadow: none;
 }
 
-.voltar {
-  display: inline-block;
-  margin-top: 10px;
-  color: #1e90ff;
-  text-decoration: none;
-  font-size: 14px;
-}
-
-.voltar:hover {
-  text-decoration: underline;
-}
 
 .troca-tela {
   margin-top: 20px;
@@ -137,4 +126,52 @@ form button:hover {
 .troca-tela a:hover {
   text-decoration: underline;
 }
+
+.menu-topo {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+}
+
+.hamburguer {
+  font-size: 24px;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.menu-lateral {
+  display: none;
+  flex-direction: column;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: white;
+  width: 200px;
+  height: 100%;
+  box-shadow: 2px 0 10px rgba(0,0,0,0.2);
+  padding: 20px;
+  z-index: 999;
+}
+
+.menu-lateral ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.menu-lateral li {
+  margin-bottom: 15px;
+}
+
+.menu-lateral a {
+  text-decoration: none;
+  color: #333;
+  font-weight: bold;
+}
+
+.menu-lateral a:hover {
+  color: #1e90ff;
+}
+
 
