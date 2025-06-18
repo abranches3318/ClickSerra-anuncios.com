@@ -105,13 +105,15 @@ auth.onAuthStateChanged(user => {
 
 // Redirecionamento do botão "Anuncie Aqui"
 function irParaAnuncio() {
-  const user = auth.currentUser;
-  if (user) {
-    window.location.href = 'criar-anuncio.html';
-  } else {
-    localStorage.setItem('destinoAposLogin', 'criar-anuncio.html');
-    window.location.href = 'login.html';
-  }
+  // Garante que o Firebase já concluiu a verificação de autenticação
+  auth.onAuthStateChanged(user => {
+    if (user) {
+      window.location.href = 'criar-anuncio.html';
+    } else {
+      localStorage.setItem('destinoAposLogin', 'criar-anuncio.html');
+      window.location.href = 'login.html';
+    }
+  });
 }
 
 // Logout
