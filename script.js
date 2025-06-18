@@ -139,14 +139,19 @@ function loginComGoogle() {
 }
 
 document.addEventListener("DOMContentLoaded", function () {
-  const mascote = document.getElementById("mascote");
+  const mascoteAberto = document.querySelector('.mascote-aberto');
+  const mascoteFechado = document.querySelector('.mascote-fechado');
 
-  if (mascote) {
+  if (mascoteAberto && mascoteFechado) {
     setInterval(() => {
-      mascote.src = "imagens/mascote-olhofechado.png";
+      mascoteAberto.style.opacity = '0';
+      mascoteFechado.style.opacity = '1';
+
       setTimeout(() => {
-        mascote.src = "imagens/mascote-olhoaberto.png";
-      }, 150); // tempo que o olho permanece fechado
+        mascoteAberto.style.opacity = '1';
+        mascoteFechado.style.opacity = '0';
+      }, 150); // duração dos olhos fechados
     }, 4000); // intervalo entre piscadas
   }
 });
+
