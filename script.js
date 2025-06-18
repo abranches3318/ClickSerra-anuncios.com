@@ -8,8 +8,9 @@ const firebaseConfig = {
   messagingSenderId: "251868045964",
   appId: "1:251868045964:web:34f527f3d7c380746211a9",
 };
+
 firebase.initializeApp(firebaseConfig);
-window.auth = firebase.auth();
+window.auth = firebase.auth(); // ✅ Torna o auth global e acessível em eventos inline
 
 // Menu Hambúrguer
 function toggleMenu() {
@@ -79,7 +80,6 @@ setInterval(() => {
   atualizaDestaque();
 }, 5000);
 
-
 // Botão Voltar ao Topo
 const btnTopo = document.getElementById('btnTopo');
 window.addEventListener('scroll', () => {
@@ -104,18 +104,15 @@ auth.onAuthStateChanged(user => {
 });
 
 // Redirecionamento do botão "Anuncie Aqui"
-window.addEventListener('DOMContentLoaded', () => {
-  // Função segura após carregar tudo
-  window.irParaAnuncio = function () {
-    const user = auth.currentUser;
-    if (user) {
-      window.location.href = 'criar-anuncio.html';
-    } else {
-      localStorage.setItem('destinoAposLogin', 'criar-anuncio.html');
-      window.location.href = 'login.html';
-    }
-  };
-});
+window.irParaAnuncio = function () {
+  const user = auth.currentUser;
+  if (user) {
+    window.location.href = 'criar-anuncio.html';
+  } else {
+    localStorage.setItem('destinoAposLogin', 'criar-anuncio.html');
+    window.location.href = 'login.html';
+  }
+};
 
 // Logout
 function logout() {
@@ -124,7 +121,7 @@ function logout() {
   });
 }
 
-// Login com Google (habilita login e cadastro)
+// Login com Google
 function loginComGoogle() {
   const provider = new firebase.auth.GoogleAuthProvider();
   provider.setCustomParameters({ prompt: 'select_account' });
@@ -139,4 +136,4 @@ function loginComGoogle() {
       console.error("Erro no login com Google:", error);
       alert("Erro ao fazer login com Google.");
     });
-}  
+}
