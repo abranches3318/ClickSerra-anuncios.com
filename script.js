@@ -9,7 +9,7 @@ const firebaseConfig = {
   appId: "1:251868045964:web:34f527f3d7c380746211a9",
 };
 firebase.initializeApp(firebaseConfig);
-const auth = firebase.auth();
+window.auth = firebase.auth();
 
 // Menu Hambúrguer
 function toggleMenu() {
