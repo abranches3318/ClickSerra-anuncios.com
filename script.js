@@ -1,18 +1,11 @@
 // Firebase Config
 const firebaseConfig = {
-
   apiKey: "AIzaSyDhjUescYhrZ1e12M6nv5mnWxDovNcGxw0",
-
   authDomain: "clickserra-anuncios.firebaseapp.com",
-
   databaseURL: "https://clickserra-anuncios-default-rtdb.firebaseio.com",
-
   projectId: "clickserra-anuncios",
-
   storageBucket: "clickserra-anuncios.firebasestorage.app",
-
   messagingSenderId: "251868045964",
-
   appId: "1:251868045964:web:34f527f3d7c380746211a9",
 };
 firebase.initializeApp(firebaseConfig);
@@ -103,13 +96,6 @@ auth.onAuthStateChanged(user => {
   if (user) {
     if (btnEntrar) btnEntrar.style.display = 'none';
     if (btnSair) btnSair.style.display = 'inline-block';
-
-    // Verifica se veio do botão "Anuncie aqui"
-    const redirectAnuncio = sessionStorage.getItem('redirectAnuncio');
-    if (redirectAnuncio === 'true') {
-      sessionStorage.removeItem('redirectAnuncio');
-      window.location.href = 'criar-anuncio.html';
-    }
   } else {
     if (btnEntrar) btnEntrar.style.display = 'inline-block';
     if (btnSair) btnSair.style.display = 'none';
@@ -122,7 +108,7 @@ function irParaAnuncio() {
   if (user) {
     window.location.href = 'criar-anuncio.html';
   } else {
-    sessionStorage.setItem('redirectAnuncio', 'true');
+    localStorage.setItem('destinoAposLogin', 'criar-anuncio.html');
     window.location.href = 'login.html';
   }
 }
@@ -139,7 +125,7 @@ function loginComGoogle() {
   const provider = new firebase.auth.GoogleAuthProvider();
   auth.signInWithPopup(provider)
     .then(result => {
-      // Verificação de redirecionamento será feita no onAuthStateChanged
+      // Redirecionamento automático será tratado no login.js após autenticação
     })
     .catch(error => {
       console.error("Erro no login com Google:", error);
