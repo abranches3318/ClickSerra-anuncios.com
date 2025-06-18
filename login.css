@@ -84,17 +84,11 @@ form button:hover {
 
 .campo-senha {
   position: relative;
-  margin-bottom: 15px;
 }
 
 .campo-senha input {
   width: 100%;
-  padding: 12px;
-  padding-right: 40px;
-  border-radius: 5px;
-  border: 1px solid #ccc;
-  font-size: 1rem;
-  box-sizing: border-box;
+  padding-right: 45px; /* espaço para o botão */
 }
 
 .toggle-senha {
@@ -102,16 +96,32 @@ form button:hover {
   right: 10px;
   top: 50%;
   transform: translateY(-50%);
-  background: none;
+  background: transparent;
   border: none;
   cursor: pointer;
-  font-size: 1.2rem;
+  font-size: 18px;
   color: #555;
-  padding: 4px;
+}
+
+.toggle-senha:hover {
+  color: #000;
 }
 
 .toggle-senha:focus {
   outline: none;
+  box-shadow: none;
+}
+
+.voltar {
+  display: inline-block;
+  margin-top: 10px;
+  color: #1e90ff;
+  text-decoration: none;
+  font-size: 14px;
+}
+
+.voltar:hover {
+  text-decoration: underline;
 }
 
 .troca-tela {
