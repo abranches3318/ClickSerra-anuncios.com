@@ -99,18 +99,19 @@ form button:hover {
   background: transparent;
   border: none;
   cursor: pointer;
-  font-size: 18px;
-  color: #555;
   padding: 0;
-  outline: none;
 }
 
-/* Removemos efeitos visuais ao passar o mouse ou focar */
+.toggle-senha img {
+  width: 24px;
+  height: 24px;
+  pointer-events: none;
+}
+
 .toggle-senha:hover,
 .toggle-senha:focus {
-  color: #555;
-  box-shadow: none;
   outline: none;
+  box-shadow: none;
 }
 
 
