@@ -237,6 +237,7 @@ body {
   width: 120px;
   height: 120px;
   margin: 0 auto;
+  animation: piscarMascote 4s infinite;
 }
 
 .mascote {
@@ -250,7 +251,7 @@ body {
 }
 
 .mascote-aberto {
-  animation: piscarMascote 3.5s infinite;
+  opacity: 1;
 }
 
 .mascote-fechado {
@@ -259,9 +260,9 @@ body {
 
 @keyframes piscarMascote {
   0%, 90%, 100% {
-    opacity: 1;
+    /* Olho aberto */
   }
   92%, 98% {
-    opacity: 0;
+    /* Troca visual com JS */
   }
 }
