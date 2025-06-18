@@ -119,3 +119,15 @@ function traduzErroFirebase(codigo) {
       return 'Erro desconhecido. Tente novamente.';
   }
 }
+
+// Fechar menu lateral ao clicar fora dele
+document.addEventListener('click', function (event) {
+  const menu = document.getElementById('menuNavegacao');
+  const botao = document.querySelector('.hamburguer');
+
+  const clicouFora = !menu.contains(event.target) && !botao.contains(event.target);
+
+  if (menu && menu.style.display === 'flex' && clicouFora) {
+    menu.style.display = 'none';
+  }
+});
