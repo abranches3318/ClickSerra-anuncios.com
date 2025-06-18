@@ -168,8 +168,24 @@ form button:hover {
   cursor: pointer;
 }
 
-.toggle-senha img {
-  width: 22px;
-  height: 22px;
+
+/* Corrige o box-sizing de todos os elementos do formulário */
+*, *::before, *::after {
+  box-sizing: border-box;
 }
+
+/* Responsividade extra para telas pequenas */
+@media (max-width: 400px) {
+  .container {
+    padding: 25px;
+  }
+
+  .logo {
+    width: 80px;
+  }
+
+  .toggle-senha img {
+    width: 20px;
+    height: 20px;
+  }
 
