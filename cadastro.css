@@ -141,3 +141,35 @@ form button:hover {
   color: #1e90ff;
 }
 
+/* Campo com botão de mostrar/ocultar senha */
+.campo-senha {
+  position: relative;
+  width: 100%;
+  margin-bottom: 15px;
+}
+
+.campo-senha input[type="password"],
+.campo-senha input[type="text"] {
+  width: 100%;
+  padding: 12px 40px 12px 12px; /* espaço à direita para o ícone */
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+}
+
+.toggle-senha {
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+}
+
+.toggle-senha img {
+  width: 22px;
+  height: 22px;
+}
+
