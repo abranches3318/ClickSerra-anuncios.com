@@ -21,11 +21,9 @@ document.getElementById('formLogin').addEventListener('submit', async function (
     const userCredential = await signInWithEmailAndPassword(auth, email, senha);
     const user = userCredential.user;
 
-    // Armazena dados localmente
     localStorage.setItem('usuarioLogado', user.uid);
     localStorage.setItem('usuarioEmail', user.email);
 
-    // Redireciona
     const destino = localStorage.getItem('destinoAposLogin') || 'index.html';
     localStorage.removeItem('destinoAposLogin');
 
@@ -46,7 +44,6 @@ window.loginComGoogle = async function () {
     const result = await signInWithPopup(auth, provider);
     const user = result.user;
 
-    // Armazena dados localmente
     localStorage.setItem('usuarioLogado', user.uid);
     localStorage.setItem('usuarioEmail', user.email);
     localStorage.setItem('usuarioNome', user.displayName || '');
@@ -71,7 +68,6 @@ window.toggleSenha = function () {
   const mostrando = campoSenha.type === 'text';
   campoSenha.type = mostrando ? 'password' : 'text';
 
-  // Troca o ícone da imagem
   icone.src = mostrando ? 'imagens/ocultar-senha.png' : 'imagens/revelar-senha.png';
   icone.alt = mostrando ? 'Mostrar senha' : 'Ocultar senha';
 };
@@ -99,3 +95,16 @@ function traduzErroFirebase(codigo) {
       return 'Erro desconhecido. Tente novamente.';
   }
 }
+
+// Fechar menu lateral ao clicar fora dele
+document.addEventListener('click', function (event) {
+  const menu = document.getElementById('menuNavegacao');
+  const botao = document.querySelector('.hamburguer');
+
+  const clicouFora = !menu.contains(event.target) && !botao.contains(event.target);
+
+  if (menu && menu.style.display === 'flex' && clicouFora) {
+    menu.style.display = 'none';
+  }
+});
+
