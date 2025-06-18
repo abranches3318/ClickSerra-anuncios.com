@@ -151,7 +151,7 @@ form button:hover {
 .campo-senha input[type="password"],
 .campo-senha input[type="text"] {
   width: 100%;
-  padding: 12px 40px 12px 12px; /* espaço à direita para o ícone */
+  padding: 12px 44px 12px 12px; /* espaço à direita para o botão */
   border-radius: 5px;
   border: 1px solid #ccc;
   box-sizing: border-box;
@@ -160,9 +160,11 @@ form button:hover {
 /* Botão do ícone (sem foco azul, sem fundo) */
 .toggle-senha {
   position: absolute;
-  top: 50%;
+  top: 0;
+  bottom: 0;
   right: 10px;
-  transform: translateY(-50%);
+  display: flex;
+  align-items: center;
   background: none;
   border: none;
   padding: 0;
@@ -204,3 +206,4 @@ form button:hover {
     height: 20px;
   }
 }
+
