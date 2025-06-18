@@ -18,6 +18,7 @@ body {
   text-align: center;
   width: 90%;
   max-width: 360px;
+  position: relative;
 }
 
 .logo {
@@ -82,15 +83,22 @@ form button:hover {
   color: white;
 }
 
+/* Campo de senha com botão lateral */
 .campo-senha {
   position: relative;
 }
 
 .campo-senha input {
   width: 100%;
+  padding: 12px;
   padding-right: 45px; /* espaço para o botão */
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+  box-sizing: border-box;
 }
 
+/* Botão do olho */
 .toggle-senha {
   position: absolute;
   right: 10px;
@@ -100,20 +108,25 @@ form button:hover {
   border: none;
   cursor: pointer;
   padding: 0;
-}
-
-.toggle-senha img {
-  width: 24px;
+  margin: 0;
   height: 24px;
-  pointer-events: none;
+  width: 24px;
 }
 
-.toggle-senha:hover,
-.toggle-senha:focus {
+/* Remover outline e sombra azul */
+.toggle-senha:focus,
+.toggle-senha:active {
   outline: none;
   box-shadow: none;
 }
 
+/* Ícone de olho */
+.toggle-senha img {
+  width: 24px;
+  height: 24px;
+  pointer-events: none;
+  display: block;
+}
 
 .troca-tela {
   margin-top: 20px;
@@ -129,6 +142,7 @@ form button:hover {
   text-decoration: underline;
 }
 
+/* Menu topo (hambúrguer) */
 .menu-topo {
   position: absolute;
   top: 20px;
@@ -142,6 +156,7 @@ form button:hover {
   cursor: pointer;
 }
 
+/* Menu lateral */
 .menu-lateral {
   display: none;
   flex-direction: column;
@@ -149,7 +164,7 @@ form button:hover {
   top: 0;
   left: 0;
   background-color: white;
-  width: 200px;
+  width: 220px;
   height: 100%;
   box-shadow: 2px 0 10px rgba(0,0,0,0.2);
   padding: 20px;
@@ -175,5 +190,4 @@ form button:hover {
 .menu-lateral a:hover {
   color: #1e90ff;
 }
-
 
