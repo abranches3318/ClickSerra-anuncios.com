@@ -24,39 +24,33 @@ function toggleBusca() {
   campo.focus();
 }
 
-// Carrossel de Categorias (modo infinito)
+// Carrossel de Categorias
 const setaEsquerda = document.querySelector('.seta.esquerda');
 const setaDireita = document.querySelector('.seta.direita');
 const cards = document.querySelector('.top-categorias .cards');
 
 const cardsConteudo = cards.innerHTML;
 cards.innerHTML += cardsConteudo;
-cards.innerHTML += cardsConteudo; // duplica novamente para suavidade
 
 let posScroll = 0;
 const passoScroll = 160;
 
-function atualizaScroll() {
-  cards.style.transition = 'transform 0.5s ease';
-  cards.style.transform = `translateX(${-posScroll}px)`;
-}
-
 setaEsquerda.addEventListener('click', () => {
   posScroll -= passoScroll;
-  if (posScroll < 0) posScroll = cards.scrollWidth / 3;
-  atualizaScroll();
+  if (posScroll < 0) posScroll = cards.scrollWidth / 2;
+  cards.style.transform = `translateX(${-posScroll}px)`;
 });
 
 setaDireita.addEventListener('click', () => {
   posScroll += passoScroll;
-  if (posScroll >= cards.scrollWidth / 1.5) posScroll = 0;
-  atualizaScroll();
+  if (posScroll >= cards.scrollWidth / 2) posScroll = 0;
+  cards.style.transform = `translateX(${-posScroll}px)`;
 });
 
 setInterval(() => {
   posScroll += passoScroll;
-  if (posScroll >= cards.scrollWidth / 1.5) posScroll = 0;
-  atualizaScroll();
+  if (posScroll >= cards.scrollWidth / 2) posScroll = 0;
+  cards.style.transform = `translateX(${-posScroll}px)`;
 }, 4000);
 
 // Carrossel Destaques
@@ -84,6 +78,7 @@ setInterval(() => {
   indexDestaque = (indexDestaque + 1) % totalDestaques;
   atualizaDestaque();
 }, 5000);
+
 
 // Botão Voltar ao Topo
 const btnTopo = document.getElementById('btnTopo');
