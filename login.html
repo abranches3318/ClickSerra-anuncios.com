@@ -12,12 +12,18 @@
       <img src="imagens/logo.png" alt="Logo Click Serra" class="logo">
       <h2>Entrar na Conta</h2>
 
-      <!-- Formulário de login -->
-      <form id="formLogin">
-        <input type="email" id="emailLogin" placeholder="Email" required />
-        <input type="password" id="senhaLogin" placeholder="Senha" required />
-        <button type="submit">Entrar</button>
-      </form>
+     <!-- Formulário de login -->
+<form id="formLogin">
+  <input type="email" id="emailLogin" placeholder="Email" required />
+
+  <div class="campo-senha">
+    <input type="password" id="senhaLogin" placeholder="Senha" required />
+    <button type="button" class="toggle-senha" onclick="toggleSenha()">👁️</button>
+  </div>
+
+  <button type="submit">Entrar</button>
+</form>
+
 
       <p class="ou">ou entre com</p>
       <div class="social-login">
