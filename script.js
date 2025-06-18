@@ -137,3 +137,16 @@ function loginComGoogle() {
       alert("Erro ao fazer login com Google.");
     });
 }
+
+document.addEventListener("DOMContentLoaded", function () {
+  const mascote = document.getElementById("mascote");
+
+  if (mascote) {
+    setInterval(() => {
+      mascote.src = "imagens/mascote-olhofechado.png";
+      setTimeout(() => {
+        mascote.src = "imagens/mascote-olhoaberto.png";
+      }, 150); // tempo que o olho permanece fechado
+    }, 4000); // intervalo entre piscadas
+  }
+});
