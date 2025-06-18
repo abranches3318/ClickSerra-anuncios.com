@@ -157,6 +157,7 @@ form button:hover {
   box-sizing: border-box;
 }
 
+/* Botão do ícone (sem foco azul, sem fundo) */
 .toggle-senha {
   position: absolute;
   top: 50%;
@@ -166,15 +167,29 @@ form button:hover {
   border: none;
   padding: 0;
   cursor: pointer;
+  outline: none;
 }
 
+.toggle-senha:hover,
+.toggle-senha:focus {
+  background: none;
+  outline: none;
+  box-shadow: none;
+}
 
-/* Corrige o box-sizing de todos os elementos do formulário */
+/* Ícone */
+.toggle-senha img {
+  width: 22px;
+  height: 22px;
+  pointer-events: none; /* impede clique direto no ícone */
+}
+
+/* Corrige o box-sizing de todos os elementos */
 *, *::before, *::after {
   box-sizing: border-box;
 }
 
-/* Responsividade extra para telas pequenas */
+/* Responsivo para telas pequenas */
 @media (max-width: 400px) {
   .container {
     padding: 25px;
@@ -188,4 +203,4 @@ form button:hover {
     width: 20px;
     height: 20px;
   }
-
+}
