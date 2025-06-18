@@ -24,33 +24,39 @@ function toggleBusca() {
   campo.focus();
 }
 
-// Carrossel de Categorias
+// Carrossel de Categorias (modo infinito)
 const setaEsquerda = document.querySelector('.seta.esquerda');
 const setaDireita = document.querySelector('.seta.direita');
 const cards = document.querySelector('.top-categorias .cards');
 
 const cardsConteudo = cards.innerHTML;
 cards.innerHTML += cardsConteudo;
+cards.innerHTML += cardsConteudo; // duplica novamente para suavidade
 
 let posScroll = 0;
 const passoScroll = 160;
 
+function atualizaScroll() {
+  cards.style.transition = 'transform 0.5s ease';
+  cards.style.transform = `translateX(${-posScroll}px)`;
+}
+
 setaEsquerda.addEventListener('click', () => {
   posScroll -= passoScroll;
-  if (posScroll < 0) posScroll = cards.scrollWidth / 2;
-  cards.style.transform = `translateX(${-posScroll}px)`;
+  if (posScroll < 0) posScroll = cards.scrollWidth / 3;
+  atualizaScroll();
 });
 
 setaDireita.addEventListener('click', () => {
   posScroll += passoScroll;
-  if (posScroll >= cards.scrollWidth / 2) posScroll = 0;
-  cards.style.transform = `translateX(${-posScroll}px)`;
+  if (posScroll >= cards.scrollWidth / 1.5) posScroll = 0;
+  atualizaScroll();
 });
 
 setInterval(() => {
   posScroll += passoScroll;
-  if (posScroll >= cards.scrollWidth / 2) posScroll = 0;
-  cards.style.transform = `translateX(${-posScroll}px)`;
+  if (posScroll >= cards.scrollWidth / 1.5) posScroll = 0;
+  atualizaScroll();
 }, 4000);
 
 // Carrossel Destaques
@@ -88,7 +94,7 @@ btnTopo.addEventListener('click', () => {
   window.scrollTo({ top: 0, behavior: 'smooth' });
 });
 
-// Gerenciar visibilidade de botões com Firebase
+// Visibilidade dos botões de autenticação
 auth.onAuthStateChanged(user => {
   const btnEntrar = document.getElementById('botao-entrar');
   const btnSair = document.getElementById('botao-sair');
@@ -120,15 +126,19 @@ function logout() {
   });
 }
 
-// Login com Google (botão social)
+// Login com Google (habilita login e cadastro)
 function loginComGoogle() {
   const provider = new firebase.auth.GoogleAuthProvider();
+  provider.setCustomParameters({ prompt: 'select_account' });
   auth.signInWithPopup(provider)
     .then(result => {
-      // Redirecionamento automático será tratado no login.js após autenticação
+      const destino = localStorage.getItem('destinoAposLogin') || 'index.html';
+      localStorage.removeItem('destinoAposLogin');
+      localStorage.setItem('usuarioLogado', result.user.uid);
+      window.location.href = destino;
     })
     .catch(error => {
       console.error("Erro no login com Google:", error);
       alert("Erro ao fazer login com Google.");
     });
-}
+}  
