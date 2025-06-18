@@ -35,11 +35,30 @@
     </div>
   </div>
 
-  <p style="margin-top: 20px;">
-  <a href="index.html" class="voltar">← Voltar para a página inicial</a>
-</p>
+ <!-- Menu Hambúrguer -->
+<div class="menu-topo">
+  <button class="hamburguer" onclick="toggleMenu()">☰</button>
+</div>
+
+<!-- Menu Lateral -->
+<nav id="menuNavegacao" class="menu-lateral">
+  <ul>
+    <li><a href="index.html">Início</a></li>
+    <li><a href="#">Sobre</a></li>
+    <li><a href="#">Contato</a></li>
+    <!-- Adicione mais links conforme necessário -->
+  </ul>
+</nav>
 
   <script type="module" src="login.js"></script>
+
+  <!-- Script do menu hambúrguer -->
+<script>
+  function toggleMenu() {
+    const menu = document.getElementById('menuNavegacao');
+    menu.style.display = menu.style.display === 'flex' ? 'none' : 'flex';
+  }
+</script>
 </body>
 </html>
 
