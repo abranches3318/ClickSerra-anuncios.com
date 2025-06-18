@@ -237,7 +237,6 @@ body {
   width: 120px;
   height: 120px;
   margin: 0 auto;
-  animation: piscarMascote 4s infinite;
 }
 
 .mascote {
@@ -252,17 +251,42 @@ body {
 
 .mascote-aberto {
   opacity: 1;
+  z-index: 1;
 }
 
 .mascote-fechado {
   opacity: 0;
+  z-index: 1;
 }
 
-@keyframes piscarMascote {
-  0%, 90%, 100% {
-    /* Olho aberto */
+/* ONDAS SONORAS */
+.ondas-container {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 4px;
+  z-index: 0;
+}
+
+.onda {
+  width: 6px;
+  height: 20px;
+  background: #005288;
+  border-radius: 3px;
+  animation: pulsar 1s infinite ease-in-out;
+}
+
+.onda1 { animation-delay: 0s; }
+.onda2 { animation-delay: 0.2s; }
+.onda3 { animation-delay: 0.4s; }
+
+@keyframes pulsar {
+  0%, 100% {
+    transform: scaleY(1);
   }
-  92%, 98% {
-    /* Troca visual com JS */
+  50% {
+    transform: scaleY(1.8);
   }
 }
