@@ -1,4 +1,8 @@
-import { signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+import {
+  signInWithEmailAndPassword,
+  signInWithPopup,
+  GoogleAuthProvider
+} from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
 import { auth } from "/ClickSerra-anuncios.com/firebase-config.js";
 
 // Login com e-mail e senha
@@ -17,12 +21,15 @@ document.getElementById('formLogin').addEventListener('submit', async function (
     const userCredential = await signInWithEmailAndPassword(auth, email, senha);
     const user = userCredential.user;
 
-    // Redireciona para destino salvo (ou index.html)
+    // Armazena dados localmente
+    localStorage.setItem('usuarioLogado', user.uid);
+    localStorage.setItem('usuarioEmail', user.email);
+
+    // Redireciona
     const destino = localStorage.getItem('destinoAposLogin') || 'index.html';
     localStorage.removeItem('destinoAposLogin');
 
     alert('Login realizado com sucesso!');
-    localStorage.setItem('usuarioLogado', user.uid);
     window.location.href = destino;
 
   } catch (error) {
@@ -34,16 +41,20 @@ document.getElementById('formLogin').addEventListener('submit', async function (
 // Login com Google
 window.loginComGoogle = async function () {
   const provider = new GoogleAuthProvider();
+
   try {
     const result = await signInWithPopup(auth, provider);
     const user = result.user;
 
-    // Redireciona para destino salvo (ou index.html)
+    // Armazena dados localmente
+    localStorage.setItem('usuarioLogado', user.uid);
+    localStorage.setItem('usuarioEmail', user.email);
+    localStorage.setItem('usuarioNome', user.displayName || '');
+
     const destino = localStorage.getItem('destinoAposLogin') || 'index.html';
     localStorage.removeItem('destinoAposLogin');
 
     alert('Login com Google realizado com sucesso!');
-    localStorage.setItem('usuarioLogado', user.uid);
     window.location.href = destino;
 
   } catch (error) {
@@ -72,10 +83,13 @@ function traduzErroFirebase(codigo) {
       return 'Senha não informada.';
     case 'auth/too-many-requests':
       return 'Muitas tentativas. Tente novamente mais tarde.';
+    case 'auth/popup-blocked':
+      return 'O navegador bloqueou o pop-up. Permita e tente novamente.';
     case 'auth/popup-closed-by-user':
       return 'O pop-up foi fechado antes da conclusão.';
+    case 'auth/cancelled-popup-request':
+      return 'A solicitação de login foi cancelada.';
     default:
       return 'Erro desconhecido. Tente novamente.';
   }
 }
-
