@@ -66,8 +66,14 @@ window.loginComGoogle = async function () {
 // Mostrar/ocultar senha
 window.toggleSenha = function () {
   const campoSenha = document.getElementById('senhaLogin');
-  const tipoAtual = campoSenha.getAttribute('type');
-  campoSenha.setAttribute('type', tipoAtual === 'password' ? 'text' : 'password');
+  const icone = document.getElementById('iconeOlho');
+
+  const mostrando = campoSenha.type === 'text';
+  campoSenha.type = mostrando ? 'password' : 'text';
+
+  // Troca o ícone da imagem
+  icone.src = mostrando ? 'imagens/olho-fechado.png' : 'imagens/olho-aberto.png';
+  icone.alt = mostrando ? 'Mostrar senha' : 'Ocultar senha';
 };
 
 // Traduz mensagens de erro do Firebase
