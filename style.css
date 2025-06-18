@@ -231,3 +231,37 @@ body {
   background-color: #e6b800;
 }
 
+/* MASCOTE ANIMADO */
+.mascote-container {
+  position: relative;
+  width: 120px;
+  height: 120px;
+  margin: 0 auto;
+}
+
+.mascote {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 120px;
+  height: 120px;
+  object-fit: contain;
+  transition: opacity 0.2s ease;
+}
+
+.mascote-aberto {
+  animation: piscarMascote 3.5s infinite;
+}
+
+.mascote-fechado {
+  opacity: 0;
+}
+
+@keyframes piscarMascote {
+  0%, 90%, 100% {
+    opacity: 1;
+  }
+  92%, 98% {
+    opacity: 0;
+  }
+}
