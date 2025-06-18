@@ -1,6 +1,7 @@
-import { signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+import { signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
 import { auth } from "/ClickSerra-anuncios.com/firebase-config.js";
 
+// Login com e-mail e senha
 document.getElementById('formLogin').addEventListener('submit', async function (e) {
   e.preventDefault();
 
@@ -16,11 +17,12 @@ document.getElementById('formLogin').addEventListener('submit', async function (
     const userCredential = await signInWithEmailAndPassword(auth, email, senha);
     const user = userCredential.user;
 
-    // Redireciona para destino salvo (ou para a index.html se não houver)
+    // Redireciona para destino salvo (ou index.html)
     const destino = localStorage.getItem('destinoAposLogin') || 'index.html';
     localStorage.removeItem('destinoAposLogin');
 
     alert('Login realizado com sucesso!');
+    localStorage.setItem('usuarioLogado', user.uid);
     window.location.href = destino;
 
   } catch (error) {
@@ -29,7 +31,35 @@ document.getElementById('formLogin').addEventListener('submit', async function (
   }
 });
 
-// Função para traduzir mensagens de erro do Firebase
+// Login com Google
+window.loginComGoogle = async function () {
+  const provider = new GoogleAuthProvider();
+  try {
+    const result = await signInWithPopup(auth, provider);
+    const user = result.user;
+
+    // Redireciona para destino salvo (ou index.html)
+    const destino = localStorage.getItem('destinoAposLogin') || 'index.html';
+    localStorage.removeItem('destinoAposLogin');
+
+    alert('Login com Google realizado com sucesso!');
+    localStorage.setItem('usuarioLogado', user.uid);
+    window.location.href = destino;
+
+  } catch (error) {
+    console.error("Erro no login com Google:", error);
+    alert("Erro ao fazer login com Google: " + traduzErroFirebase(error.code));
+  }
+};
+
+// Mostrar/ocultar senha
+window.toggleSenha = function () {
+  const campoSenha = document.getElementById('senhaLogin');
+  const tipoAtual = campoSenha.getAttribute('type');
+  campoSenha.setAttribute('type', tipoAtual === 'password' ? 'text' : 'password');
+};
+
+// Traduz mensagens de erro do Firebase
 function traduzErroFirebase(codigo) {
   switch (codigo) {
     case 'auth/user-not-found':
@@ -42,7 +72,10 @@ function traduzErroFirebase(codigo) {
       return 'Senha não informada.';
     case 'auth/too-many-requests':
       return 'Muitas tentativas. Tente novamente mais tarde.';
+    case 'auth/popup-closed-by-user':
+      return 'O pop-up foi fechado antes da conclusão.';
     default:
       return 'Erro desconhecido. Tente novamente.';
   }
 }
+
