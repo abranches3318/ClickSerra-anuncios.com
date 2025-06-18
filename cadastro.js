@@ -1,7 +1,13 @@
 import { auth, db } from './firebase-config.js';
-import { createUserWithEmailAndPassword, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js';
-import { setDoc, doc } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js';
+import {
+  createUserWithEmailAndPassword,
+  onAuthStateChanged,
+  signInWithPopup,
+  GoogleAuthProvider
+} from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js';
+import { setDoc, doc, getDoc } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js';
 
+// Cadastro com e-mail e senha
 document.getElementById('formCadastro').addEventListener('submit', async function (e) {
   e.preventDefault();
 
@@ -25,7 +31,7 @@ document.getElementById('formCadastro').addEventListener('submit', async functio
     const userCredential = await createUserWithEmailAndPassword(auth, email, senha);
     const user = userCredential.user;
 
-    // Espera a autenticação estar ativa para garantir as permissões
+    // Espera a autenticação estar ativa
     onAuthStateChanged(auth, async (userAuth) => {
       if (userAuth && userAuth.uid === user.uid) {
         try {
@@ -55,3 +61,61 @@ document.getElementById('formCadastro').addEventListener('submit', async functio
     }
   }
 });
+
+// Cadastro/Login com Google
+window.loginComGoogle = async function () {
+  const provider = new GoogleAuthProvider();
+
+  try {
+    const result = await signInWithPopup(auth, provider);
+    const user = result.user;
+
+    // Verifica se o usuário já existe no Firestore
+    const docRef = doc(db, "users", user.uid);
+    const docSnap = await getDoc(docRef);
+
+    if (!docSnap.exists()) {
+      // Usuário novo — salva no Firestore
+      await setDoc(docRef, {
+        nome: user.displayName || "",
+        email: user.email,
+        criadoEm: new Date()
+      });
+    }
+
+    localStorage.setItem('usuarioLogado', user.uid);
+    localStorage.setItem('usuarioEmail', user.email);
+    localStorage.setItem('usuarioNome', user.displayName || '');
+
+    alert("Login com Google realizado com sucesso!");
+    window.location.href = "index.html";
+
+  } catch (error) {
+    console.error("Erro no login com Google:", error);
+    alert("Erro ao fazer login com Google: " + traduzErroFirebase(error.code));
+  }
+};
+
+// Traduz erros Firebase
+function traduzErroFirebase(codigo) {
+  switch (codigo) {
+    case 'auth/user-not-found':
+      return 'Usuário não encontrado.';
+    case 'auth/wrong-password':
+      return 'Senha incorreta.';
+    case 'auth/invalid-email':
+      return 'E-mail inválido.';
+    case 'auth/missing-password':
+      return 'Senha não informada.';
+    case 'auth/too-many-requests':
+      return 'Muitas tentativas. Tente novamente mais tarde.';
+    case 'auth/popup-blocked':
+      return 'O navegador bloqueou o pop-up. Permita e tente novamente.';
+    case 'auth/popup-closed-by-user':
+      return 'O pop-up foi fechado antes da conclusão.';
+    case 'auth/cancelled-popup-request':
+      return 'A solicitação de login foi cancelada.';
+    default:
+      return 'Erro desconhecido. Tente novamente.';
+  }
+}
