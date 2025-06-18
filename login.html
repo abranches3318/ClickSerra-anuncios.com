@@ -12,7 +12,7 @@
       <img src="imagens/logo.png" alt="Logo Click Serra" class="logo">
       <h2>Entrar na Conta</h2>
 
-      <!-- Formulário com IDs corretos -->
+      <!-- Formulário de login -->
       <form id="formLogin">
         <input type="email" id="emailLogin" placeholder="Email" required />
         <input type="password" id="senhaLogin" placeholder="Senha" required />
@@ -21,7 +21,7 @@
 
       <p class="ou">ou entre com</p>
       <div class="social-login">
-        <button class="google">Entrar com Google</button>
+        <button class="google" id="btnGoogle" onclick="loginComGoogle()">Entrar com Google</button>
         <button class="facebook">Entrar com Facebook</button>
       </div>
 
@@ -31,7 +31,7 @@
     </div>
   </div>
 
-  <!-- Apenas login.js, pois ele já importa firebase-config.js -->
+  <!-- Firebase Login -->
   <script type="module" src="login.js"></script>
 </body>
 </html>
