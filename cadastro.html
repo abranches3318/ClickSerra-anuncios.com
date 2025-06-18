@@ -16,8 +16,19 @@
       <form id="formCadastro">
         <input type="text" id="nome" placeholder="Nome completo" required />
         <input type="email" id="email" placeholder="Email" required />
-        <input type="password" id="senha" placeholder="Senha" required />
-        <input type="password" id="confirmarSenha" placeholder="Confirmar senha" required />
+        <div class="campo-senha">
+  <input type="password" id="senha" placeholder="Senha" required />
+  <button type="button" class="toggle-senha" onclick="toggleSenha('senha', 'iconeSenha')" aria-label="Revelar senha">
+    <img id="iconeSenha" src="imagens/ocultar-senha.png" alt="Mostrar senha" />
+  </button>
+</div>
+
+<div class="campo-senha">
+  <input type="password" id="confirmarSenha" placeholder="Confirmar senha" required />
+  <button type="button" class="toggle-senha" onclick="toggleSenha('confirmarSenha', 'iconeConfirmarSenha')" aria-label="Revelar senha">
+    <img id="iconeConfirmarSenha" src="imagens/ocultar-senha.png" alt="Mostrar senha" />
+  </button>
+</div>
         <button type="submit">Cadastrar</button>
       </form>
 
