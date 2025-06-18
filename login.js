@@ -72,7 +72,7 @@ window.toggleSenha = function () {
   campoSenha.type = mostrando ? 'password' : 'text';
 
   // Troca o ícone da imagem
-  icone.src = mostrando ? 'imagens/olho-fechado.png' : 'imagens/olho-aberto.png';
+  icone.src = mostrando ? 'imagens/ocultar-senha.png' : 'imagens/revelar-senha.png';
   icone.alt = mostrando ? 'Mostrar senha' : 'Ocultar senha';
 };
 
