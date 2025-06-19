@@ -19,27 +19,29 @@
       <img src="imagens/mascote-olhoaberto.png" alt="Mascote falando" class="mascote mascote-aberto" />
       <img src="imagens/mascote-olhofechado.png" alt="Mascote calado" class="mascote mascote-fechado" />
     </div>
-    <h1 class="titulo-site">Click Serra</h1>
+    <h1 class="titulo-site">Click Serra Anúncios</h1>
   </div>
 
   <div class="busca-central">
     <div class="icone-lupa" onclick="toggleBusca()">🔍</div>
-    <input type="text" class="campo-busca" placeholder="Ex: Restaurante, Oficina..." onfocus="this.placeholder=''" onblur="this.placeholder='Ex: Restaurante, Oficina...'" />
+    <input
+      type="text"
+      class="campo-busca"
+      placeholder="Ex: Restaurante, Oficina..."
+      onfocus="this.placeholder=''"
+      onblur="this.placeholder='Ex: Restaurante, Oficina...'"
+    />
   </div>
 
   <div class="botoes-direita">
-    <a href="meus-anuncios.html" class="botao-login" id="botao-meus-anuncios" style="display: none;">Meus anúncios</a>
-    <a href="conta.html" class="botao-conta" id="botao-conta" style="display: none;">
-      <img src="imagens/usuario.png" alt="Conta" />
-    </a>
     <a href="javascript:void(0)" onclick="irParaAnuncio()" class="botao-login" id="botao-anuncie">📢 Anuncie aqui</a>
+    <a href="#" class="botao-login" id="botao-conta" style="display: none;"><img src="imagens/usuario.png" alt="Conta" class="icone-conta" /></a>
     <a href="login.html" class="botao-login" id="botao-entrar">Entrar</a>
     <a href="javascript:void(0)" class="botao-login" id="botao-sair" style="display: none;" onclick="logout()">Sair</a>
   </div>
 </header>
 
-<!-- Cabeçalho vazio -->
-<section class="cabecalho"></section>
+<!-- Menu Lateral (removido) -->
 
 <!-- Destaques -->
 <section id="destaques">
@@ -57,19 +59,7 @@
   </div>
 </section>
 
-<!-- Rodapé -->
-<footer class="rodape">
-  &copy; 2025 Click Serra Anúncios - Todos os direitos reservados.
-</footer>
-
-<!-- Barra inferior -->
-<nav class="barra-inferior">
-  <a href="#">VAGAS DE EMPREGO</a>
-  <a href="#">EVENTOS</a>
-  <a href="#">DÚVIDAS</a>
-</nav>
-
-<!-- Carrossel de Categorias (no fim da página) -->
+<!-- Carrossel de Categorias -->
 <section class="top-categorias">
   <button class="seta esquerda">❮</button>
   <div class="container-cards">
@@ -95,6 +85,21 @@
   </div>
   <button class="seta direita">❯</button>
 </section>
+
+<!-- Barra inferior -->
+<section class="barra-inferior">
+  <a href="#">VAGAS DE EMPREGO</a>
+  <a href="#">EVENTOS</a>
+  <a href="#">DÚVIDAS</a>
+</section>
+
+<!-- Rodapé -->
+<footer class="rodape">
+  &copy; 2025 Click Serra Anúncios - Todos os direitos reservados.
+</footer>
+
+<!-- Botão Topo -->
+<button id="btnTopo">↑</button>
 
 <!-- Script principal -->
 <script src="script.js" defer></script>
