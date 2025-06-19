@@ -5,8 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Click Serra Anúncios</title>
   <link rel="stylesheet" href="style.css" />
-
-  <!-- Firebase Compat SDKs -->
   <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth-compat.js"></script>
 </head>
@@ -14,10 +12,10 @@
 
 <!-- Barra de Navegação -->
 <header class="barra-navegacao">
-  <div class="logo-e-titulo">
+  <div class="logo-container">
     <div class="mascote-container">
-      <img src="imagens/mascote-olhoaberto.png" alt="Mascote falando" class="mascote mascote-aberto" />
-      <img src="imagens/mascote-olhofechado.png" alt="Mascote calado" class="mascote mascote-fechado" />
+      <img src="imagens/mascote-olhoaberto.png" class="mascote mascote-aberto" alt="Mascote" />
+      <img src="imagens/mascote-olhofechado.png" class="mascote mascote-fechado" alt="Mascote" />
     </div>
     <h1 class="titulo-site">Click Serra Anúncios</h1>
   </div>
@@ -34,14 +32,18 @@
   </div>
 
   <div class="botoes-direita">
-    <a href="javascript:void(0)" onclick="irParaAnuncio()" class="botao-login" id="botao-anuncie">📢 Anuncie aqui</a>
-    <a href="#" class="botao-login" id="botao-conta" style="display: none;"><img src="imagens/usuario.png" alt="Conta" class="icone-conta" /></a>
-    <a href="login.html" class="botao-login" id="botao-entrar">Entrar</a>
-    <a href="javascript:void(0)" class="botao-login" id="botao-sair" style="display: none;" onclick="logout()">Sair</a>
+    <a href="javascript:void(0)" onclick="irParaAnuncio()" id="botao-anuncie" class="botao-login">📢 Anuncie aqui</a>
+    <a href="login.html" id="botao-entrar" class="botao-login">Entrar</a>
+    <a href="javascript:void(0)" id="botao-sair" onclick="logout()" class="botao-login" style="display: none;">Sair</a>
+    <a href="conta.html" id="botao-conta" class="botao-conta" style="display: none;">
+      <img src="imagens/usuario.png" alt="Conta do Usuário" />
+    </a>
+    <a href="meus-anuncios.html" id="botao-anuncios" class="botao-login" style="display: none;">Meus Anúncios</a>
   </div>
 </header>
 
-<!-- Menu Lateral (removido) -->
+<!-- Espaço reservado para espaçar a altura da barra fixa -->
+<div class="espaco-barra"></div>
 
 <!-- Destaques -->
 <section id="destaques">
@@ -86,12 +88,12 @@
   <button class="seta direita">❯</button>
 </section>
 
-<!-- Barra inferior -->
-<section class="barra-inferior">
-  <a href="#">VAGAS DE EMPREGO</a>
-  <a href="#">EVENTOS</a>
-  <a href="#">DÚVIDAS</a>
-</section>
+!-- Barra Inferior (acima do rodapé) -->
+<nav class="barra-inferior">
+  <a href="empregos.html">VAGAS DE EMPREGO</a>
+  <a href="eventos.html">EVENTOS</a>
+  <a href="duvidas.html">DÚVIDAS</a>
+</nav>
 
 <!-- Rodapé -->
 <footer class="rodape">
@@ -101,8 +103,7 @@
 <!-- Botão Topo -->
 <button id="btnTopo">↑</button>
 
-<!-- Script principal -->
+<!-- Scripts -->
 <script src="script.js" defer></script>
-
 </body>
 </html>
