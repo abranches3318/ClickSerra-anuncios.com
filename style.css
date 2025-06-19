@@ -1,4 +1,4 @@
-/* RESET */
+/* Reset e Configurações Globais */
 * {
   margin: 0;
   padding: 0;
@@ -11,54 +11,61 @@ body {
   color: #333;
   min-height: 100vh;
   position: relative;
-  padding-bottom: 80px;
+  padding-bottom: 100px;
 }
 
-/* BARRA DE NAVEGAÇÃO */
+.espaco-barra {
+  height: 90px;
+}
+
+/* Barra de Navegação Principal */
 .barra-navegacao {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  padding: 10px 20px;
   background-color: #005288;
   color: white;
-  padding: 20px 25px;
   position: fixed;
   top: 0;
-  width: 100%;
+  left: 0;
+  right: 0;
+  z-index: 1000;
   height: 90px;
-  z-index: 999;
 }
 
-.logo-mascote {
+.logo-container {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 12px;
 }
 
-.logo-mascote .mascote-container {
+.mascote-container {
   position: relative;
-  width: 70px;
-  height: 70px;
+  width: 60px;
+  height: 60px;
 }
 
-.logo-mascote .mascote-container img {
-  width: 100%;
-  height: 100%;
+.mascote {
   position: absolute;
-  transition: opacity 0.3s ease;
+  top: 0;
+  left: 0;
+  width: 60px;
+  height: 60px;
   object-fit: contain;
+  transition: opacity 0.25s ease;
 }
 
-.logo-mascote h1 {
+.titulo-site {
+  font-size: 1.6rem;
+  font-weight: bold;
   font-family: 'Trebuchet MS', sans-serif;
-  font-size: 1.8rem;
-  color: white;
 }
 
 .busca-central {
+  flex: 1;
   display: flex;
   align-items: center;
-  flex: 1;
   justify-content: center;
   gap: 8px;
 }
@@ -72,9 +79,9 @@ body {
   display: block;
   width: 60%;
   max-width: 400px;
-  padding: 8px 12px;
+  padding: 6px 12px;
   border: none;
-  border-radius: 6px;
+  border-radius: 4px;
   font-size: 15px;
 }
 
@@ -87,46 +94,39 @@ body {
 .botao-login {
   background-color: white;
   color: #005288;
-  padding: 8px 14px;
-  border-radius: 6px;
+  padding: 6px 14px;
+  border-radius: 4px;
   font-weight: bold;
   text-decoration: none;
-  font-size: 15px;
-  display: flex;
-  align-items: center;
-  gap: 4px;
+  transition: background 0.3s;
 }
 
 .botao-login:hover {
-  background-color: #e6e6e6;
+  background-color: #ddd;
 }
 
-#botao-conta img {
-  width: 28px;
-  height: 28px;
+.botao-conta img {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
 }
 
-/* MASCOTE ANIMADO */
-.mascote-fechado {
-  opacity: 0;
-  z-index: 1;
+.botao-conta {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
 }
 
-.mascote-aberto {
-  opacity: 1;
-  z-index: 2;
-}
-
-/* CARROSSEL DESTAQUES */
+/* Destaques */
 #destaques {
-  margin-top: 110px;
-  padding: 20px;
+  margin: 20px 10px;
   text-align: center;
 }
 
 .titulo-secao {
-  font-size: 22px;
-  margin-bottom: 15px;
+  margin-bottom: 10px;
+  font-size: 20px;
   color: #005288;
 }
 
@@ -136,8 +136,8 @@ body {
 }
 
 .container-destaque {
-  overflow: hidden;
   width: 100%;
+  overflow: hidden;
 }
 
 .cards-destaque {
@@ -155,23 +155,31 @@ body {
   display: block;
 }
 
-/* CARROSSEL DE CATEGORIAS */
+.seta {
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  color: #005288;
+}
+
+/* Carrossel Categorias */
 .top-categorias {
   display: flex;
   align-items: center;
-  padding: 20px;
-  margin: 10px 0;
+  margin: 20px 10px;
+  overflow-x: hidden;
 }
 
 .container-cards {
-  overflow: hidden;
   flex: 1;
+  overflow: hidden;
 }
 
 .cards {
   display: flex;
-  transition: transform 0.3s ease-in-out;
   gap: 10px;
+  transition: transform 0.3s ease-in-out;
 }
 
 .card {
@@ -189,47 +197,47 @@ body {
   object-fit: cover;
 }
 
-.seta {
-  background: none;
-  border: none;
-  font-size: 24px;
-  cursor: pointer;
-}
-
-/* BARRA DE LINKS INFERIOR */
+/* Barra Inferior */
 .barra-inferior {
-  background-color: #005288;
-  color: white;
   display: flex;
   justify-content: center;
   gap: 30px;
-  padding: 15px;
+  background-color: #005288;
+  color: white;
+  padding: 14px 0;
   font-weight: bold;
-  font-size: 16px;
+  position: fixed;
+  bottom: 50px;
+  width: 100%;
+  z-index: 998;
 }
 
 .barra-inferior a {
   color: white;
   text-decoration: none;
+  font-size: 14px;
 }
 
-.barra-inferior a:hover {
-  text-decoration: underline;
-}
-
-/* RODAPÉ */
+/* Rodapé */
 .rodape {
-  background-color: #003f66;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 50px;
+  background-color: #003b5c;
   color: white;
-  padding: 15px;
-  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
 }
 
-/* BOTÃO TOPO */
+/* Botão Topo */
 #btnTopo {
   position: fixed;
-  bottom: 80px;
-  right: 20px;
+  bottom: 110px;
+  right: 15px;
   background-color: #005288;
   color: white;
   border: none;
@@ -240,24 +248,51 @@ body {
   display: none;
 }
 
+/* Animação Mascote */
+@keyframes piscarOlho {
+  0%, 100% { opacity: 1; }
+  48%, 52% { opacity: 0; }
+}
+
+.mascote-aberto {
+  animation: piscarOlho 4s infinite;
+  z-index: 1;
+}
+
+.mascote-fechado {
+  z-index: 1;
+  opacity: 0;
+}
+
+/* Responsivo */
 @media (max-width: 768px) {
   .barra-navegacao {
     flex-direction: column;
+    align-items: flex-start;
     height: auto;
-    gap: 10px;
   }
+
+  .logo-container {
+    width: 100%;
+    justify-content: center;
+    margin-bottom: 8px;
+  }
+
   .busca-central {
     width: 100%;
+    justify-content: center;
+    margin-bottom: 8px;
   }
-  .campo-busca {
-    width: 90%;
-  }
+
   .botoes-direita {
+    width: 100%;
+    justify-content: center;
     flex-wrap: wrap;
-    justify-content: center;
   }
-  .logo-mascote {
-    justify-content: center;
+
+  .campo-busca {
+    width: 80%;
   }
 }
+
 
