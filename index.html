@@ -14,73 +14,62 @@
 
 <!-- Barra de Navegação -->
 <header class="barra-navegacao">
-  <div class="menu-button" onclick="toggleMenu()">☰</div>
+  <div class="logo-e-titulo">
+    <div class="mascote-container">
+      <img src="imagens/mascote-olhoaberto.png" alt="Mascote falando" class="mascote mascote-aberto" />
+      <img src="imagens/mascote-olhofechado.png" alt="Mascote calado" class="mascote mascote-fechado" />
+    </div>
+    <h1 class="titulo-site">Click Serra</h1>
+  </div>
 
   <div class="busca-central">
     <div class="icone-lupa" onclick="toggleBusca()">🔍</div>
-    <input
-      type="text"
-      class="campo-busca"
-      placeholder="Ex: Restaurante, Oficina..."
-      onfocus="this.placeholder=''"
-      onblur="this.placeholder='Ex: Restaurante, Oficina...'"
-    />
+    <input type="text" class="campo-busca" placeholder="Ex: Restaurante, Oficina..." onfocus="this.placeholder=''" onblur="this.placeholder='Ex: Restaurante, Oficina...'" />
   </div>
 
   <div class="botoes-direita">
+    <a href="meus-anuncios.html" class="botao-login" id="botao-meus-anuncios" style="display: none;">Meus anúncios</a>
+    <a href="conta.html" class="botao-conta" id="botao-conta" style="display: none;">
+      <img src="imagens/usuario.png" alt="Conta" />
+    </a>
     <a href="javascript:void(0)" onclick="irParaAnuncio()" class="botao-login" id="botao-anuncie">📢 Anuncie aqui</a>
     <a href="login.html" class="botao-login" id="botao-entrar">Entrar</a>
     <a href="javascript:void(0)" class="botao-login" id="botao-sair" style="display: none;" onclick="logout()">Sair</a>
   </div>
 </header>
 
-<!-- Menu Lateral -->
-<nav class="itens-navegacao" id="menuNavegacao">
-  <a href="index.html">Início</a>
-  <a href="comercio.html">Comércio</a>
-  <a href="servicos.html">Serviços</a>
-  <a href="empregos.html">Empregos</a>
-  <a href="eventos.html">Eventos</a>
-  <a href="sobre.html">Sobre</a>
-  <a href="contato.html">Contato</a>
-</nav>
+<!-- Cabeçalho vazio -->
+<section class="cabecalho"></section>
 
-<!-- Cabeçalho -->
-<section class="cabecalho">
-  <div class="mascote-e-titulo">
-    <div class="mascote-container">
-      <img
-  src="imagens/mascote-olhoaberto.png"
-  alt="Mascote falando"
-  class="mascote mascote-aberto"
-  loading="lazy"
-  decoding="async"
-  width="120"
-  height="120"
-/>
-<img
-  src="imagens/mascote-olhofechado.png"
-  alt="Mascote calado"
-  class="mascote mascote-fechado"
-  loading="lazy"
-  decoding="async"
-  width="120"
-  height="120"
-/>
-      <div class="ondas-container">
-        <span class="onda onda1"></span>
-        <span class="onda onda2"></span>
-        <span class="onda onda3"></span>
+<!-- Destaques -->
+<section id="destaques">
+  <h2 class="titulo-secao">Destaques</h2>
+  <div class="carrossel-destaque">
+    <button class="seta destaque-esquerda">❮</button>
+    <div class="container-destaque">
+      <div class="cards-destaque">
+        <div class="card-destaque"><img src="imagens/Divertilandia.jpg" alt="Destaque 1" /></div>
+        <div class="card-destaque"><img src="imagens/d2.jpg" alt="Destaque 2" /></div>
+        <div class="card-destaque"><img src="imagens/d3.jpg" alt="Destaque 3" /></div>
       </div>
     </div>
-    <div class="texto-cabecalho">
-      <h1>Click Serra Anúncios</h1>
-      <p>Divulgue seu comércio, serviços, vagas de emprego e eventos na cidade de Serra - ES.</p>
-    </div>
+    <button class="seta destaque-direita">❯</button>
   </div>
 </section>
 
-<!-- Top Categorias -->
+<!-- Rodapé -->
+<footer class="rodape">
+  &copy; 2025 Click Serra Anúncios - Todos os direitos reservados.
+</footer>
+
+<!-- Barra inferior -->
+<nav class="barra-inferior">
+  <a href="#">VAGAS DE EMPREGO</a>
+  <a href="#">EVENTOS</a>
+  <a href="#">DÚVIDAS</a>
+</nav>
+
+<!-- Carrossel de Categorias (no fim da página) -->
 <section class="top-categorias">
   <button class="seta esquerda">❮</button>
   <div class="container-cards">
@@ -106,30 +95,6 @@
   </div>
   <button class="seta direita">❯</button>
 </section>
-
-<!-- Destaques -->
-<section id="destaques">
-  <h2 class="titulo-secao">Destaques</h2>
-  <div class="carrossel-destaque">
-    <button class="seta destaque-esquerda">❮</button>
-    <div class="container-destaque">
-      <div class="cards-destaque">
-        <div class="card-destaque"><img src="imagens/Divertilandia.jpg" alt="Destaque 1" /></div>
-        <div class="card-destaque"><img src="imagens/d2.jpg" alt="Destaque 2" /></div>
-        <div class="card-destaque"><img src="imagens/d3.jpg" alt="Destaque 3" /></div>
-      </div>
-    </div>
-    <button class="seta destaque-direita">❯</button>
-  </div>
-</section>
-
-<!-- Rodapé -->
-<footer class="rodape">
-  &copy; 2025 Click Serra Anúncios - Todos os direitos reservados.
-</footer>
-
-<!-- Botão Topo -->
-<button id="btnTopo">↑</button>
 
 <!-- Script principal -->
 <script src="script.js" defer></script>
