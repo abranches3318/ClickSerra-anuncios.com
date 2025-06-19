@@ -140,20 +140,3 @@ function loginComGoogle() {
     });
 }
 
-// Animação do mascote (olhos piscando suavemente)
-document.addEventListener("DOMContentLoaded", function () {
-  const mascoteAberto = document.querySelector(".mascote-aberto");
-  const mascoteFechado = document.querySelector(".mascote-fechado");
-
-  if (mascoteAberto && mascoteFechado) {
-    setInterval(() => {
-      mascoteAberto.style.opacity = "0";
-      mascoteFechado.style.opacity = "1";
-
-      setTimeout(() => {
-        mascoteAberto.style.opacity = "1";
-        mascoteFechado.style.opacity = "0";
-      }, 400); // ← olhos fechados por 400ms
-    }, 4000);
-  }
-});
