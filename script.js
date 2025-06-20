@@ -113,16 +113,20 @@ auth.onAuthStateChanged((user) => {
   const menuSuspenso = document.getElementById("menuSuspenso")
   const espacoBarra = document.getElementById('espacoBarraSuperior');
 
+  if (botaoConta) {
+  botaoConta.addEventListener("click", () => {
+    menuConta.classList.toggle("ativo");
+  });
+}
+
   if (user) {
     if (btnEntrar) btnEntrar.style.display = "none";
-    if (btnSair) btnSair.style.display = "inline-block";
     if (btnMeusAnuncios) btnMeusAnuncios.style.display = "inline-block";
     if (menuConta) menuConta.style.display = "block";
     if (barraLogado) barraLogado.style.display = 'flex';
     if (espacoBarra) espacoBarra.style.display = 'none';
   } else {
     if (btnEntrar) btnEntrar.style.display = "inline-block";
-    if (btnSair) btnSair.style.display = "none";
     if (btnMeusAnuncios) btnMeusAnuncios.style.display = "none";
     if (menuConta) menuConta.style.display = "none"
     if (barraLogado) barraLogado.style.display = 'none';
