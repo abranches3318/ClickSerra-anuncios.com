@@ -9,24 +9,24 @@ body {
   font-family: "Segoe UI", sans-serif;
   background: #f9f9f9;
   color: #333;
+  padding-top: 130px;
   min-height: 100vh;
   position: relative;
-  padding-top: 130px; /* 40px (barra superior) + 90px (navegação) */
   padding-bottom: 100px;
 }
 
-.barra-superior-logado {
-  width: 100%;
-  height: 40px;
-  background-color: #003d66;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 20px;
+.barra-superior {
   position: fixed;
   top: 0;
   left: 0;
-  z-index: 1001; /* acima da nav principal */
+  right: 0;
+  height: 40px;
+  background-color: #003d66;
+  z-index: 1001;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 15px;
 }
 
 .espaco-barra {
@@ -42,28 +42,84 @@ body {
   background-color: #003d66;
   z-index: 1001;
 }
+.botao-entrar {
+  background: none;
+  border: none;
+  color: white;
+  font-weight: bold;
+  font-size: 15px;
+  cursor: pointer;
+}
 
+.botao-conta img {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+}
+
+.menu-suspenso {
+  display: none;
+  position: absolute;
+  top: 40px;
+  left: 0;
+  background-color: white;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+  z-index: 999;
+  width: 160px;
+}
+
+.menu-suspenso a {
+  display: block;
+  padding: 10px;
+  color: #333;
+  text-decoration: none;
+  border-bottom: 1px solid #eee;
+}
+
+.menu-suspenso a:last-child {
+  border-bottom: none;
+}
+
+.menu-conta {
+  position: relative;
+}
+
+.menu-conta.ativo .menu-suspenso {
+  display: block;
+
+  /* Responsivo */
+@media (max-width: 768px) {
+  .barra-navegacao {
+    flex-direction: column;
+    align-items: flex-start;
+    height: auto;
+  }
+  
 /* Barra de Navegação Principal */
 .barra-navegacao {
   display: flex;
+  flex-direction: column;
   align-items: center;
-  justify-content: space-between;
-  padding: 10px 20px;
   background-color: #005288;
   color: white;
+  padding: 10px 15px;
   position: fixed;
   top: 40px;
   left: 0;
   right: 0;
   z-index: 1000;
-  height: 90px;
 }
 
 .logo-container {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 10px;
+  width: 100%;
+  justify-content: center;
 }
+
 
 .mascote-container {
   position: relative;
@@ -93,10 +149,15 @@ body {
   z-index: 1;
 }
 
+  /* Animação Mascote */
+@keyframes piscarOlho {
+  0%, 100% { opacity: 1; }
+  48%, 52% { opacity: 0; }
+}
+
 .titulo-site {
-  font-size: 1.6rem;
+  font-size: 1.5rem;
   font-weight: bold;
-  font-family: 'Trebuchet MS', sans-serif;
 }
 
 .busca-central {
@@ -125,37 +186,23 @@ body {
 
 .botoes-direita {
   display: flex;
-  align-items: center;
+  justify-content: center;
   gap: 10px;
+  margin-top: 10px;
+  width: 100%;
 }
 
-.botao-login {
+.botao-anunciar, .botao-meus-anuncios {
   background-color: white;
   color: #005288;
   padding: 6px 14px;
   border-radius: 4px;
   font-weight: bold;
-  text-decoration: none;
-  transition: background 0.3s;
-}
-
-.botao-login:hover {
-  background-color: #ddd;
-}
-
-.botao-conta {
-  background: none;
   border: none;
-  padding: 0;
   cursor: pointer;
+  font-size: 14px;
 }
 
-.botao-conta img {
-  width: 28px;
-  height: 28px;
-  border-radius: 50%;
-  cursor: pointer;
-}
 
 .botao-sair-superior {
   color: white;
@@ -167,16 +214,17 @@ body {
   cursor: pointer;
 }
 
-/* Destaques */
-#destaques {
-  margin: 20px 10px;
-  text-align: center;
-}
 
 .titulo-secao {
   margin-bottom: 10px;
   font-size: 20px;
   color: #005288;
+}
+
+  /* Destaques */
+#destaques {
+  margin: 20px 10px;
+  text-align: center;
 }
 
 .carrossel-destaque {
@@ -248,13 +296,12 @@ body {
 
 .barra-inferior {
   display: flex;
-  flex-wrap: wrap; /* permite quebrar linha */
   justify-content: center;
-  align-items: center;
-  gap: 16px;
+  flex-wrap: wrap;
+  gap: 20px;
   background-color: #005288;
   color: white;
-  padding: 14px 10px;
+  padding: 12px 10px;
   font-weight: bold;
   position: fixed;
   bottom: 50px;
@@ -263,10 +310,11 @@ body {
   text-align: center;
 }
 
+
 .barra-inferior a {
   color: white;
   text-decoration: none;
-  font-size: 16px;
+  font-size: 14px;
   white-space: nowrap; /* evita quebra no meio das palavras */
   padding: 4px 8px;
 }
@@ -277,10 +325,21 @@ body {
     gap: 6px;
     padding: 10px;
   }
+}
 
-  .barra-inferior a {
-    font-size: 14px;
-  }
+  /* Botão Topo */
+#btnTopo {
+  position: fixed;
+  bottom: 110px;
+  right: 15px;
+  background-color: #005288;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  font-size: 20px;
+  padding: 10px;
+  cursor: pointer;
+  display: none;
 }
 
 /* Rodapé */
@@ -298,52 +357,6 @@ body {
   font-size: 14px;
 }
 
-/* Botão Topo */
-#btnTopo {
-  position: fixed;
-  bottom: 110px;
-  right: 15px;
-  background-color: #005288;
-  color: white;
-  border: none;
-  border-radius: 50%;
-  font-size: 20px;
-  padding: 10px;
-  cursor: pointer;
-  display: none;
-}
 
-/* Animação Mascote */
-@keyframes piscarOlho {
-  0%, 100% { opacity: 1; }
-  48%, 52% { opacity: 0; }
-}
-
-
-/* Responsivo */
-@media (max-width: 768px) {
-  .barra-navegacao {
-    flex-direction: column;
-    align-items: flex-start;
-    height: auto;
-  }
-
-  .logo-container {
-    width: 100%;
-    justify-content: center;
-    margin-bottom: 8px;
-  }
-
-  .busca-central {
-    width: 100%;
-    justify-content: center;
-    margin-bottom: 8px;
-  }
-
-  .botoes-direita {
-    width: 100%;
-    justify-content: center;
-    flex-wrap: wrap;
-  }
 
   
