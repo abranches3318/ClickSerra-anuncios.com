@@ -33,6 +33,12 @@ body {
   height: 90px;
 }
 
+.espaco-barra-superior {
+  width: 100%;
+  height: 40px;
+  background-color: #003d66;
+}
+
 /* Barra de Navegação Principal */
 .barra-navegacao {
   display: flex;
