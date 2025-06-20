@@ -116,14 +116,14 @@ auth.onAuthStateChanged((user) => {
     if (btnEntrar) btnEntrar.style.display = "none";
     if (btnSair) btnSair.style.display = "inline-block";
     if (btnMeusAnuncios) btnMeusAnuncios.style.display = "inline-block";
-    if (btnConta) btnConta.style.display = "inline-block";
+    if (menuConta) menuConta.style.display = "block";
     if (barraLogado) barraLogado.style.display = 'flex';
     if (espacoBarra) espacoBarra.style.display = 'none';
   } else {
     if (btnEntrar) btnEntrar.style.display = "inline-block";
     if (btnSair) btnSair.style.display = "none";
     if (btnMeusAnuncios) btnMeusAnuncios.style.display = "none";
-    if (btnConta) btnConta.style.display = "none";
+    if (menuConta) menuConta.style.display = "none"
     if (barraLogado) barraLogado.style.display = 'none';
     if (espacoBarra) espacoBarra.style.display = 'block';
   }
