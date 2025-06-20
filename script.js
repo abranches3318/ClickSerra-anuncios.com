@@ -176,7 +176,7 @@ document.addEventListener("DOMContentLoaded", function () {
       setTimeout(() => {
         mascoteAberto.style.opacity = '1';
         mascoteFechado.style.opacity = '0';
-      }, 150); // Fecha por 150ms (olhos fechados rápidos)
+      }, 150); // Fecha por 150ms
     }, 3500); // Pisca a cada 3.5s
   }
 });
