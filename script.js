@@ -106,10 +106,10 @@ btnTopo.addEventListener("click", () => {
 // Autenticação - visibilidade de botões
 auth.onAuthStateChanged((user) => {
   const btnEntrar = document.getElementById("botao-entrar");
-  const btnSair = document.getElementById("botao-sair");
   const btnMeusAnuncios = document.getElementById("botao-meus-anuncios");
   const btnConta = document.getElementById("botao-conta");
   const barraLogado = document.getElementById('barra-superior-logado');
+  onst menuSuspenso = document.getElementById("menuSuspenso")
   const espacoBarra = document.getElementById('espacoBarraSuperior');
 
   if (user) {
