@@ -89,17 +89,20 @@ auth.onAuthStateChanged((user) => {
   const btnSair = document.getElementById("botao-sair");
   const btnMeusAnuncios = document.getElementById("botao-meus-anuncios");
   const btnConta = document.getElementById("botao-conta");
+  const barraLogado = document.getElementById('barra-superior-logado');
 
   if (user) {
     if (btnEntrar) btnEntrar.style.display = "none";
     if (btnSair) btnSair.style.display = "inline-block";
     if (btnMeusAnuncios) btnMeusAnuncios.style.display = "inline-block";
     if (btnConta) btnConta.style.display = "inline-block";
+    if (barraLogado) barraLogado.style.display = 'flex';
   } else {
     if (btnEntrar) btnEntrar.style.display = "inline-block";
     if (btnSair) btnSair.style.display = "none";
     if (btnMeusAnuncios) btnMeusAnuncios.style.display = "none";
     if (btnConta) btnConta.style.display = "none";
+    if (barraLogado) barraLogado.style.display = 'none';
   }
 });
 
