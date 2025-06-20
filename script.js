@@ -19,6 +19,26 @@ function toggleBusca() {
   campo.focus();
 }
 
+// Menu suspenso
+const botaoConta = document.getElementById("botaoConta");
+const menuConta = document.getElementById("menuConta");
+
+if (botaoConta) {
+  botaoConta.addEventListener("click", () => {
+    menuConta.classList.toggle("ativo");
+  });
+}
+
+window.irParaAnuncio = function () {
+  const user = auth.currentUser;
+  if (user) {
+    window.location.href = 'criar-anuncio.html';
+  } else {
+    localStorage.setItem('destinoAposLogin', 'criar-anuncio.html');
+    window.location.href = 'login.html';
+  }
+};
+
 // Carrossel de Categorias
 const setaEsquerda = document.querySelector(".seta.esquerda");
 const setaDireita = document.querySelector(".seta.direita");
@@ -135,9 +155,6 @@ function loginComGoogle() {
   auth
     .signInWithPopup(provider)
     .then((result) => {
-      const destino = localStorage.getItem("destinoAposLogin") || "index.html";
-      localStorage.removeItem("destinoAposLogin");
-      localStorage.setItem("usuarioLogado", result.user.uid);
       window.location.href = destino;
     })
     .catch((error) => {
@@ -145,6 +162,8 @@ function loginComGoogle() {
       alert("Erro ao fazer login com Google.");
     });
 }
+
+// Mascote animação
 document.addEventListener("DOMContentLoaded", function () {
   const mascoteAberto = document.querySelector('.mascote-aberto');
   const mascoteFechado = document.querySelector('.mascote-fechado');
