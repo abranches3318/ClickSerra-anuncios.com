@@ -10,20 +10,23 @@
 </head>
 <body>
   <!-- Barra Superior -->
-  <div class="barra-superior" id="barraSuperior">
-    <button id="botao-entrar" class="botao-entrar" onclick="window.location.href='login.html'">Entrar</button>
-    <div class="menu-conta" id="menuConta">
-      <button class="botao-conta" id="botaoConta">
-        <img src="imagens/usuario.png" alt="Conta" /> &#x25BC;
-      </button>
-      <div class="menu-suspenso" id="menuSuspenso">
-        <a href="#">Ver Perfil</a>
-        <a href="criar-anuncio.html">Meus Anúncios</a>
-        <a href="#">Configurações</a>
-        <a href="#" onclick="logout()">Sair</a>
-      </div>
+<div class="barra-superior" id="barraSuperior">
+  <button id="botao-entrar" class="botao-acao" onclick="window.location.href='login.html'">Entrar</button>
+
+  <div class="menu-conta" id="menuConta">
+    <button class="botao-conta" id="botaoConta">
+      <img src="usuario.png" alt="Conta" /> ▼
+    </button>
+    <div class="menu-suspenso" id="menuSuspenso">
+      <a href="#">Ver Perfil</a>
+      <a href="criar-anuncio.html">Meus Anúncios</a>
+      <a href="#">Configurações</a>
+      <a href="#" onclick="logout()">Sair</a>
     </div>
   </div>
+
+  <button class="botao-acao" id="botao-anunciar-superior" onclick="irParaAnuncio()">📢 Anuncie Aqui</button>
+</div>
 
   <!-- Barra de Navegação -->
   <nav class="barra-navegacao">
@@ -40,12 +43,6 @@
     <div class="busca-central">
       <input type="text" class="campo-busca" placeholder="Buscar..." />
     </div>
-
-    <div class="botoes-direita">
-      <button class="botao-anunciar" onclick="irParaAnuncio()">📢 Anuncie Aqui</button>
-      <button id="botao-meus-anuncios" class="botao-meus-anuncios" onclick="window.location.href='criar-anuncio.html'">Meus Anúncias</button>
-    </div>
-  </nav>
 
 <!-- Destaques -->
 <section id="destaques">
