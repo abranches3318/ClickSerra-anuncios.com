@@ -107,9 +107,10 @@ btnTopo.addEventListener("click", () => {
 auth.onAuthStateChanged((user) => {
   const btnEntrar = document.getElementById("botao-entrar");
   const btnMeusAnuncios = document.getElementById("botao-meus-anuncios");
-  const btnConta = document.getElementById("botao-conta");
+  const botaoConta = document.getElementById("botaoConta");
+  const menuConta = document.getElementById("menuConta");
   const barraLogado = document.getElementById('barra-superior-logado');
-  onst menuSuspenso = document.getElementById("menuSuspenso")
+  const menuSuspenso = document.getElementById("menuSuspenso")
   const espacoBarra = document.getElementById('espacoBarraSuperior');
 
   if (user) {
