@@ -164,14 +164,11 @@ function loginComGoogle() {
 window.loginComGoogle = loginComGoogle;
 
 // Mascote animação
-window.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", function () {
   const mascoteAberto = document.querySelector('.mascote-aberto');
   const mascoteFechado = document.querySelector('.mascote-fechado');
 
   if (mascoteAberto && mascoteFechado) {
-    mascoteAberto.style.opacity = '1';
-    mascoteFechado.style.opacity = '0';
-
     setInterval(() => {
       mascoteAberto.style.opacity = '0';
       mascoteFechado.style.opacity = '1';
@@ -179,7 +176,8 @@ window.addEventListener("DOMContentLoaded", () => {
       setTimeout(() => {
         mascoteAberto.style.opacity = '1';
         mascoteFechado.style.opacity = '0';
-      }, 250);
-    }, 3500);
+      }, 150); // Fecha por 150ms (olhos fechados rápidos)
+    }, 3500); // Pisca a cada 3.5s
   }
 });
+  
