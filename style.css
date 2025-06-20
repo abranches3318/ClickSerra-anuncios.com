@@ -42,16 +42,30 @@ body {
 
 .mascote-container {
   position: relative;
-  width: 100px; /* aumentado */
-  height: 100px;
+  width: 120px;
+  height: 120px;
   margin-right: 10px;
   flex-shrink: 0;
 }
 
 .mascote {
-  width: 100px;
-  height: 100px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 120px;
+  height: 120px;
   object-fit: contain;
+  transition: opacity 0.3s ease;
+}
+
+.mascote-aberto {
+  opacity: 1;
+  z-index: 2;
+}
+
+.mascote-fechado {
+  opacity: 0;
+  z-index: 1;
 }
 
 .titulo-site {
@@ -252,13 +266,6 @@ body {
   48%, 52% { opacity: 0; }
 }
 
-.mascote-aberto {
-  display: block;
-}
-
-.mascote-fechado {
-  display: none;
-}
 
 /* Responsivo */
 @media (max-width: 768px) {
