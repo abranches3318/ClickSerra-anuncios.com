@@ -11,8 +11,8 @@ body {
   color: #333;
   min-height: 100vh;
   position: relative;
-  padding-top: 130px; /* 40 + 90 */
-  padding-bottom: 100px; /* para rodapé e barra inferior */
+  padding-top: 130px; /* 40px (barra superior) + 90px (navegação) */
+  padding-bottom: 100px;
 }
 
 .espaco-barra {
@@ -90,8 +90,8 @@ body {
 
 .campo-busca {
   display: block;
-  width: 60%;
-  max-width: 400px;
+  flex-grow: 1;
+  max-width: 100%;
   padding: 6px 12px;
   border: none;
   border-radius: 4px;
@@ -124,6 +124,7 @@ body {
   padding: 0;
   cursor: pointer;
 }
+
 .barra-superior-logado {
   width: 100%;
   height: 40px;
@@ -136,6 +137,11 @@ body {
   top: 0;
   left: 0;
   z-index: 1001; /* acima da nav principal */
+}
+
+/* Correção para barra de navegação ficar abaixo */
+.barra-navegacao {
+  top: 40px; /* empurrada para baixo da barra superior */
 }
 
 .botao-conta img {
@@ -318,8 +324,4 @@ body {
     flex-wrap: wrap;
   }
 
-  .campo-busca {
-    width: 80%;
-  }
-}
-
+  
