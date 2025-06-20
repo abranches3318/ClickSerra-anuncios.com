@@ -1,57 +1,54 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Click Serra Anúncios</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ClickSerra - Anúncios</title>
   <link rel="stylesheet" href="style.css" />
-  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth-compat.js"></script>
 </head>
 <body>
-  <div class="espaco-barra-superior" id="espacoBarraSuperior"></div>
-  <!-- Barra Superior do Usuário Logado -->
-<div class="barra-superior-logado" id="barra-superior-logado" style="display: none;">
-  <a href="conta-user.html" id="botao-conta" class="botao-conta">
-    <img src="imagens/usuario.png" alt="Conta" width="28" height="28" />
-  </a>
-  <a href="javascript:void(0)" onclick="logout()" id="botao-sair-superior" class="botao-sair-superior">Sair</a>
-</div>
 
-<!-- Barra de Navegação -->
-<header class="barra-navegacao">
-  <div class="logo-container">
-    <div class="mascote-container">
-      <img src="imagens/mascote-olhoaberto.png" class="mascote mascote-aberto" alt="Mascote" />
-      <img src="imagens/mascote-olhofechado.png" class="mascote mascote-fechado" alt="Mascote" />
+  <!-- Barra Superior (visível apenas quando logado ou deslogado com "Entrar") -->
+  <div class="barra-superior" id="barraSuperior">
+    <button id="botao-entrar" class="botao-entrar" onclick="window.location.href='login.html'">Entrar</button>
+    <div class="menu-conta" id="menuConta">
+      <button class="botao-conta" id="botaoConta">
+        <img src="usuario.png" alt="Conta" /> ▼
+      </button>
+      <div class="menu-suspenso" id="menuSuspenso">
+        <a href="#">Ver Perfil</a>
+        <a href="criar-anuncio.html">Meus Anúncios</a>
+        <a href="#">Configurações</a>
+        <a href="#" onclick="logout()">Sair</a>
+      </div>
     </div>
-    <h1 class="titulo-site">Click Serra Anúncios</h1>
   </div>
 
-  <div class="busca-central">
-    <div class="icone-lupa" onclick="toggleBusca()">🔍</div>
-    <input
-      type="text"
-      class="campo-busca"
-      placeholder="Ex: Restaurante, Oficina..."
-      onfocus="this.placeholder=''"
-      onblur="this.placeholder='Ex: Restaurante, Oficina...'"
-    />
-  </div>
+  <!-- Barra de Navegação Principal -->
+  <nav class="barra-navegacao">
+    <div class="logo-container">
+      <div class="mascote-container">
+        <img src="mascote-aberto.png" class="mascote mascote-aberto" />
+        <img src="mascote-fechado.png" class="mascote mascote-fechado" />
+      </div>
+      <span class="titulo-site">ClickSerra</span>
+    </div>
 
-  <div class="botoes-direita">
-    <a href="javascript:void(0)" onclick="irParaAnuncio()" id="botao-anuncie" class="botao-login">📢 Anuncie aqui</a>
-    <a href="meus-anuncios.html" class="botao-login" id="botao-meus-anuncios" style="display: none;">Meus Anúncios</a>
-    <a href="login.html" id="botao-entrar" class="botao-login">Entrar</a>
-    <a href="conta.html" id="botao-conta" class="botao-conta" style="display: none;">
-      <img src="imagens/usuario.png" alt="Conta do Usuário" />
-    </a>
-    <a href="meus-anuncios.html" id="botao-anuncios" class="botao-login" style="display: none;">Meus Anúncios</a>
-  </div>
-</header>
+    <div class="linha-separadora"></div>
 
-<!-- Espaço reservado para espaçar a altura da barra fixa -->
-<div class="espaco-barra"></div>
+    <div class="busca-central">
+      <input type="text" class="campo-busca" placeholder="Buscar..." />
+    </div>
+
+    <div class="botoes-direita">
+      <button class="botao-anunciar" onclick="irParaAnuncio()">📢 Anuncie Aqui</button>
+      <button id="botao-meus-anuncios" class="botao-meus-anuncios" onclick="window.location.href='criar-anuncio.html'">Meus Anúncios</button>
+    </div>
+  </nav>
+
+  <div class="espaco-barra"></div>
 
 <!-- Destaques -->
 <section id="destaques">
@@ -97,22 +94,23 @@
 </section>
 
 
-<nav class="barra-inferior">
-  <a href="empregos.html">VAGAS DE EMPREGO</a>
-  <a href="eventos.html">EVENTOS</a>
-  <a href="noticias.html">NOTICIAS</a>
-  <a href="duvidas.html">DÚVIDAS</a>
-</nav>
+<!-- Barra Inferior -->
+  <nav class="barra-inferior">
+    <a href="empregos.html">VAGAS DE EMPREGO</a>
+    <a href="eventos.html">EVENTOS</a>
+    <a href="noticias.html">NOTÍCIAS</a>
+    <a href="duvidas.html">DÚVIDAS</a>
+  </nav>
 
-<!-- Rodapé -->
-<footer class="rodape">
-  &copy; 2025 Click Serra Anúncios - Todos os direitos reservados.
-</footer>
+  <!-- Rodapé -->
+  <footer class="rodape">
+    <p>ClickSerra &copy; 2025 - Todos os direitos reservados</p>
+  </footer>
 
-<!-- Botão Topo -->
-<button id="btnTopo">↑</button>
+  <!-- Botão Voltar ao Topo -->
+  <button id="btnTopo">&#8679;</button>
 
-<!-- Scripts -->
-<script src="script.js" defer></script>
+  <!-- Scripts -->
+  <script src="script.js"></script>
 </body>
 </html>
