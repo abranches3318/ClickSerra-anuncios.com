@@ -246,25 +246,41 @@ body {
   object-fit: cover;
 }
 
-/* Barra Inferior */
 .barra-inferior {
   display: flex;
+  flex-wrap: wrap; /* permite quebrar linha */
   justify-content: center;
-  gap: 30px;
+  align-items: center;
+  gap: 16px;
   background-color: #005288;
   color: white;
-  padding: 14px 0;
+  padding: 14px 10px;
   font-weight: bold;
   position: fixed;
   bottom: 50px;
   width: 100%;
   z-index: 998;
+  text-align: center;
 }
 
 .barra-inferior a {
   color: white;
   text-decoration: none;
-  font-size: 20px;
+  font-size: 16px;
+  white-space: nowrap; /* evita quebra no meio das palavras */
+  padding: 4px 8px;
+}
+
+@media (max-width: 768px) {
+  .barra-inferior {
+    flex-direction: column;
+    gap: 6px;
+    padding: 10px;
+  }
+
+  .barra-inferior a {
+    font-size: 14px;
+  }
 }
 
 /* Rodapé */
