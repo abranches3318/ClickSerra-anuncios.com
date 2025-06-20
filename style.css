@@ -33,6 +33,19 @@ body {
   align-items: center;
   justify-content: space-between;
   padding: 0 15px;
+  gap: 10px;
+}
+
+.botao-acao {
+  background-color: white;
+  color: #005288;
+  padding: 6px 14px;
+  border-radius: 4px;
+  font-weight: bold;
+  border: none;
+  cursor: pointer;
+  font-size: 14px;
+  margin-left: 10px;
 }
 
 .botao-entrar {
