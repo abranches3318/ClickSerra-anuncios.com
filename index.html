@@ -3,30 +3,29 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>ClickSerra - Anúncios</title>
+  <title>ClickSerra - Anúncias</title>
   <link rel="stylesheet" href="style.css" />
   <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth-compat.js"></script>
 </head>
 <body>
-
-  <!-- Barra Superior (visível apenas quando logado ou deslogado com "Entrar") -->
+  <!-- Barra Superior -->
   <div class="barra-superior" id="barraSuperior">
     <button id="botao-entrar" class="botao-entrar" onclick="window.location.href='login.html'">Entrar</button>
     <div class="menu-conta" id="menuConta">
       <button class="botao-conta" id="botaoConta">
-        <img src="usuario.png" alt="Conta" /> ▼
+        <img src="usuario.png" alt="Conta" /> &#x25BC;
       </button>
       <div class="menu-suspenso" id="menuSuspenso">
         <a href="#">Ver Perfil</a>
-        <a href="criar-anuncio.html">Meus Anúncios</a>
+        <a href="criar-anuncio.html">Meus Anúncias</a>
         <a href="#">Configurações</a>
         <a href="#" onclick="logout()">Sair</a>
       </div>
     </div>
   </div>
 
-  <!-- Barra de Navegação Principal -->
+  <!-- Barra de Navegação -->
   <nav class="barra-navegacao">
     <div class="logo-container">
       <div class="mascote-container">
@@ -44,11 +43,9 @@
 
     <div class="botoes-direita">
       <button class="botao-anunciar" onclick="irParaAnuncio()">📢 Anuncie Aqui</button>
-      <button id="botao-meus-anuncios" class="botao-meus-anuncios" onclick="window.location.href='criar-anuncio.html'">Meus Anúncios</button>
+      <button id="botao-meus-anuncios" class="botao-meus-anuncios" onclick="window.location.href='criar-anuncio.html'">Meus Anúncias</button>
     </div>
   </nav>
-
-  <div class="espaco-barra"></div>
 
 <!-- Destaques -->
 <section id="destaques">
@@ -93,8 +90,7 @@
   <button class="seta direita">❯</button>
 </section>
 
-
-<!-- Barra Inferior -->
+ <!-- Barra Inferior -->
   <nav class="barra-inferior">
     <a href="empregos.html">VAGAS DE EMPREGO</a>
     <a href="eventos.html">EVENTOS</a>
@@ -107,10 +103,10 @@
     <p>ClickSerra &copy; 2025 - Todos os direitos reservados</p>
   </footer>
 
-  <!-- Botão Voltar ao Topo -->
+  <!-- Botão Topo -->
   <button id="btnTopo">&#8679;</button>
 
   <!-- Scripts -->
   <script src="script.js"></script>
 </body>
-</html>
+</html>>
