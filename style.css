@@ -42,15 +42,15 @@ body {
 
 .mascote-container {
   position: relative;
-  width: 160px; /* aumentado */
-  height: 160px;
+  width: 100px; /* aumentado */
+  height: 100px;
   margin-right: 10px;
   flex-shrink: 0;
 }
 
 .mascote {
-  width: 160px;
-  height: 160px;
+  width: 100px;
+  height: 100px;
   object-fit: contain;
 }
 
