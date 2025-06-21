@@ -271,9 +271,8 @@ body {
 }
 
 .card i {
-  display: block;
-  margin: 0 auto 8px;
-  color: #005288;
+font-weight: 300;
+  opacity: 0.85
 }
 
 
