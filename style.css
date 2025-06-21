@@ -273,18 +273,18 @@ body {
 /* Barra Inferior */
 .barra-inferior {
   display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-  gap: 20px;
+  justify-content: space-around;
+  align-items: center;
   background-color: #005288;
   color: white;
-  padding: 12px 10px;
+  padding: 8px 10px;
   font-weight: bold;
   position: fixed;
   bottom: 50px;
   width: 100%;
   z-index: 998;
   text-align: center;
+  height: 50px;
 }
 
 .barra-inferior a {
@@ -292,21 +292,37 @@ body {
   text-decoration: none;
   font-size: 14px;
   white-space: nowrap;
-  padding: 4px 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+}
+
+.barra-inferior a span {
+  font-size: 12px;
 }
 
 /* Responsivo */
-@media (max-width: 768px) {
+@media (max-width: 600px) {
+  .barra-inferior a {
+    font-size: 12px;
+  }
+
+  .barra-inferior a span {
+    font-size: 10px;
+  }
+
   .barra-inferior {
-    flex-direction: column;
-    gap: 6px;
-    padding: 10px;
+    height: auto;
+    padding: 6px;
+    gap: 0;
   }
 
   .barra-navegacao {
     padding-bottom: 10px;
   }
 }
+
 
 /* Botão Topo */
 #btnTopo {
