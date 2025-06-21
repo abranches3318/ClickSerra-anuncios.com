@@ -102,17 +102,14 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
   background-color: #005288;
   color: white;
-  padding: 8px 12px;
+  padding: 10px 15px;
   position: fixed;
   top: 40px;
   left: 0;
   right: 0;
   z-index: 1000;
-  gap: 8px;
-
 }
 
 .logo-container {
@@ -166,23 +163,20 @@ body {
 }
 
 .busca-central {
-  flex: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   width: 100%;
-  padding: 0;
+  display: flex;
+  justify-content: center;
+  margin-top: 5px;
+  margin-bottom: 5px;
 }
 
 .campo-busca {
-  display: block;
-  flex-grow: 1;
-  max-width: 85%;
+  width: 90%;
+  max-width: 500px;
   padding: 6px 12px;
-  border: none;
   border-radius: 4px;
+  border: none;
   font-size: 15px;
-  margin: 0 10px;
 }
 
 .botao-anunciar,
