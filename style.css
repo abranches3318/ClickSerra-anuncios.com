@@ -270,6 +270,13 @@ body {
   object-fit: cover;
 }
 
+.card i {
+  display: block;
+  margin: 0 auto 8px;
+  color: #005288;
+}
+
+
 /* Barra Inferior */
 .barra-inferior {
   display: flex;
