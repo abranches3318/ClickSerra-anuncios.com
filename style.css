@@ -291,7 +291,7 @@ font-weight: 300;
   width: 100%;
   z-index: 998;
   font-size: 16px;
-  gap: 15px;
+  gap: 18px;
 }
 
 .barra-inferior a {
@@ -358,6 +358,26 @@ font-weight: 300;
 
 .botao-circular:hover {
   background-color: #e6e6e6;
+}
+
+.botao-anunciar-destaque {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 20px;
+  border-radius: 30px; /* deixa ele arredondado */
+  background-color: #ffcc00;
+  color: #003d66;
+  font-weight: bold;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
+  transition: background-color 0.3s ease;
+}
+
+.botao-anunciar-destaque:hover {
+  background-color: #ffdb4d;
 }
 
 /* Botão Topo */
