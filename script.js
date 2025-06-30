@@ -12,11 +12,18 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 window.auth = firebase.auth();
 
+// menu hambúrguer 
+document.getElementById('botaoMenu').addEventListener('click', function () {
+  document.querySelector('.menu-hamburguer').classList.toggle('ativo');
+});
+
+
 // Campo de Busca
-function toggleBusca() {
-  const campo = document.querySelector(".campo-busca");
-  campo.style.display = campo.style.display === "none" || campo.style.display === "" ? "block" : "none";
-  campo.focus();
+function buscar() {
+  const termo = document.getElementById('campoBusca').value;
+  if (termo.trim()) {
+    window.location.href = `busca.html?q=${encodeURIComponent(termo)}`;
+  }
 }
 
 // Menu suspenso
