@@ -13,11 +13,9 @@ firebase.initializeApp(firebaseConfig);
 window.auth = firebase.auth();
 
 // menu hambúrguer 
-  document.getElementById('botaoMenu').addEventListener('click', function (e) {
-    e.stopPropagation(); // Evita fechamento imediato ao clicar no botão
-    const menu = document.getElementById('menuHamburguer');
-    menu.classList.toggle('ativo');
-  });
+  document.getElementById('botaoMenu').addEventListener('click', function () {
+  document.querySelector('.menu-hamburguer').classList.toggle('ativo');
+});
 
   // Fecha o menu ao clicar fora
   document.addEventListener('click', function (e) {
