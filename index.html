@@ -13,7 +13,17 @@
 <body>
   <!-- Barra Superior -->
 <div class="barra-superior" id="barraSuperior">
-  <button id="botao-entrar" class="botao-acao" onclick="window.location.href='login.html'">Entrar</button>
+<div class="menu-hamburguer">
+  <button id="botaoMenu"><i class="fa-solid fa-bars"></i></button>
+  <div class="menu-hamburguer-opcoes">
+    <a href="login.html">Entrar</a>
+    <a href="#">Buscar</a>
+    <a href="criar-anuncio.html">Anunciar</a>
+    <a href="#categorias">Categorias</a>
+    <a href="duvidas.html">Ajuda</a>
+  </div>
+</div>
+
 
   <div class="menu-conta" id="menuConta">
     <button class="botao-conta" id="botaoConta">
@@ -40,9 +50,12 @@
       </div>
       <div class="linha-separadora"></div>
       <div class="busca-central">
-      <input type="text" class="campo-busca" placeholder="Buscar..." />
+       <input type="text" class="campo-busca" placeholder="Buscar..." id="campoBusca" />
+    <button class="botao-lupa" onclick="buscar()">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    </button>
       </div>
-  </nav>
+    </nav>
 
 <!-- Destaques -->
 <section id="destaques">
