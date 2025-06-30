@@ -135,7 +135,6 @@ if (btnTopo) {
 
 // Autenticação - visibilidade de botões
 auth.onAuthStateChanged((user) => {
-  const menuHamburguer = document.getElementById("menuHamburguer");
   const btnEntrar = document.getElementById("botao-entrar");
   const btnMeusAnuncios = document.getElementById("botao-meus-anuncios");
   const botaoConta = document.getElementById("botaoConta");
@@ -145,7 +144,6 @@ auth.onAuthStateChanged((user) => {
 
   if (user) {
     if (btnEntrar) btnEntrar.style.display = "none";
-    if (menuHamburguer) menuHamburguer.style.display = "none";
     if (btnMeusAnuncios) btnMeusAnuncios.style.display = "inline-block";
     if (menuConta) menuConta.style.display = "block";
     if (barraLogado) barraLogado.style.display = 'flex';
@@ -156,9 +154,20 @@ auth.onAuthStateChanged((user) => {
     if (menuConta) menuConta.style.display = "none";
     if (barraLogado) barraLogado.style.display = 'none';
     if (espacoBarra) espacoBarra.style.display = 'block';
-    if  (menuHamburguer) menuHamburguer.style.display = "flex";
   }
 });
+
+firebase.auth().onAuthStateChanged((user) => {
+  const menuHamburguer = document.getElementById("menuHamburguer");
+  if (user) {
+    // Usuário logado → esconder menu hambúrguer
+    menuHamburguer.style.display = "none";
+  } else {
+    // Usuário deslogado → mostrar menu
+    menuHamburguer.style.display = "flex";
+  }
+});
+
 
 // Logout
 function logout() {
