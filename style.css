@@ -115,7 +115,7 @@ body {
   display: none;
   position: absolute;
   top: 40px;
-  right: 0;
+  left: 0;
   background-color: white;
   border: 1px solid #ccc;
   border-radius: 6px;
