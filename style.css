@@ -456,6 +456,7 @@ font-weight: 300;
 /* Rodapé */
 .rodape {
   background-color: #003b5c;
+  position: static;
   color: white;
   display: flex;
   align-items: center;
