@@ -222,3 +222,20 @@ document.addEventListener("DOMContentLoaded", () => {
     }, 3500);
   }
 });
+
+const footer = document.getElementById('footer');
+
+function checkScroll() {
+  const scrollHeight = document.documentElement.scrollHeight;
+  const scrollTop = window.scrollY || window.pageYOffset;
+  const windowHeight = window.innerHeight;
+
+  if (scrollTop + windowHeight >= scrollHeight - 10) {
+    footer.classList.add('visible');
+  } else {
+    footer.classList.remove('visible');
+  }
+}
+
+window.addEventListener('scroll', checkScroll);
+checkScroll(); // Verifica já no carregamento
