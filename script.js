@@ -12,20 +12,19 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 const auth = firebase.auth();
 
-// Menu Hambúrguer (para usuários deslogados)
 function alternarMenu() {
-  const opcoes = document.getElementById("opcoesHamburguer");
+  const opcoes = document.getElementById("menuHamburguerOpcoes");
   opcoes.classList.toggle("ativo");
 }
 
-// Fecha menu hambúrguer ao clicar fora
 window.addEventListener("click", function (e) {
   const menu = document.getElementById("menuHamburguer");
-  const opcoes = document.getElementById("opcoesHamburguer");
+  const opcoes = document.getElementById("menuHamburguerOpcoes");
   if (!menu.contains(e.target)) {
     opcoes.classList.remove("ativo");
   }
 });
+
 
 // Campo de Busca
 function buscar() {
