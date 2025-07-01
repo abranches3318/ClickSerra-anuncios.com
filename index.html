@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>ClickSerra - Anúncios</title>
+  <title>ClickSerra - Anúncias</title>
   <link rel="icon" type="image/x-icon" href="favicon.ico">
   <link rel="stylesheet" href="style.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
@@ -12,35 +12,33 @@
 </head>
 <body>
   <!-- Barra Superior -->
-<div class="barra-superior" id="barraSuperior">
-  
-<!-- Menu Hamburguer visível apenas se deslogado -->
-<div id="menuHamburguer" class="menu-hamburguer deslogado">
-  <button class="icone-hamburguer" onclick="alternarMenu()">
-    <i class="fa-solid fa-bars"></i>
-  </button>
-  <div class="menu-hamburguer-opcoes" id="opcoesHamburguer">
-    <a href="login.html">🔑 Entrar</a>
-    <a href="#busca">🔍 Buscar</a>
-    <a href="criar-anuncio.html">📢 Anunciar</a>
-    <a href="#categorias">📂 Categorias</a>
-    <a href="duvidas.html">❓ Ajuda</a>
-  </div>
-</div>
+  <div class="barra-superior" id="barraSuperior">
+    <!-- Menu Hamburguer visível apenas se deslogado -->
+    <div id="menuHamburguer" class="menu-hamburguer deslogado">
+      <button class="icone-hamburguer" id="botaoMenu">
+        <i class="fa-solid fa-bars"></i>
+      </button>
+      <div class="menu-hamburguer-opcoes" id="menuHamburguerOpcoes">
+        <a href="login.html">🔑 Entrar</a>
+        <a href="#busca">🔍 Buscar</a>
+        <a href="criar-anuncio.html">📢 Anunciar</a>
+        <a href="#categorias">📂 Categorias</a>
+        <a href="duvidas.html">❓ Ajuda</a>
+      </div>
+    </div>
 
-  <div class="menu-conta" id="menuConta">
-    <button class="botao-conta" id="botaoConta">
-      <img src="imagens/usuario.png" alt="Conta" /> ▼
-    </button>
-    <div class="menu-suspenso" id="menuSuspenso">
-      <a href="#">Ver Perfil</a>
-      <a href="criar-anuncio.html">Meus Anúncios</a>
-      <a href="#">Configurações</a>
-      <a href="#" onclick="logout()">Sair</a>
+    <div class="menu-conta" id="menuConta">
+      <button class="botao-conta" id="botaoConta">
+        <img src="imagens/usuario.png" alt="Conta" /> ▼
+      </button>
+      <div class="menu-suspenso" id="menuSuspenso">
+        <a href="#">Ver Perfil</a>
+        <a href="criar-anuncio.html">Meus Anúncios</a>
+        <a href="#">Configurações</a>
+        <a href="#" onclick="logout()">Sair</a>
+      </div>
     </div>
   </div>
-</div>
-
 
   <!-- Barra de Navegação -->
   <nav class="barra-navegacao">
@@ -50,78 +48,77 @@
         <img src="imagens/mascote-olhofechado.png" class="mascote mascote-fechado" />
       </div>
       <span class="titulo-site">Click Serra Anúncios</span>
-      </div>
-      <div class="linha-separadora"></div>
-      <div class="busca-central">
-       <input type="text" class="campo-busca" placeholder="Buscar..." id="campoBusca" />
-    <button class="botao-lupa" onclick="buscar()">
-    <i class="fa-solid fa-magnifying-glass"></i>
-    </button>
-      </div>
-    </nav>
+    </div>
+    <div class="linha-separadora"></div>
+    <div class="busca-central">
+      <input type="text" class="campo-busca" placeholder="Buscar..." id="campoBusca" />
+      <button class="botao-lupa" onclick="buscar()">
+        <i class="fa-solid fa-magnifying-glass"></i>
+      </button>
+    </div>
+  </nav>
 
-<!-- Destaques -->
-<section id="destaques">
-  <h2 class="titulo-secao">Destaques</h2>
-  <div class="carrossel-destaque">
-    <button class="seta destaque-esquerda">❮</button>
-    <div class="container-destaque">
-      <div class="cards-destaque">
-        <div class="card-destaque"><img src="imagens/Divertilandia.jpg" alt="Destaque 1" /></div>
-        <div class="card-destaque"><img src="imagens/d2.jpg" alt="Destaque 2" /></div>
-        <div class="card-destaque"><img src="imagens/d3.jpg" alt="Destaque 3" /></div>
+  <!-- Destaques -->
+  <section id="destaques">
+    <h2 class="titulo-secao">Destaques</h2>
+    <div class="carrossel-destaque">
+      <button class="seta destaque-esquerda">❮</button>
+      <div class="container-destaque">
+        <div class="cards-destaque">
+          <div class="card-destaque"><img src="imagens/Divertilandia.jpg" alt="Destaque 1" /></div>
+          <div class="card-destaque"><img src="imagens/d2.jpg" alt="Destaque 2" /></div>
+          <div class="card-destaque"><img src="imagens/d3.jpg" alt="Destaque 3" /></div>
+        </div>
+      </div>
+      <button class="seta destaque-direita">❯</button>
+    </div>
+  </section>
+
+  <!-- Carrossel de Categorias -->
+  <section class="top-categorias" id="categorias">
+    <button class="seta esquerda">❮</button>
+    <div class="container-cards">
+      <div class="cards animacao-carrossel">
+        <div class="card"><a href="Categoria/Alimentacao.html"><i class="fas fa-utensils fa-2x"></i><p>Alimentação</p></a></div>
+        <div class="card"><a href="Categoria/Beleza_Estetica.html"><i class="fas fa-spa fa-2x"></i><p>Beleza</p></a></div>
+        <div class="card"><a href="Categoria/Educacao_Cursos.html"><i class="fas fa-book-open fa-2x"></i><p>Educação</p></a></div>
+        <div class="card"><a href="Categoria/Saude_BemEstar.html"><i class="fas fa-heartbeat fa-2x"></i><p>Saúde</p></a></div>
+        <div class="card"><a href="Categoria/Imoveis.html"><i class="fas fa-home fa-2x"></i><p>Imóveis</p></a></div>
+        <div class="card"><a href="Categoria/Automoveis.html"><i class="fas fa-car fa-2x"></i><p>Automóveis</p></a></div>
+        <div class="card"><a href="Categoria/Pet_Animais.html"><i class="fas fa-dog fa-2x"></i><p>Pet</p></a></div>
+        <div class="card"><a href="Categoria/Construcao_Reforma.html"><i class="fas fa-hammer fa-2x"></i><p>Construção</p></a></div>
+        <div class="card"><a href="Categoria/Festas_Eventos.html"><i class="fas fa-music fa-2x"></i><p>Festas</p></a></div>
+        <div class="card"><a href="Categoria/Oficinas_Mecanicas.html"><i class="fas fa-wrench fa-2x"></i><p>Oficinas</p></a></div>
+        <div class="card"><a href="Categoria/Moda_Acessorios.html"><i class="fas fa-tshirt fa-2x"></i><p>Moda</p></a></div>
+        <div class="card"><a href="Categoria/Moveis_Eletros_Decoracao.html"><i class="fas fa-couch fa-2x"></i><p>Móveis e Eletros</p></a></div>
+        <div class="card"><a href="Categoria/Servicos_Gerais.html"><i class="fas fa-concierge-bell fa-2x"></i><p>Serviços Gerais</p></a></div>
+        <div class="card"><a href="Categoria/Esportes_Lazer.html"><i class="fas fa-football-ball fa-2x"></i><p>Esporte e Lazer</p></a></div>
+        <div class="card"><a href="Categoria/Tecnologia_Informatica.html"><i class="fas fa-laptop-code fa-2x"></i><p>Tecnologia</p></a></div>
+        <div class="card"><a href="Categoria/Telefonia_Internet.html"><i class="fas fa-wifi fa-2x"></i><p>Telefonia</p></a></div>
+        <div class="card"><a href="Categoria/Turismo_Hospedagem.html"><i class="fas fa-hotel fa-2x"></i><p>Turismo</p></a></div>
       </div>
     </div>
-    <button class="seta destaque-direita">❯</button>
-  </div>
-</section>
-
-<!-- Carrossel de Categorias -->
-<section class="top-categorias">
-  <button class="seta esquerda">❮</button>
-  <div class="container-cards">
-    <div class="cards animacao-carrossel">
- <div class="card"><a href="Categoria/Alimentacao.html"><i class="fas fa-utensils fa-2x"></i><p>Alimentação</p></a></div>
-<div class="card"><a href="Categoria/Beleza_Estetica.html"><i class="fas fa-spa fa-2x"></i><p>Beleza</p></a></div>
-<div class="card"><a href="Categoria/Educacao_Cursos.html"><i class="fas fa-book-open fa-2x"></i><p>Educação</p></a></div>
-<div class="card"><a href="Categoria/Saude_BemEstar.html"><i class="fas fa-heartbeat fa-2x"></i><p>Saúde</p></a></div>
-<div class="card"><a href="Categoria/Imoveis.html"><i class="fas fa-home fa-2x"></i><p>Imóveis</p></a></div>
-<div class="card"><a href="Categoria/Automoveis.html"><i class="fas fa-car fa-2x"></i><p>Automóveis</p></a></div>
-<div class="card"><a href="Categoria/Pet_Animais.html"><i class="fas fa-dog fa-2x"></i><p>Pet</p></a></div>
-<div class="card"><a href="Categoria/Construcao_Reforma.html"><i class="fas fa-hammer fa-2x"></i><p>Construção</p></a></div>
-<div class="card"><a href="Categoria/Festas_Eventos.html"><i class="fas fa-music fa-2x"></i><p>Festas</p></a></div>
-<div class="card"><a href="Categoria/Oficinas_Mecanicas.html"><i class="fas fa-wrench fa-2x"></i><p>Oficinas</p></a></div>
-<div class="card"><a href="Categoria/Moda_Acessorios.html"><i class="fas fa-tshirt fa-2x"></i><p>Moda</p></a></div>
-<div class="card"><a href="Categoria/Moveis_Eletros_Decoracao.html"><i class="fas fa-couch fa-2x"></i><p>Móveis e Eletros</p></a></div>
-<div class="card"><a href="Categoria/Servicos_Gerais.html"><i class="fas fa-concierge-bell fa-2x"></i><p>Serviços Gerais</p></a></div>
-<div class="card"><a href="Categoria/Esportes_Lazer.html"><i class="fas fa-football-ball fa-2x"></i><p>Esporte e Lazer</p></a></div>
-<div class="card"><a href="Categoria/Tecnologia_Informatica.html"><i class="fas fa-laptop-code fa-2x"></i><p>Tecnologia</p></a></div>
-<div class="card"><a href="Categoria/Telefonia_Internet.html"><i class="fas fa-wifi fa-2x"></i><p>Telefonia</p></a></div>
-<div class="card"><a href="Categoria/Turismo_Hospedagem.html"><i class="fas fa-hotel fa-2x"></i><p>Turismo</p></a></div>
-    </div>
-  </div>
-    
-  <button class="seta direita">❯</button>
-</section>
-
+    <button class="seta direita">❯</button>
+  </section>
 
   <!-- Rodapé -->
   <footer class="rodape">
     <p>ClickSerra &copy; 2025 - Todos os direitos reservados</p>
   </footer>
-  
- <!-- Barra Inferior -->
-<nav class="barra-inferior">
-  <a href="empregos.html">💼<span>Vagas</span></a>
-  <a href="eventos.html">🎉<span>Eventos</span></a>
- <button class="botao-anunciar-destaque" onclick="irParaAnuncio()">
-  📢 Anunciar
-</button>
-  <a href="noticias.html">📰<span>Notícias</span></a>
-  <a href="duvidas.html">❓<span>Dúvidas</span></a>
- 
-</nav>
-    <!-- Botão Topo -->
+
+  <!-- Espaço reservado para barra inferior -->
+  <div id="espacoBarraInferior"></div>
+
+  <!-- Barra Inferior -->
+  <nav class="barra-inferior">
+    <a href="empregos.html">💼<span>Vagas</span></a>
+    <a href="eventos.html">🎉<span>Eventos</span></a>
+    <a href="#" class="botao-anunciar-destaque" onclick="irParaAnuncio()">📢<span>Anunciar</span></a>
+    <a href="noticias.html">📰<span>Notícias</span></a>
+    <a href="duvidas.html">❓<span>Dúvidas</span></a>
+  </nav>
+
+  <!-- Botão Topo -->
   <button id="btnTopo">&#8679;</button>
 
   <!-- Scripts -->
