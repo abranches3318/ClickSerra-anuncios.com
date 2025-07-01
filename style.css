@@ -131,6 +131,18 @@ body {
   background-color: rgba(255, 255, 255, 0.1); /* efeito hover leve */
 }
 
+.botao-conta.icone-hamburguer {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 24px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px;
+}
+
 /* Barra de Navegação */
 .barra-navegacao {
   display: flex;
