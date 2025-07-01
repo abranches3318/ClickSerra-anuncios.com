@@ -120,6 +120,17 @@ body {
   display: block;
 }
 
+.botao-conta.icone-hamburguer {
+  padding: 8px;
+  border-radius: 50%;
+  background-color: transparent; /* ou branco, se necessário */
+  transition: background 0.2s;
+}
+
+.botao-conta.icone-hamburguer:hover {
+  background-color: rgba(255, 255, 255, 0.1); /* efeito hover leve */
+}
+
 /* Barra de Navegação */
 .barra-navegacao {
   display: flex;
