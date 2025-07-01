@@ -31,16 +31,17 @@
     </div>
 
     <div class="menu-conta" id="menuConta">
-      <button class="botao-conta" id="botaoConta">
-        <img src="imagens/usuario.png" alt="Conta" /> ▼
-      </button>
-      <div class="menu-suspenso" id="menuSuspenso">
-        <a href="#">Ver Perfil</a>
-        <a href="criar-anuncio.html">Meus Anúncios</a>
-        <a href="#">Configurações</a>
-        <a href="#" onclick="logout()">Sair</a>
-      </div>
-    </div>
+  <button class="botao-conta" id="botaoConta" aria-label="Abrir menu da conta">
+    <i class="fas fa-bars fa-lg"></i>
+  </button>
+
+  <div class="menu-suspenso" id="menuSuspenso">
+    <a href="#"><i class="fas fa-user"></i> Ver Perfil</a>
+    <a href="criar-anuncio.html"><i class="fas fa-bullhorn"></i> Meus Anúncios</a>
+    <a href="#"><i class="fas fa-cog"></i> Configurações</a>
+    <a href="#" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Sair</a>
+  </div>
+</div>
   </div>
 
   <!-- Barra de Navegação -->
