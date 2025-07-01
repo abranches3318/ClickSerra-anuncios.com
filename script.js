@@ -12,20 +12,26 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 const auth = firebase.auth();
 
-function alternarMenu() {
-  const opcoes = document.getElementById("menuHamburguerOpcoes"); 
-  if (opcoes) {
-    opcoes.classList.toggle("ativo");
-  }
-}
+// Menu Hamburguer (deslogado)
+document.addEventListener("DOMContentLoaded", () => {
+  const botaoMenu = document.getElementById("botaoMenu");
+  const menuOpcoes = document.getElementById("menuHamburguerOpcoes");
 
-window.addEventListener("click", function (e) {
-  const menu = document.getElementById("menuHamburguer");
-  const opcoes = document.getElementById("menuHamburguerOpcoes");
-  if (!menu.contains(e.target)) {
-    opcoes.classList.remove("ativo");
+  if (botaoMenu && menuOpcoes) {
+    botaoMenu.addEventListener("click", (e) => {
+      e.stopPropagation(); // Evita que o clique feche imediatamente
+      menuOpcoes.classList.toggle("ativo");
+    });
+
+    // Fecha se clicar fora
+    document.addEventListener("click", (e) => {
+      if (!menuOpcoes.contains(e.target) && !botaoMenu.contains(e.target)) {
+        menuOpcoes.classList.remove("ativo");
+      }
+    });
   }
 });
+
 
 
 // Campo de Busca
