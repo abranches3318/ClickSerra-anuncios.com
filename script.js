@@ -4,45 +4,41 @@ const firebaseConfig = {
   authDomain: "clickserra-anuncios.firebaseapp.com",
   databaseURL: "https://clickserra-anuncios-default-rtdb.firebaseio.com",
   projectId: "clickserra-anuncios",
-  storageBucket: "clickserra-anuncios.firebasestorage.app",
+  storageBucket: "clickserra-anuncios.appspot.com",
   messagingSenderId: "251868045964",
   appId: "1:251868045964:web:34f527f3d7c380746211a9",
 };
 
 firebase.initializeApp(firebaseConfig);
-window.auth = firebase.auth();
+const auth = firebase.auth();
 
-// menu hambúrguer 
-  document.getElementById('botaoMenu').addEventListener('click', function () {
-  document.querySelector('.menu-hamburguer').classList.toggle('ativo');
-});
-
-  // Fecha o menu ao clicar fora
-  document.addEventListener('click', function (e) {
-    const menu = document.getElementById('menuHamburguer');
-    if (!menu.contains(e.target)) {
-      menu.classList.remove('ativo');
-    }
-  });
-
+// Menu Hambúrguer (para usuários deslogados)
 function alternarMenu() {
-  const menu = document.getElementById("menuHamburguer");
-  menu.classList.toggle("ativo");
+  const opcoes = document.getElementById("opcoesHamburguer");
+  opcoes.classList.toggle("ativo");
 }
 
+// Fecha menu hambúrguer ao clicar fora
+window.addEventListener("click", function (e) {
+  const menu = document.getElementById("menuHamburguer");
+  const opcoes = document.getElementById("opcoesHamburguer");
+  if (!menu.contains(e.target)) {
+    opcoes.classList.remove("ativo");
+  }
+});
 
 // Campo de Busca
 function buscar() {
-  const termo = document.getElementById('campoBusca').value;
+  const termo = document.getElementById("campoBusca").value;
   if (termo.trim()) {
     window.location.href = `busca.html?q=${encodeURIComponent(termo)}`;
   }
 }
+window.buscar = buscar;
 
-// Menu suspenso
+// Menu Conta (usuário logado)
 const botaoConta = document.getElementById("botaoConta");
 const menuConta = document.getElementById("menuConta");
-const menuSuspenso = document.getElementById("menuSuspenso");
 
 if (botaoConta) {
   botaoConta.addEventListener("click", () => {
@@ -50,14 +46,14 @@ if (botaoConta) {
   });
 }
 
-// Navegar para página de anúncio
+// Botão Anuncie Aqui
 window.irParaAnuncio = function () {
   const user = auth.currentUser;
   if (user) {
-    window.location.href = 'criar-anuncio.html';
+    window.location.href = "criar-anuncio.html";
   } else {
-    localStorage.setItem('destinoAposLogin', 'criar-anuncio.html');
-    window.location.href = 'login.html';
+    localStorage.setItem("destinoAposLogin", "criar-anuncio.html");
+    window.location.href = "login.html";
   }
 };
 
@@ -69,30 +65,29 @@ const cards = document.querySelector(".top-categorias .cards");
 if (cards && setaEsquerda && setaDireita) {
   const cardsConteudo = cards.innerHTML;
   cards.innerHTML += cardsConteudo;
-
   let posScroll = 0;
   const passoScroll = 160;
 
   setaEsquerda.addEventListener("click", () => {
     posScroll -= passoScroll;
     if (posScroll < 0) posScroll = cards.scrollWidth / 2;
-    cards.style.transform = `translateX(${-posScroll}px)`;
+    cards.style.transform = `translateX(-${posScroll}px)`;
   });
 
   setaDireita.addEventListener("click", () => {
     posScroll += passoScroll;
     if (posScroll >= cards.scrollWidth / 2) posScroll = 0;
-    cards.style.transform = `translateX(${-posScroll}px)`;
+    cards.style.transform = `translateX(-${posScroll}px)`;
   });
 
   setInterval(() => {
     posScroll += passoScroll;
     if (posScroll >= cards.scrollWidth / 2) posScroll = 0;
-    cards.style.transform = `translateX(${-posScroll}px)`;
+    cards.style.transform = `translateX(-${posScroll}px)`;
   }, 4000);
 }
 
-// Carrossel Destaques
+// Carrossel de Destaques
 const cardsDestaque = document.querySelector(".cards-destaque");
 const btnEsquerdaDestaque = document.querySelector(".seta.destaque-esquerda");
 const btnDireitaDestaque = document.querySelector(".seta.destaque-direita");
@@ -121,7 +116,7 @@ if (cardsDestaque && btnEsquerdaDestaque && btnDireitaDestaque) {
   }, 5000);
 }
 
-// Botão Voltar ao Topo
+// Botão Topo
 const btnTopo = document.getElementById("btnTopo");
 if (btnTopo) {
   window.addEventListener("scroll", () => {
@@ -133,41 +128,19 @@ if (btnTopo) {
   });
 }
 
-// Autenticação - visibilidade de botões
+// Autenticação - controle de visibilidade de menus
 auth.onAuthStateChanged((user) => {
-  const btnEntrar = document.getElementById("botao-entrar");
-  const btnMeusAnuncios = document.getElementById("botao-meus-anuncios");
-  const botaoConta = document.getElementById("botaoConta");
-  const menuConta = document.getElementById("menuConta");
-  const barraLogado = document.getElementById('barra-superior-logado');
-  const espacoBarra = document.getElementById('espacoBarraSuperior');
-
-  if (user) {
-    if (btnEntrar) btnEntrar.style.display = "none";
-    if (btnMeusAnuncios) btnMeusAnuncios.style.display = "inline-block";
-    if (menuConta) menuConta.style.display = "block";
-    if (barraLogado) barraLogado.style.display = 'flex';
-    if (espacoBarra) espacoBarra.style.display = 'none';
-  } else {
-    if (btnEntrar) btnEntrar.style.display = "inline-block";
-    if (btnMeusAnuncios) btnMeusAnuncios.style.display = "none";
-    if (menuConta) menuConta.style.display = "none";
-    if (barraLogado) barraLogado.style.display = 'none';
-    if (espacoBarra) espacoBarra.style.display = 'block';
-  }
-});
-
-firebase.auth().onAuthStateChanged((user) => {
   const menuHamburguer = document.getElementById("menuHamburguer");
+  const menuConta = document.getElementById("menuConta");
+
   if (user) {
-    // Usuário logado → esconder menu hambúrguer
-    menuHamburguer.style.display = "none";
+    if (menuHamburguer) menuHamburguer.style.display = "none";
+    if (menuConta) menuConta.style.display = "flex";
   } else {
-    // Usuário deslogado → mostrar menu
-    menuHamburguer.style.display = "flex";
+    if (menuHamburguer) menuHamburguer.style.display = "flex";
+    if (menuConta) menuConta.style.display = "none";
   }
 });
-
 
 // Logout
 function logout() {
@@ -196,20 +169,19 @@ function loginComGoogle() {
 window.loginComGoogle = loginComGoogle;
 
 // Mascote animação
-document.addEventListener("DOMContentLoaded", function () {
-  const mascoteAberto = document.querySelector('.mascote-aberto');
-  const mascoteFechado = document.querySelector('.mascote-fechado');
+window.addEventListener("DOMContentLoaded", () => {
+  const mascoteAberto = document.querySelector(".mascote-aberto");
+  const mascoteFechado = document.querySelector(".mascote-fechado");
 
   if (mascoteAberto && mascoteFechado) {
     setInterval(() => {
-      mascoteAberto.style.opacity = '0';
-      mascoteFechado.style.opacity = '1';
+      mascoteAberto.style.opacity = "0";
+      mascoteFechado.style.opacity = "1";
 
       setTimeout(() => {
-        mascoteAberto.style.opacity = '1';
-        mascoteFechado.style.opacity = '0';
-      }, 500); // Fecha por 500ms
-    }, 3500); // Pisca a cada 3.5s
+        mascoteAberto.style.opacity = "1";
+        mascoteFechado.style.opacity = "0";
+      }, 500);
+    }, 3500);
   }
 });
-  
