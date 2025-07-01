@@ -64,6 +64,22 @@ if (botaoConta && menuConta && menuSuspenso) {
   });
 }
 
+auth.onAuthStateChanged((user) => {
+  const menuConta = document.getElementById("menuConta");
+  const menuHamburguer = document.getElementById("menuHamburguer");
+
+  if (user) {
+    if (menuConta) menuConta.style.display = "flex";
+    if (menuHamburguer) menuHamburguer.style.display = "none";
+  } else {
+    if (menuConta) {
+      menuConta.style.display = "none";
+      menuConta.classList.remove("ativo"); // fecha o menu suspenso se estiver aberto
+    }
+    if (menuHamburguer) menuHamburguer.style.display = "flex";
+  }
+});
+
 // Ir para criar anúncio
 function irParaAnuncio() {
   const user = auth.currentUser;
