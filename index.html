@@ -6,19 +6,16 @@
   <title>ClickSerra - Anúncios</title>
   <link rel="icon" type="image/x-icon" href="favicon.ico">
   <link rel="stylesheet" href="style.css" />
-  <link rel="stylesheet" 
-  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
-  integrity="sha512-1ycn6IcaQQ40/J6AU5yZ9G0v5YZo1U6e9ZxflW0nGzW51N1hsI0rUpFxUglik5C1YQYZJ3UKY9kx64pr8K0C5Q=="
-  crossorigin="anonymous"
-  referrerpolicy="no-referrer"
-  />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    integrity="sha512-1ycn6IcaQQ40/J6AU5yZ9G0v5YZo1U6e9ZxflW0nGzW51N1hsI0rUpFxUglik5C1YQYZJ3UKY9kx64pr8K0C5Q=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
 
+  <!-- Firebase -->
   <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth-compat.js"></script>
-  
 </head>
-  
 <body>
+
   <!-- Barra Superior -->
   <div class="barra-superior" id="barraSuperior">
     <div id="menuHamburguer" class="menu-hamburguer deslogado">
@@ -28,7 +25,7 @@
       <div class="menu-hamburguer-opcoes" id="menuHamburguerOpcoes">
         <a href="login.html">🔑 Entrar</a>
         <a href="#busca">🔍 Buscar</a>
-        <a href="#" onclick="irParaAnuncio()">📢<span>Anunciar</span></a>
+        <a href="#" onclick="irParaAnuncio()">📢 Anunciar</a>
         <a href="#categorias">📂 Categorias</a>
         <a href="duvidas.html">❓ Ajuda</a>
       </div>
@@ -81,7 +78,7 @@
     </div>
   </section>
 
-  <!-- Carrossel de Categorias -->
+  <!-- Categorias -->
   <section class="top-categorias" id="categorias">
     <button class="seta esquerda">❮</button>
     <div class="container-cards">
@@ -98,7 +95,7 @@
         <div class="card"><a href="Categoria/Oficinas_Mecanicas.html"><i class="fas fa-wrench fa-2x"></i><p>Oficinas</p></a></div>
         <div class="card"><a href="Categoria/Moda_Acessorios.html"><i class="fas fa-tshirt fa-2x"></i><p>Moda</p></a></div>
         <div class="card"><a href="Categoria/Moveis_Eletros_Decoracao.html"><i class="fas fa-couch fa-2x"></i><p>Móveis e Eletros</p></a></div>
-        <div class="card"><a href="Categoria/Servicos_Gerais.html"><i class="fas fa-concierge-bell fa-2x"></i><p>Serviços Gerais</p></a></div>
+        <div class="card"><a href="Categoria/Servicos_Gerais.html"><i class="fas fa-concierge-bell fa-2x"></i><p>Serviços</p></a></div>
         <div class="card"><a href="Categoria/Esportes_Lazer.html"><i class="fas fa-football-ball fa-2x"></i><p>Esporte e Lazer</p></a></div>
         <div class="card"><a href="Categoria/Tecnologia_Informatica.html"><i class="fas fa-laptop-code fa-2x"></i><p>Tecnologia</p></a></div>
         <div class="card"><a href="Categoria/Telefonia_Internet.html"><i class="fas fa-wifi fa-2x"></i><p>Telefonia</p></a></div>
@@ -108,15 +105,14 @@
     <button class="seta direita">❯</button>
   </section>
 
-  <!-- Espaço reservado para barra inferior -->
+  <!-- Espaço para rodapé não colidir com a barra inferior -->
   <div id="espacoBarraInferior"></div>
-
 
   <!-- Rodapé -->
   <footer class="rodape">
     <p>ClickSerra &copy; 2025 - Todos os direitos reservados</p>
   </footer>
-  
+
   <!-- Barra Inferior -->
   <nav class="barra-inferior">
     <a href="empregos.html">💼<span>Vagas</span></a>
