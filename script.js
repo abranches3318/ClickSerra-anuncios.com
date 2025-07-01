@@ -39,12 +39,28 @@ document.addEventListener("DOMContentLoaded", () => {
 
 // Campo de busca
 function buscar() {
-  const termo = document.getElementById('campoBusca').value.trim();
+  const termo = document.getElementById("campoBusca").value.trim();
   if (termo) {
     window.location.href = `busca.html?q=${encodeURIComponent(termo)}`;
   }
 }
 window.buscar = buscar;
+
+// Aciona busca ao clicar na lupa
+const botaoLupa = document.getElementById("botaoLupa");
+if (botaoLupa) {
+  botaoLupa.addEventListener("click", buscar);
+}
+
+// Aciona busca ao pressionar Enter
+const campoBusca = document.getElementById("campoBusca");
+if (campoBusca) {
+  campoBusca.addEventListener("keydown", (event) => {
+    if (event.key === "Enter") {
+      buscar();
+    }
+  });
+}
 
 // Menu suspenso da conta
 const botaoConta = document.getElementById("botaoConta");
