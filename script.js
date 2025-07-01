@@ -6,14 +6,14 @@ const firebaseConfig = {
   projectId: "clickserra-anuncios",
   storageBucket: "clickserra-anuncios.appspot.com",
   messagingSenderId: "251868045964",
-  appId: "1:251868045964:web:34f527f3d7c380746211a9",
+  appId: "1:251868045964:web:34f527f3d7c380746211a9"
 };
 
 firebase.initializeApp(firebaseConfig);
 const auth = firebase.auth();
 
-// Espera DOM carregar antes de adicionar listeners
-window.addEventListener("DOMContentLoaded", () => {
+// Menu Hamburguer (deslogado)
+document.addEventListener("DOMContentLoaded", () => {
   const botaoMenu = document.getElementById("botaoMenu");
   const menuOpcoes = document.getElementById("menuHamburguerOpcoes");
 
@@ -29,7 +29,7 @@ window.addEventListener("DOMContentLoaded", () => {
       }
     });
   }
-
+});
 
 // Campo de Busca
 function buscar() {
