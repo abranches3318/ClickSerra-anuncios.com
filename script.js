@@ -12,41 +12,36 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 const auth = firebase.auth();
 
-document.getElementById('botaoMenu').addEventListener('click', function (e) {
-    e.stopPropagation(); // Evita fechamento imediato ao clicar no botão
-    const menu = document.getElementById('menuHamburguer');
-    menu.classList.toggle('ativo');
-  });
+// Menu hambúrguer
+const botaoMenu = document.getElementById('botaoMenu');
+const menuHamburguer = document.getElementById('menuHamburguer');
 
-  // Fecha o menu ao clicar fora
-  document.addEventListener('click', function (e) {
-    const menu = document.getElementById('menuHamburguer');
-    if (!menu.contains(e.target)) {
-      menu.classList.remove('ativo');
-    }
-  });
+botaoMenu.addEventListener('click', function (e) {
+  e.stopPropagation();
+  menuHamburguer.classList.toggle('ativo');
+});
 
-function alternarMenu() {
-  const menu = document.getElementById("menuHamburguer");
-  menu.classList.toggle("ativo");
-}
-
-
-firebase.auth().onAuthStateChanged((user) => {
-  const menuHamburguer = document.getElementById("menuHamburguer");
-  if (user) {
-    // Usuário logado → esconder menu hambúrguer
-    menuHamburguer.style.display = "none";
-  } else {
-    // Usuário deslogado → mostrar menu
-    menuHamburguer.style.display = "flex";
+document.addEventListener('click', function (e) {
+  if (!menuHamburguer.contains(e.target)) {
+    menuHamburguer.classList.remove('ativo');
   }
 });
 
-// Campo de Busca
+// Exibe ou esconde menu hambúrguer dependendo do login
+auth.onAuthStateChanged((user) => {
+  if (user) {
+    menuHamburguer.style.display = "none";
+    document.getElementById("menuConta").style.display = "block";
+  } else {
+    menuHamburguer.style.display = "flex";
+    document.getElementById("menuConta").style.display = "none";
+  }
+});
+
+// Campo de busca
 function buscar() {
-  const termo = document.getElementById('campoBusca').value;
-  if (termo.trim()) {
+  const termo = document.getElementById('campoBusca').value.trim();
+  if (termo) {
     window.location.href = `busca.html?q=${encodeURIComponent(termo)}`;
   }
 }
@@ -57,12 +52,19 @@ const botaoConta = document.getElementById("botaoConta");
 const menuConta = document.getElementById("menuConta");
 
 if (botaoConta) {
-  botaoConta.addEventListener("click", () => {
+  botaoConta.addEventListener("click", (e) => {
+    e.stopPropagation();
     menuConta.classList.toggle("ativo");
+  });
+
+  document.addEventListener("click", (e) => {
+    if (!menuConta.contains(e.target)) {
+      menuConta.classList.remove("ativo");
+    }
   });
 }
 
-// Ir para página de anúncio
+// Ir para criar anúncio
 function irParaAnuncio() {
   const user = auth.currentUser;
   if (user) {
@@ -105,7 +107,7 @@ if (cards && setaEsquerda && setaDireita) {
   }, 4000);
 }
 
-// Carrossel Destaques
+// Carrossel de Destaques
 const cardsDestaque = document.querySelector(".cards-destaque");
 const btnEsquerdaDestaque = document.querySelector(".seta.destaque-esquerda");
 const btnDireitaDestaque = document.querySelector(".seta.destaque-direita");
@@ -146,29 +148,6 @@ if (btnTopo) {
   });
 }
 
-// Verifica login para mostrar/esconder botões
-auth.onAuthStateChanged((user) => {
-  const btnEntrar = document.getElementById("botao-entrar");
-  const btnMeusAnuncios = document.getElementById("botao-meus-anuncios");
-  const menuConta = document.getElementById("menuConta");
-  const barraLogado = document.getElementById("barra-superior-logado");
-  const espacoBarra = document.getElementById("espacoBarraSuperior");
-
-  if (user) {
-    if (btnEntrar) btnEntrar.style.display = "none";
-    if (btnMeusAnuncios) btnMeusAnuncios.style.display = "inline-block";
-    if (menuConta) menuConta.style.display = "block";
-    if (barraLogado) barraLogado.style.display = "flex";
-    if (espacoBarra) espacoBarra.style.display = "none";
-  } else {
-    if (btnEntrar) btnEntrar.style.display = "inline-block";
-    if (btnMeusAnuncios) btnMeusAnuncios.style.display = "none";
-    if (menuConta) menuConta.style.display = "none";
-    if (barraLogado) barraLogado.style.display = "none";
-    if (espacoBarra) espacoBarra.style.display = "block";
-  }
-});
-
 // Logout
 function logout() {
   auth.signOut().then(() => {
@@ -182,8 +161,7 @@ function loginComGoogle() {
   const provider = new firebase.auth.GoogleAuthProvider();
   provider.setCustomParameters({ prompt: "select_account" });
 
-  auth
-    .signInWithPopup(provider)
+  auth.signInWithPopup(provider)
     .then(() => {
       const destino = localStorage.getItem("destinoAposLogin") || "index.html";
       window.location.href = destino;
@@ -196,7 +174,7 @@ function loginComGoogle() {
 window.loginComGoogle = loginComGoogle;
 
 // Animação do mascote
-document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("DOMContentLoaded", () => {
   const mascoteAberto = document.querySelector(".mascote-aberto");
   const mascoteFechado = document.querySelector(".mascote-fechado");
 
