@@ -12,26 +12,23 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 const auth = firebase.auth();
 
-// Menu Hamburguer (deslogado)
-document.addEventListener("DOMContentLoaded", () => {
+// Espera DOM carregar antes de adicionar listeners
+window.addEventListener("DOMContentLoaded", () => {
   const botaoMenu = document.getElementById("botaoMenu");
   const menuOpcoes = document.getElementById("menuHamburguerOpcoes");
 
   if (botaoMenu && menuOpcoes) {
     botaoMenu.addEventListener("click", (e) => {
-      e.stopPropagation(); // Evita que o clique feche imediatamente
+      e.stopPropagation();
       menuOpcoes.classList.toggle("ativo");
     });
 
-    // Fecha se clicar fora
     document.addEventListener("click", (e) => {
       if (!menuOpcoes.contains(e.target) && !botaoMenu.contains(e.target)) {
         menuOpcoes.classList.remove("ativo");
       }
     });
   }
-});
-
 
 
 // Campo de Busca
