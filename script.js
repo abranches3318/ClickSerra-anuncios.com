@@ -12,14 +12,13 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 const auth = firebase.auth();
 
-// Alternar menu hamburguer (mobile)
 function alternarMenu() {
-  const opcoes = document.getElementById("menuHamburguerOpcoes");
-  opcoes.classList.toggle("ativo");
+  const opcoes = document.getElementById("menuHamburguerOpcoes"); 
+  if (opcoes) {
+    opcoes.classList.toggle("ativo");
+  }
 }
-window.alternarMenu = alternarMenu;
 
-// Fecha o menu ao clicar fora
 window.addEventListener("click", function (e) {
   const menu = document.getElementById("menuHamburguer");
   const opcoes = document.getElementById("menuHamburguerOpcoes");
@@ -27,6 +26,7 @@ window.addEventListener("click", function (e) {
     opcoes.classList.remove("ativo");
   }
 });
+
 
 // Campo de Busca
 function buscar() {
