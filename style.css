@@ -80,13 +80,15 @@ body {
 /* Menu Conta */
 .menu-conta {
   position: relative;
-  display: none;
+  display: flex; /* Mostrar o botão da conta por padrão. Altere via JS se necessário */
+  align-items: center;
 }
 
 .botao-conta img {
   width: 30px;
   height: 30px;
   border-radius: 50%;
+  cursor: pointer;
 }
 
 .menu-suspenso {
