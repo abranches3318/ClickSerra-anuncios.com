@@ -28,14 +28,13 @@ document.addEventListener('click', function (e) {
 });
 
 // Exibe ou esconde menu hambúrguer dependendo do login
-auth.onAuthStateChanged((user) => {
-  if (user) {
-    menuHamburguer.style.display = "none";
-    document.getElementById("menuConta").style.display = "block";
-  } else {
-    menuHamburguer.style.display = "flex";
-    document.getElementById("menuConta").style.display = "none";
-  }
+document.addEventListener("DOMContentLoaded", () => {
+  firebase.auth().onAuthStateChanged((user) => {
+    const menuHamburguer = document.getElementById("menuHamburguer");
+    if (menuHamburguer) {
+      menuHamburguer.style.display = user ? "none" : "flex";
+    }
+  });
 });
 
 // Campo de busca
