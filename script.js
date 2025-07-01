@@ -49,8 +49,9 @@ window.buscar = buscar;
 // Menu suspenso da conta
 const botaoConta = document.getElementById("botaoConta");
 const menuConta = document.getElementById("menuConta");
+const menuSuspenso = document.getElementById("menuSuspenso");
 
-if (botaoConta) {
+if (botaoConta && menuConta && menuSuspenso) {
   botaoConta.addEventListener("click", (e) => {
     e.stopPropagation();
     menuConta.classList.toggle("ativo");
