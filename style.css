@@ -1,4 +1,4 @@
-/* Reset e Configurações Globais */
+/* Reset e Globais */
 * {
   margin: 0;
   padding: 0;
@@ -10,17 +10,13 @@ body {
   background: #f9f9f9;
   color: #333;
   min-height: 100vh;
-  position: relative;
   padding-top: 130px;
   padding-bottom: 160px;
+  position: relative;
+  overflow-x: hidden;
 }
 
-/* Espaço visual fixo no topo */
-.espaco-barra {
-  height: 90px;
-}
-
-/* Barra Superior (Entrar ou Conta) */
+/* Barra Superior */
 .barra-superior {
   position: fixed;
   top: 0;
@@ -34,69 +30,10 @@ body {
   justify-content: space-between;
   padding: 0 15px;
   gap: 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
 }
 
-.botao-acao {
-  background-color: white;
-  color: #005288;
-  padding: 6px 14px;
-  border-radius: 4px;
-  font-weight: bold;
-  border: none;
-  cursor: pointer;
-  font-size: 14px;
-  margin-left: 10px;
-}
-
-.botao-entrar {
-  background: none;
-  border: none;
-  color: white;
-  font-weight: bold;
-  font-size: 15px;
-  cursor: pointer;
-}
-
-.menu-conta {
-  position: relative;
-}
-
-.botao-conta img {
-  width: 30px;
-  height: 30px;
-  border-radius: 50%;
-  vertical-align: middle;
-}
-
-.menu-suspenso {
-  display: none;
-  position: absolute;
-  top: 40px;
-  left: 0;
-  background-color: white;
-  border: 1px solid #ccc;
-  border-radius: 6px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
-  z-index: 999;
-  width: 160px;
-}
-
-.menu-suspenso a {
-  display: block;
-  padding: 10px;
-  color: #333;
-  text-decoration: none;
-  border-bottom: 1px solid #eee;
-}
-
-.menu-suspenso a:last-child {
-  border-bottom: none;
-}
-
-.menu-conta.ativo .menu-suspenso {
-  display: block;
-}
-
+/* Menu Hamburguer */
 .menu-hamburguer {
   position: relative;
   display: flex;
@@ -136,14 +73,52 @@ body {
   border-bottom: none;
 }
 
-/* Classe para mostrar o menu */
 .menu-hamburguer.ativo .menu-hamburguer-opcoes {
   display: block;
 }
 
+/* Menu Conta */
+.menu-conta {
+  position: relative;
+  display: none;
+}
 
+.botao-conta img {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+}
 
-/* Barra de Navegação Principal */
+.menu-suspenso {
+  display: none;
+  position: absolute;
+  top: 40px;
+  left: 0;
+  background-color: white;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+  z-index: 999;
+  width: 160px;
+}
+
+.menu-suspenso a {
+  display: block;
+  padding: 10px;
+  color: #333;
+  text-decoration: none;
+  border-bottom: 1px solid #eee;
+}
+
+.menu-suspenso a:last-child {
+  border-bottom: none;
+}
+
+.menu-conta.ativo .menu-suspenso {
+  display: block;
+}
+
+/* Barra de Navegação */
 .barra-navegacao {
   display: flex;
   flex-direction: column;
@@ -170,18 +145,16 @@ body {
   position: relative;
   width: 60px;
   height: 60px;
-  margin-right: 10px;
-  flex-shrink: 0;
 }
 
 .mascote {
   position: absolute;
-  top: 0;
-  left: 0;
   width: 60px;
   height: 60px;
   object-fit: contain;
-  transition: opacity 0.2s ease;
+  top: 0;
+  left: 0;
+  transition: opacity 0.3s ease;
   pointer-events: none;
 }
 
@@ -208,6 +181,7 @@ body {
   margin: 10px 0;
 }
 
+/* Campo de Busca */
 .busca-central {
   position: relative;
   width: 100%;
@@ -235,19 +209,7 @@ body {
   cursor: pointer;
 }
 
-.botao-anunciar,
-.botao-meus-anuncios {
-  background-color: white;
-  color: #005288;
-  padding: 6px 14px;
-  border-radius: 4px;
-  font-weight: bold;
-  border: none;
-  cursor: pointer;
-  font-size: 14px;
-}
-
-/* Destaques */
+/* Carrossel de Destaques */
 #destaques {
   margin: 20px 10px;
   text-align: center;
@@ -292,13 +254,12 @@ body {
   color: #005288;
 }
 
-/* Categorias */
+/* Carrossel de Categorias */
 .top-categorias {
   display: flex;
   align-items: center;
-  margin: 20px 10px;
-  overflow-x: hidden;
-  margin-bottom: 100px;
+  margin: 20px 10px 100px;
+  overflow: hidden;
 }
 
 .container-cards {
@@ -318,22 +279,32 @@ body {
   padding: 10px;
   border-radius: 6px;
   text-align: center;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-}
-
-.card img {
-  width: 100%;
-  height: 80px;
-  object-fit: cover;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
 .card i {
-font-weight: 300;
-  opacity: 0.85
+  font-weight: 300;
+  opacity: 0.85;
 }
 
+.card p {
+  margin-top: 6px;
+  font-size: 14px;
+}
 
-/* Barra Inferior Fixa */
+/* Rodapé */
+.rodape {
+  background-color: #003b5c;
+  color: white;
+  text-align: center;
+  font-size: 14px;
+  padding: 15px;
+  position: relative;
+  z-index: 1;
+  margin-top: 60px;
+}
+
+/* Barra Inferior */
 .barra-inferior {
   display: flex;
   justify-content: space-around;
@@ -348,12 +319,12 @@ font-weight: 300;
   z-index: 998;
   font-size: 16px;
   gap: 18px;
+  box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.15);
 }
 
 .barra-inferior a {
   color: white;
   text-decoration: none;
-  font-size: 16px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -363,65 +334,13 @@ font-weight: 300;
   font-size: 12px;
 }
 
-.botao-anunciar-inferior {
-  background-color: white;
-  color: #005288;
-  padding: 8px 16px;
-  border-radius: 6px;
-  font-weight: bold;
-  border: none;
-  cursor: pointer;
-  font-size: 15px;
-}
-
-/* Responsivo */
-@media (max-width: 600px) {
-  .barra-inferior a {
-    font-size: 12px;
-  }
-
-  .barra-inferior a span {
-    font-size: 10px;
-  }
-
-  .barra-inferior {
-    height: auto;
-    padding: 6px;
-    gap: 0;
-  }
-
-  .barra-navegacao {
-    padding-bottom: 10px;
-  }
-}
-
-.botao-circular {
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  background-color: white;
-  color: #005288;
-  font-size: 22px;
-  font-weight: bold;
-  border: none;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-.botao-circular:hover {
-  background-color: #e6e6e6;
-}
-
+/* Botão Anunciar Destaque */
 .botao-anunciar-destaque {
   display: flex;
   align-items: center;
   justify-content: center;
   padding: 10px 20px;
-  border-radius: 30px; /* deixa ele arredondado */
+  border-radius: 30px;
   background-color: #ffcc00;
   color: #003d66;
   font-weight: bold;
@@ -436,7 +355,7 @@ font-weight: 300;
   background-color: #ffdb4d;
 }
 
-/* Botão Topo */
+/* Botão Voltar ao Topo */
 #btnTopo {
   position: fixed;
   bottom: 110px;
@@ -451,23 +370,22 @@ font-weight: 300;
   display: none;
 }
 
-.barra-superior,
-.barra-inferior {
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+/* Responsivo */
+@media (max-width: 600px) {
+  .barra-inferior a {
+    font-size: 12px;
+  }
+
+  .barra-inferior a span {
+    font-size: 10px;
+  }
+
+  .barra-inferior {
+    padding: 6px;
+    gap: 0;
+  }
+
+  .barra-navegacao {
+    padding-bottom: 10px;
+  }
 }
-
-/* Rodapé */
-.rodape {
-  background-color: #003b5c;
-  position: static;
-  color: white;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 14px;
-  height: 50px;
-  margin-top: 50px;
-}
-
-
-  
