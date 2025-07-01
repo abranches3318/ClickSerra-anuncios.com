@@ -12,22 +12,34 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 const auth = firebase.auth();
 
-// Menu Hamburguer (deslogado)
-document.addEventListener("DOMContentLoaded", () => {
-  const botaoMenu = document.getElementById("botaoMenu");
-  const menuOpcoes = document.getElementById("menuHamburguerOpcoes");
+document.getElementById('botaoMenu').addEventListener('click', function (e) {
+    e.stopPropagation(); // Evita fechamento imediato ao clicar no botão
+    const menu = document.getElementById('menuHamburguer');
+    menu.classList.toggle('ativo');
+  });
 
-  if (botaoMenu && menuOpcoes) {
-    botaoMenu.addEventListener("click", (e) => {
-      e.stopPropagation();
-      menuOpcoes.classList.toggle("ativo");
-    });
+  // Fecha o menu ao clicar fora
+  document.addEventListener('click', function (e) {
+    const menu = document.getElementById('menuHamburguer');
+    if (!menu.contains(e.target)) {
+      menu.classList.remove('ativo');
+    }
+  });
 
-    document.addEventListener("click", (e) => {
-      if (!menuOpcoes.contains(e.target) && !botaoMenu.contains(e.target)) {
-        menuOpcoes.classList.remove("ativo");
-      }
-    });
+function alternarMenu() {
+  const menu = document.getElementById("menuHamburguer");
+  menu.classList.toggle("ativo");
+}
+
+
+firebase.auth().onAuthStateChanged((user) => {
+  const menuHamburguer = document.getElementById("menuHamburguer");
+  if (user) {
+    // Usuário logado → esconder menu hambúrguer
+    menuHamburguer.style.display = "none";
+  } else {
+    // Usuário deslogado → mostrar menu
+    menuHamburguer.style.display = "flex";
   }
 });
 
@@ -141,7 +153,6 @@ auth.onAuthStateChanged((user) => {
   const menuConta = document.getElementById("menuConta");
   const barraLogado = document.getElementById("barra-superior-logado");
   const espacoBarra = document.getElementById("espacoBarraSuperior");
-  const menuHamburguer = document.getElementById("menuHamburguer");
 
   if (user) {
     if (btnEntrar) btnEntrar.style.display = "none";
@@ -149,14 +160,12 @@ auth.onAuthStateChanged((user) => {
     if (menuConta) menuConta.style.display = "block";
     if (barraLogado) barraLogado.style.display = "flex";
     if (espacoBarra) espacoBarra.style.display = "none";
-    if (menuHamburguer) menuHamburguer.style.display = "none";
   } else {
     if (btnEntrar) btnEntrar.style.display = "inline-block";
     if (btnMeusAnuncios) btnMeusAnuncios.style.display = "none";
     if (menuConta) menuConta.style.display = "none";
     if (barraLogado) barraLogado.style.display = "none";
     if (espacoBarra) espacoBarra.style.display = "block";
-    if (menuHamburguer) menuHamburguer.style.display = "flex";
   }
 });
 
