@@ -1,0 +1,36 @@
+<!DOCTYPE html><html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Configurações</title>
+  <link rel="stylesheet" href="user-configuracoes.css">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css">
+  <script type="module" src="user-configuracoes.js" defer></script>
+</head>
+<body>
+  <header class="top-bar">
+    <button class="voltar" onclick="window.location.href='index.html'"><i class="fas fa-home"></i></button><div class="menu-hamburguer" id="menuHamburguer">
+  <button class="botao-menu" onclick="toggleMenuHamburguer()">
+    <i class="fas fa-bars"></i>
+  </button>
+
+  <div class="menu-hamburguer-opcoes" id="menuHamburguerOpcoes">
+    <a href="criar-anuncio.html"><i class="fas fa-bullhorn"></i> Anunciar</a>
+    <a href="meus-anuncios.html"><i class="fas fa-grip-vertical"></i> Meus Anúncios</a>
+    <a href="user-perfil.html"><i class="fas fa-user"></i> Perfil</a>
+  </div>
+</div>
+
+  </header>  <main class="conteudo">
+    <h2>Configurações da Conta</h2>
+    <ul class="lista-configuracoes">
+      <li onclick="abrirModal('senha')"><i class="fas fa-lock"></i> Alterar Senha</li>
+      <li onclick="abrirModal('email')"><i class="fas fa-envelope"></i> Alterar Email</li>
+      <li onclick="abrirModal('notificacoes')"><i class="fas fa-bell"></i> Notificações</li>
+      <li onclick="abrirModal('excluir')"><i class="fas fa-trash-alt"></i> Excluir Conta</li>
+      <li onclick="window.location.href='pagamento.html'"><i class="fas fa-credit-card"></i> Gerenciar Pagamento</li>
+      <li onclick="window.location.href='favoritos.html'"><i class="fas fa-star"></i> Favoritos</li>
+    </ul>
+  </main>  <!-- Modais -->  <div class="modal" id="modalSenha">
+    <div class="modal-content">
+      <h3>Alterar
