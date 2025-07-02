@@ -1,3 +1,4 @@
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
 import {
   getAuth,
   onAuthStateChanged,
@@ -8,9 +9,20 @@ import {
   reauthenticateWithCredential
 } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
 
-// Inicializa Firebase Auth
-const auth = getAuth();
+// ✅ CONFIGURAÇÃO DO FIREBASE (sua chave abaixo)
+const firebaseConfig = {
+  apiKey: "AIzaSyDhjUescYhrZ1e12M6nv5mnWxDovNcGxw0",
+  authDomain: "clickserra-anuncios.firebaseapp.com",
+  databaseURL: "https://clickserra-anuncios-default-rtdb.firebaseio.com",
+  projectId: "clickserra-anuncios",
+  storageBucket: "clickserra-anuncios.appspot.com",
+  messagingSenderId: "251868045964",
+  appId: "1:251868045964:web:34f527f3d7c380746211a9"
+};
 
+// ✅ Inicializa o app
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
 // Função de alerta de erro
 function showAlertaErro(titulo, mensagem) {
   Swal.fire({
