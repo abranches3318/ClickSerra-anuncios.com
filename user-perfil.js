@@ -58,7 +58,7 @@ function toggleMenuHamburguer() {
 // Fecha o menu hambúrguer se clicar fora
 document.addEventListener("click", function (event) {
   const menu = document.getElementById("menuHamburguer");
-  const botao = menu.querySelector(".menu");
+  const botao = menu.querySelector(".botao-menu");
   const opcoes = document.getElementById("menuHamburguerOpcoes");
 
   const clicouFora = !menu.contains(event.target);
