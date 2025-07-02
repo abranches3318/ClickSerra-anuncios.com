@@ -1,79 +1,83 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
+<!DOCTYPE html><html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Meu Perfil</title>
-  <link rel="stylesheet" href="user-perfil.css" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <title>Perfil do Usuário</title>
+  <link rel="stylesheet" href="user-perfil.css">
+  <script type="module" src="user-perfil.js" defer></script>
+  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
 </head>
-<body>
-
-  <!-- Menu de navegação tipo barra superior -->
-  <nav class="menu-navegacao">
-    <a href="index.html"><i class="fas fa-home"></i> Início</a>
-    <a href="configuracoes.html"><i class="fas fa-cog"></i> Configurações</a>
-    <a href="#" onclick="irParaAnuncio()"><i class="fas fa-bullhorn"></i> Anunciar</a>
-    <a href="criar-anuncio.html"><i class="fas fa-list"></i> Meus Anúncios</a>
-  </nav>
-
-  <main class="container-perfil">
-    <h1>Meu Perfil</h1>
-
-    <!-- Foto de perfil -->
-    <div class="foto-perfil-container">
-      <img id="fotoPerfil" src="imagens/avatar-placeholder.png" alt="Foto do Usuário" />
-      <input type="file" id="uploadFotoPerfil" accept="image/*" />
-      <p class="aviso-foto">Foto opcional. Visível no seu perfil público.</p>
-    </div>
-
-    <!-- Formulário do perfil -->
+<body>  <header class="top-bar">
+    <button class="voltar" onclick="window.location.href='index.html'"><i class="fas fa-arrow-left"></i></button>
+    <button class="menu"><i class="fas fa-bars"></i></button>
+  </header>  <main class="conteudo">
     <form id="formPerfil">
-      <label for="tipoUsuario">Tipo de Usuário</label>
-      <select id="tipoUsuario" onchange="alternarTipo()">
-        <option value="fisica">Pessoa Física</option>
-        <option value="juridica">Pessoa Jurídica</option>
-      </select>
+      <div class="foto-container">
+        <img id="fotoPerfil" src="imagens/usuario.png" alt="Foto de perfil">
+        <input type="file" id="uploadFotoPerfil" accept="image/*">
+      </div><div class="grupo">
+    <label><input type="checkbox" id="ehEmpresa"> É empresa</label>
+  </div>
 
-      <div id="campoNomePF">
-        <label for="nomePessoa">Nome completo</label>
-        <input type="text" id="nomePessoa" placeholder="Seu nome completo" />
-      </div>
+  <div class="grupo">
+    <label for="nomeCompleto">Nome completo</label>
+    <input type="text" id="nomeCompleto">
+  </div>
 
-      <div id="campoNomePJ" style="display: none;">
-        <label for="nomeEmpresa">Nome da empresa</label>
-        <input type="text" id="nomeEmpresa" placeholder="Nome fantasia ou razão social" />
-      </div>
+  <div class="grupo">
+    <label for="nomeEmpresa">Nome da empresa</label>
+    <input type="text" id="nomeEmpresa">
+  </div>
 
-      <div id="campoCPF">
-        <label for="cpf">CPF</label>
-        <input type="text" id="cpf" placeholder="000.000.000-00" />
-      </div>
+  <div class="grupo">
+    <label for="cpfCnpj">CPF/CNPJ</label>
+    <input type="text" id="cpfCnpj">
+  </div>
 
-      <div id="campoCNPJ" style="display: none;">
-        <label for="cnpj">CNPJ</label>
-        <input type="text" id="cnpj" placeholder="00.000.000/0000-00" />
-      </div>
+  <div class="grupo">
+    <label for="descricao">Descrição (opcional)</label>
+    <textarea id="descricao" rows="3"></textarea>
+  </div>
 
-      <label for="descricao">Descrição</label>
-      <textarea id="descricao" rows="3" placeholder="Fale um pouco sobre você ou seu comércio..."></textarea>
+  <div class="grupo">
+    <label for="cep">CEP</label>
+    <input type="text" id="cep">
+  </div>
 
-      <label for="cidade">Localização</label>
-      <input type="text" id="cidade" placeholder="Cidade, Estado" />
+  <div class="grupo">
+    <label for="endereco">Endereço</label>
+    <input type="text" id="endereco" readonly>
+  </div>
 
-      <label for="categoria">Categoria de Atuação</label>
-      <input type="text" id="categoria" />
+  <div class="grupo">
+    <label for="numero">Número</label>
+    <input type="text" id="numero">
+  </div>
 
-      <label for="whatsapp">WhatsApp</label>
-      <input type="tel" id="whatsapp" />
+  <div class="grupo">
+    <label for="telefone">Telefone</label>
+    <input type="text" id="telefone">
+    <label><input type="checkbox" id="ehWhatsapp"> É WhatsApp</label>
+  </div>
 
-      <label for="site">Site ou rede social</label>
-      <input type="url" id="site" />
+  <div class="grupo">
+    <label for="site">Site</label>
+    <input type="url" id="site">
+  </div>
 
-      <button type="submit">Salvar Perfil</button>
-    </form>
-  </main>
+  <div class="grupo">
+    <label for="instagram">Instagram</label>
+    <input type="url" id="instagram">
+  </div>
 
-  <script src="user-perfil.js"></script>
-</body>
+  <div class="grupo">
+    <label for="facebook">Facebook</label>
+    <input type="url" id="facebook">
+  </div>
+
+  <button type="submit" class="botao-salvar" id="botaoSalvar">Salvar Perfil</button>
+  <button type="button" class="botao-editar" id="botaoEditar" style="display: none;">Editar Perfil</button>
+</form>
+
+  </main></body>
 </html>
