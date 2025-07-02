@@ -188,6 +188,24 @@ function logout() {
 }
 window.logout = logout;
 
+// Confirmação com SweetAlert2
+function confirmarLogout() {
+  Swal.fire({
+    title: 'Deseja realmente sair?',
+    text: 'Você será desconectado da sua conta.',
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: '#d33',
+    cancelButtonColor: '#aaa',
+    confirmButtonText: 'Sim, sair',
+    cancelButtonText: 'Cancelar'
+  }).then((result) => {
+    if (result.isConfirmed) {
+      logout(); // Chama a função já definida
+    }
+  });
+}
+
 // Login com Google
 function loginComGoogle() {
   const provider = new firebase.auth.GoogleAuthProvider();
