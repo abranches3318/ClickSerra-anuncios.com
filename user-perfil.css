@@ -29,6 +29,47 @@ body {
   transform: scale(1.1);
 }
 
+.menu-hamburguer {
+  position: relative;
+}
+
+.menu-hamburguer-opcoes {
+  display: none;
+  position: absolute;
+  right: 0;
+  top: 40px;
+  background-color: white;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+  z-index: 999;
+  min-width: 160px;
+}
+
+.menu-hamburguer-opcoes a {
+  display: block;
+  padding: 10px;
+  color: #005288;
+  text-decoration: none;
+  border-bottom: 1px solid #eee;
+}
+
+.menu-hamburguer-opcoes a:last-child {
+  border-bottom: none;
+}
+
+.menu-hamburguer.ativo .menu-hamburguer-opcoes {
+  display: block;
+}
+
+.menu i {
+  font-size: 22px;
+  color: #003d66;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
 .conteudo {
   padding: 20px;
   max-width: 600px;
