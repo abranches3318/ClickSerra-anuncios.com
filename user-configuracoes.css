@@ -112,7 +112,10 @@ body {
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   text-align: left;
   text-decoration: none;
-  transition: all 0.2s ease;
+  transition: all 0.2s ease;  
+  justify-content: flex-start;
+  box-sizing: border-box;
+}
 }
 
 .config-btn:hover {
