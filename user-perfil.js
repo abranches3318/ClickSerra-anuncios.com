@@ -54,6 +54,8 @@ function toggleMenuHamburguer() {
   const menu = document.getElementById("menuHamburguer");
   menu.classList.toggle("ativo");
 }
+window.toggleMenuHamburguer = toggleMenuHamburguer;
+
 
 // Fecha o menu hambúrguer se clicar fora
 document.addEventListener("click", function (event) {
