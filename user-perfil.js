@@ -19,104 +19,108 @@ const auth = getAuth(app);
 const db = getFirestore(app);
 const storage = getStorage(app);
 
-// Alternar entre PF e PJ
-window.alternarTipo = function () {
-  const tipo = document.getElementById("tipoUsuario").value;
-  document.getElementById("campoNomePF").style.display = tipo === "fisica" ? "block" : "none";
-  document.getElementById("campoNomePJ").style.display = tipo === "juridica" ? "block" : "none";
-  document.getElementById("campoCPF").style.display = tipo === "fisica" ? "block" : "none";
-  document.getElementById("campoCNPJ").style.display = tipo === "juridica" ? "block" : "none";
-};
+const form = document.getElementById("formPerfil");
+const btnSalvar = document.getElementById("botaoSalvar");
+const btnEditar = document.getElementById("botaoEditar");
+const inputFoto = document.getElementById("uploadFotoPerfil");
+const imagem = document.getElementById("fotoPerfil");
 
-// Lógica principal
+function setFormDisabled(disabled) {
+  [...form.elements].forEach(el => {
+    if (el.id !== "botaoEditar" && el.type !== "button" && el.id !== "botaoSalvar") {
+      el.disabled = disabled;
+    }
+  });
+  btnSalvar.style.display = disabled ? "none" : "block";
+  btnEditar.style.display = disabled ? "block" : "none";
+}
+
+imagem.addEventListener("click", () => inputFoto.click());
+
+inputFoto.addEventListener("change", async (e) => {
+  const file = e.target.files[0];
+  const user = auth.currentUser;
+  if (!user || !file) return;
+
+  const storageRef = ref(storage, `usuarios/${user.uid}/fotoPerfil.jpg`);
+  await uploadBytes(storageRef, file);
+  const url = await getDownloadURL(storageRef);
+  imagem.src = url;
+  await setDoc(doc(db, "users", user.uid), { fotoPerfilUrl: url }, { merge: true });
+});
+
+// CEP busca
+const cepInput = document.getElementById("cep");
+cepInput.addEventListener("blur", async () => {
+  const cep = cepInput.value.replace(/\D/g, "");
+  if (cep.length !== 8) return;
+  const res = await fetch(`https://viacep.com.br/ws/${cep}/json/`);
+  const data = await res.json();
+  if (!data.erro) {
+    document.getElementById("endereco").value = `${data.logradouro}, ${data.bairro}, ${data.localidade} - ${data.uf}`;
+  }
+});
+
+// Empresa checkbox
+const cbEmpresa = document.getElementById("ehEmpresa");
+cbEmpresa.addEventListener("change", () => {
+  document.getElementById("nomeCompleto").disabled = cbEmpresa.checked;
+  document.getElementById("nomeEmpresa").disabled = !cbEmpresa.checked;
+});
+
+// Autenticação e preenchimento
 onAuthStateChanged(auth, async (user) => {
-  if (!user) {
-    alert("Você precisa estar logado para acessar o perfil.");
-    window.location.href = "login.html";
-    return;
+  if (!user) return;
+  const refDoc = doc(db, "users", user.uid);
+  const snap = await getDoc(refDoc);
+  if (snap.exists()) {
+    const d = snap.data();
+    form.nomeCompleto.value = d.nome || "";
+    form.nomeEmpresa.value = d.nomeEmpresa || "";
+    form.cpfCnpj.value = d.cpfCnpj || "";
+    form.descricao.value = d.descricao || "";
+    form.cep.value = d.cep || "";
+    form.endereco.value = d.endereco || "";
+    form.numero.value = d.numero || "";
+    form.telefone.value = d.telefone || "";
+    form.site.value = d.site || "";
+    form.instagram.value = d.instagram || "";
+    form.facebook.value = d.facebook || "";
+    form.ehWhatsapp.checked = d.ehWhatsapp || false;
+    form.ehEmpresa.checked = d.ehEmpresa || false;
+    if (d.fotoPerfilUrl) imagem.src = d.fotoPerfilUrl;
+    cbEmpresa.dispatchEvent(new Event("change"));
+    setFormDisabled(true);
+  } else {
+    setFormDisabled(false);
   }
+});
 
-  const uid = user.uid;
+btnEditar.addEventListener("click", () => setFormDisabled(false));
 
-  // Preenche os dados se já existir
-  const docRef = doc(db, "usuarios", uid);
-  const docSnap = await getDoc(docRef);
+form.addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const user = auth.currentUser;
+  if (!user) return;
 
-  if (docSnap.exists()) {
-    const dados = docSnap.data();
-    document.getElementById("tipoUsuario").value = dados.tipoUsuario || "fisica";
-    alternarTipo();
+  const dados = {
+    nome: form.nomeCompleto.value,
+    nomeEmpresa: form.nomeEmpresa.value,
+    cpfCnpj: form.cpfCnpj.value,
+    descricao: form.descricao.value,
+    cep: form.cep.value,
+    endereco: form.endereco.value,
+    numero: form.numero.value,
+    telefone: form.telefone.value,
+    site: form.site.value,
+    instagram: form.instagram.value,
+    facebook: form.facebook.value,
+    ehWhatsapp: form.ehWhatsapp.checked,
+    ehEmpresa: form.ehEmpresa.checked
+  };
 
-    if (dados.tipoUsuario === "fisica") {
-      document.getElementById("nomePessoa").value = dados.nome || "";
-      document.getElementById("cpf").value = dados.cpf || "";
-    } else {
-      document.getElementById("nomeEmpresa").value = dados.nome || "";
-      document.getElementById("cnpj").value = dados.cnpj || "";
-    }
-
-    document.getElementById("descricao").value = dados.descricao || "";
-    document.getElementById("cidade").value = dados.cidade || "";
-    document.getElementById("categoria").value = dados.categoria || "";
-    document.getElementById("whatsapp").value = dados.whatsapp || "";
-    document.getElementById("site").value = dados.site || "";
-
-    if (dados.fotoPerfilUrl) {
-      document.getElementById("fotoPerfil").src = dados.fotoPerfilUrl;
-    }
-  }
-
-  // Upload da foto
-  const inputFoto = document.getElementById("uploadFotoPerfil");
-  inputFoto.addEventListener("change", async (e) => {
-    const file = e.target.files[0];
-    if (!file) return;
-
-    const storageRef = ref(storage, `usuarios/${uid}/fotoPerfil.jpg`);
-    await uploadBytes(storageRef, file);
-    const url = await getDownloadURL(storageRef);
-
-    document.getElementById("fotoPerfil").src = url;
-
-    await setDoc(docRef, { fotoPerfilUrl: url }, { merge: true });
-  });
-
-  // Envio do formulário
-  const form = document.getElementById("formPerfil");
-  form.addEventListener("submit", async (e) => {
-    e.preventDefault();
-
-    const tipoUsuario = document.getElementById("tipoUsuario").value;
-    const nome = tipoUsuario === "fisica"
-      ? document.getElementById("nomePessoa").value
-      : document.getElementById("nomeEmpresa").value;
-
-    const cpf = document.getElementById("cpf").value || null;
-    const cnpj = document.getElementById("cnpj").value || null;
-    const descricao = document.getElementById("descricao").value;
-    const cidade = document.getElementById("cidade").value;
-    const categoria = document.getElementById("categoria").value;
-    const whatsapp = document.getElementById("whatsapp").value;
-    const site = document.getElementById("site").value;
-
-    const dados = {
-      tipoUsuario,
-      nome,
-      cpf,
-      cnpj,
-      descricao,
-      cidade,
-      categoria,
-      whatsapp,
-      site
-    };
-
-    try {
-      await setDoc(docRef, dados, { merge: true });
-      alert("Perfil salvo com sucesso!");
-    } catch (error) {
-      console.error("Erro ao salvar perfil:", error);
-      alert("Erro ao salvar perfil.");
-    }
-  });
+  await setDoc(doc(db, "users", user.uid), dados, { merge: true });
+  setFormDisabled(true);
+  alert("Perfil salvo com sucesso!");
+  window.location.href = "index.html";
 });
