@@ -143,6 +143,15 @@ body {
   padding: 8px;
 }
 
+.menu-suspenso .botao-sair {
+  color: #d9534f;
+  font-weight: bold;
+}
+.menu-suspenso .botao-sair:hover {
+  background-color: #f8d7da;
+  color: #a94442;
+}
+
 /* Barra de Navegação */
 .barra-navegacao {
   display: flex;
