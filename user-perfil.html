@@ -10,8 +10,20 @@
 </head>
 <body>  <header class="top-bar">
     <button class="voltar" onclick="window.location.href='index.html'"><i class="fas fa-arrow-left"></i></button>
-    <button class="menu"><i class="fas fa-bars"></i></button>
-  </header>  <main class="conteudo">
+
+  <div class="menu-hamburguer" id="menuHamburguer">
+    <button class="menu" onclick="toggleMenuHamburguer()">
+      <i class="fas fa-bars"></i>
+    </button>
+
+    <div class="menu-hamburguer-opcoes" id="menuHamburguerOpcoes">
+      <a href="criar-anuncio.html"><i class="fas fa-bullhorn"></i> Anunciar</a>
+      <a href="meus-anuncios.html"><i class="fas fa-grip-vertical"></i> Meus Anúncios</a>
+      <a href="#"><i class="fas fa-cog"></i> Configurações</a>
+    </div>
+  </div>
+</header> 
+  <main class="conteudo">
     <form id="formPerfil">
       <div class="foto-container">
         <img id="fotoPerfil" src="imagens/usuario.png" alt="Foto de perfil">
