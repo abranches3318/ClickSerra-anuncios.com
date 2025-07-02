@@ -14,7 +14,6 @@
     <button class="voltar" onclick="window.location.href='index.html'">
       <i class="fas fa-home"></i>
     </button>
-
     <div class="menu-hamburguer" id="menuHamburguer">
       <button class="botao-menu" onclick="toggleMenuHamburguer()">
         <i class="fas fa-bars"></i>
@@ -31,20 +30,17 @@
     <aside class="config-sidebar">
       <h3>Configurações</h3>
       <ul class="lista-configuracoes">
-        <li><a href="#" class="alterar-email"><i class="fas fa-envelope"></i> Alterar Email</a></li>
-        <li><a href="#" class="alterar-senha"><i class="fas fa-key"></i> Alterar Senha</a></li>
-        <li><a href="#" class="excluir-conta"><i class="fas fa-trash-alt"></i> Excluir Conta</a></li>
-        <li><a href="pagamento.html"><i class="fas fa-credit-card"></i> Gerenciar Pagamento</a></li>
-        <li><a href="favoritos.html"><i class="fas fa-heart"></i> Favoritos</a></li>
-        <li><a href="#" class="config-notificacoes"><i class="fas fa-bell"></i> Notificações</a></li>
+        <li><button class="config-btn alterar-email"><i class="fas fa-envelope"></i> Alterar Email</button></li>
+        <li><button class="config-btn alterar-senha"><i class="fas fa-key"></i> Alterar Senha</button></li>
+        <li><button class="config-btn excluir-conta"><i class="fas fa-trash-alt"></i> Excluir Conta</button></li>
+        <li><a class="config-btn" href="pagamento.html"><i class="fas fa-credit-card"></i> Gerenciar Pagamento</a></li>
+        <li><a class="config-btn" href="favoritos.html"><i class="fas fa-heart"></i> Favoritos</a></li>
+        <li><button class="config-btn config-notificacoes"><i class="fas fa-bell"></i> Notificações</button></li>
       </ul>
     </aside>
 
     <main class="config-conteudo">
-      <div class="mensagem-inicial">
-        <h2>Selecione uma configuração à esquerda</h2>
-        <p>As edições aparecerão aqui com segurança usando pop-ups.</p>
-      </div>
+      <!-- Aqui abrirão os modais na interação com SweetAlert -->
     </main>
   </div>
 </body>
