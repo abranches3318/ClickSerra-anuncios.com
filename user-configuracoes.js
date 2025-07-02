@@ -68,7 +68,7 @@ onAuthStateChanged(auth, (user) => {
   // Alterar Email
   document.querySelector(".alterar-email").addEventListener("click", async () => {
     if (!verificarLoginSenha()) {
-      showAlertaErro("Indisponível", "Só disponível para contas com email/senha.");
+      showAlertaErro("Indisponível para contas Google/Facebook.");
       return;
     }
 
@@ -96,7 +96,7 @@ onAuthStateChanged(auth, (user) => {
   // Alterar Senha
   document.querySelector(".alterar-senha").addEventListener("click", async () => {
     if (!verificarLoginSenha()) {
-      showAlertaErro("Indisponível", "Só disponível para contas com email/senha.");
+      showAlertaErro("Indisponível para contas Google/Facebook.");
       return;
     }
 
