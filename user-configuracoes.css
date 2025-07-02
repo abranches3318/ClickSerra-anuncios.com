@@ -1,7 +1,7 @@
-/* user-configuracoes.css */
 body {
   font-family: Arial, sans-serif;
   margin: 0;
+  background: #f9f9f9;
   display: flex;
   flex-direction: column;
   height: 100vh;
@@ -14,6 +14,9 @@ body {
   padding: 10px 15px;
   background-color: #003d66;
   color: white;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
 }
 
 .top-bar button {
@@ -22,49 +25,11 @@ body {
   color: white;
   font-size: 20px;
   cursor: pointer;
+  transition: transform 0.2s;
 }
 
-.config-page {
-  display: flex;
-  flex: 1;
-}
-
-.config-sidebar {
-  width: 240px;
-  background-color: #f1f1f1;
-  padding: 20px;
-  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
-}
-
-.config-sidebar ul {
-  list-style: none;
-  padding: 0;
-}
-
-.config-sidebar li {
-  margin-bottom: 15px;
-}
-
-.config-sidebar a {
-  text-decoration: none;
-  color: #003d66;
-  font-weight: 500;
-  display: flex;
-  align-items: center;
-}
-
-.config-sidebar i {
-  margin-right: 10px;
-}
-
-.config-sidebar a:hover {
-  color: #007bff;
-}
-
-.config-conteudo {
-  flex: 1;
-  padding: 30px;
-  background: #fff;
+.top-bar button:hover {
+  transform: scale(1.1);
 }
 
 .menu-hamburguer {
@@ -84,10 +49,6 @@ body {
   min-width: 160px;
 }
 
-.menu-hamburguer.ativo .menu-hamburguer-opcoes {
-  display: block;
-}
-
 .menu-hamburguer-opcoes a {
   display: block;
   padding: 10px;
@@ -98,4 +59,91 @@ body {
 
 .menu-hamburguer-opcoes a:last-child {
   border-bottom: none;
+}
+
+.menu-hamburguer.ativo .menu-hamburguer-opcoes {
+  display: block;
+}
+
+/* === CONFIGURAÇÕES === */
+
+.config-wrapper {
+  display: flex;
+  flex: 1;
+  min-height: calc(100vh - 60px); /* 60px = top-bar */
+}
+
+.config-sidebar {
+  width: 240px;
+  background-color: #fff;
+  border-right: 1px solid #ddd;
+  padding: 20px 15px;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+}
+
+.config-sidebar h3 {
+  margin-top: 0;
+  margin-bottom: 20px;
+  color: #003d66;
+}
+
+.lista-configuracoes {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.lista-configuracoes li {
+  margin-bottom: 15px;
+}
+
+.config-btn {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 16px;
+  width: 100%;
+  background-color: #fff;
+  color: #003d66;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 15px;
+  cursor: pointer;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  text-align: left;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.config-btn:hover {
+  background-color: #f0f0f0;
+  transform: scale(1.02);
+}
+
+.config-btn i {
+  font-size: 18px;
+}
+
+/* Área do conteúdo à direita (modais aparecem via JS) */
+.config-conteudo {
+  flex: 1;
+  padding: 30px;
+}
+
+/* Responsivo */
+@media (max-width: 768px) {
+  .config-wrapper {
+    flex-direction: column;
+  }
+
+  .config-sidebar {
+    width: 100%;
+    border-right: none;
+    border-bottom: 1px solid #ddd;
+    box-shadow: none;
+  }
+
+  .config-conteudo {
+    padding: 20px;
+  }
 }
