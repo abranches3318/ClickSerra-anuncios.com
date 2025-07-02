@@ -8,8 +8,16 @@ import {
   EmailAuthProvider,
   reauthenticateWithCredential
 } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+import {
+  getFirestore,
+  doc,
+  deleteDoc,
+  collection,
+  getDocs,
+  query,
+  where
+} from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
-// ✅ CONFIGURAÇÃO DO FIREBASE (sua chave abaixo)
 const firebaseConfig = {
   apiKey: "AIzaSyDhjUescYhrZ1e12M6nv5mnWxDovNcGxw0",
   authDomain: "clickserra-anuncios.firebaseapp.com",
@@ -20,10 +28,10 @@ const firebaseConfig = {
   appId: "1:251868045964:web:34f527f3d7c380746211a9"
 };
 
-// ✅ Inicializa o app
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
-// Função de alerta de erro
+const db = getFirestore(app);
+
 function showAlertaErro(titulo, mensagem) {
   Swal.fire({
     icon: 'error',
@@ -33,7 +41,6 @@ function showAlertaErro(titulo, mensagem) {
   });
 }
 
-// Envolve tudo em onAuthStateChanged
 onAuthStateChanged(auth, (user) => {
   if (!user) {
     Swal.fire("Erro", "Usuário não autenticado", "error");
@@ -65,8 +72,7 @@ onAuthStateChanged(auth, (user) => {
     }
   }
 
-  // Alterar Email
-  document.querySelector(".alterar-email").addEventListener("click", async () => {
+  document.querySelector(".alterar-email")?.addEventListener("click", async () => {
     if (!verificarLoginSenha()) {
       showAlertaErro("Indisponível para contas Google/Facebook.");
       return;
@@ -93,8 +99,7 @@ onAuthStateChanged(auth, (user) => {
     }
   });
 
-  // Alterar Senha
-  document.querySelector(".alterar-senha").addEventListener("click", async () => {
+  document.querySelector(".alterar-senha")?.addEventListener("click", async () => {
     if (!verificarLoginSenha()) {
       showAlertaErro("Indisponível para contas Google/Facebook.");
       return;
@@ -119,43 +124,58 @@ onAuthStateChanged(auth, (user) => {
     }
   });
 
-// Excluir Conta
-document.querySelector(".excluir-conta").addEventListener("click", async () => {
-  const isSenha = user?.providerData[0]?.providerId === "password";
+  document.querySelector(".excluir-conta")?.addEventListener("click", async () => {
+    const isSenha = user?.providerData[0]?.providerId === "password";
+    if (isSenha) {
+      const reauth = await reautenticarUsuario();
+      if (!reauth) return;
+    }
 
-  // Reautenticar se for usuário com email/senha
-  if (isSenha) {
-    const reauth = await reautenticarUsuario();
-    if (!reauth) return;
-  }
+    const { isConfirmed } = await Swal.fire({
+      title: 'Tem certeza?',
+      text: 'Esta ação é irreversível. Todos os seus dados serão excluídos.',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#d33',
+      confirmButtonText: 'Sim, excluir',
+      cancelButtonText: 'Cancelar'
+    });
 
-  const { isConfirmed } = await Swal.fire({
-    title: 'Tem certeza?',
-    text: 'Esta ação é irreversível.',
-    icon: 'warning',
-    showCancelButton: true,
-    confirmButtonColor: '#d33',
-    confirmButtonText: 'Sim, excluir',
-    cancelButtonText: 'Cancelar'
-  });
+    if (isConfirmed) {
+      try {
+        await deleteDoc(doc(db, "usuarios", user.uid));
 
-  if (isConfirmed) {
-    try {
-      await deleteUser(user);
-      Swal.fire("Excluído", "Sua conta foi removida.", "success").then(() => {
-        window.location.href = "index.html";
-      });
-    } catch (error) {
-      if (error.code === 'auth/requires-recent-login') {
-        Swal.fire("Sessão expirada", "Faça login novamente e tente excluir a conta.", "error");
-      } else {
-        showAlertaErro("Erro", "Falha ao excluir conta.");
+        const anunciosQuery = query(collection(db, "anuncios"), where("uid", "==", user.uid));
+        const anunciosSnapshot = await getDocs(anunciosQuery);
+        for (const docSnap of anunciosSnapshot.docs) {
+          await deleteDoc(docSnap.ref);
+        }
+
+        await deleteUser(user);
+
+        Swal.fire("Excluído", "Sua conta e dados foram removidos.", "success").then(() => {
+          window.location.href = "index.html";
+        });
+      } catch (error) {
+        if (error.code === 'auth/requires-recent-login') {
+          Swal.fire("Sessão expirada", "Faça login novamente e tente excluir a conta.", "error");
+        } else {
+          showAlertaErro("Erro", "Falha ao excluir conta ou dados.");
+        }
       }
     }
-  }
+  });
+
+  document.querySelector(".config-notificacoes")?.addEventListener("click", async () => {
+    Swal.fire({
+      title: 'Notificações',
+      text: 'Configuração de notificações em breve.',
+      icon: 'info',
+      confirmButtonText: 'OK'
+    });
+  });
 });
 
-// Menu hambúrguer (fora de onAuthStateChanged, pois não depende de login)
 document.addEventListener("click", (e) => {
   const menu = document.getElementById("menuHamburguer");
   const botao = menu?.querySelector(".botao-menu");
@@ -166,3 +186,14 @@ document.addEventListener("click", (e) => {
     menu?.classList.remove("ativo");
   }
 });
+
+
+O JavaScript foi atualizado com sucesso com as seguintes melhorias:
+
+✅ Permite exclusão para todos os tipos de login (email, Google, etc.)
+✅ Exclui também os dados do Firestore (documento do usuário e seus anúncios)
+✅ Corrigido evento de clique nas opções de alterar email, senha e notificações
+✅ Mensagens de erro e sucesso mantidas via SweetAlert2
+
+Se quiser, posso gerar agora a versão final dos arquivos HTML e CSS, ou seguir com outras melhorias. Deseja prosseguir?
+
