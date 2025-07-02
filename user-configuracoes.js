@@ -119,37 +119,40 @@ onAuthStateChanged(auth, (user) => {
     }
   });
 
-  // Excluir Conta
-  document.querySelector(".excluir-conta").addEventListener("click", async () => {
-    if (!verificarLoginSenha()) {
-      showAlertaErro("Indisponível", "Só disponível para contas com email/senha.");
-      return;
-    }
+// Excluir Conta
+document.querySelector(".excluir-conta").addEventListener("click", async () => {
+  const isSenha = user?.providerData[0]?.providerId === "password";
 
+  // Reautenticar se for usuário com email/senha
+  if (isSenha) {
     const reauth = await reautenticarUsuario();
     if (!reauth) return;
+  }
 
-    const { isConfirmed } = await Swal.fire({
-      title: 'Tem certeza?',
-      text: 'Esta ação é irreversível.',
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonColor: '#d33',
-      confirmButtonText: 'Sim, excluir',
-      cancelButtonText: 'Cancelar'
-    });
+  const { isConfirmed } = await Swal.fire({
+    title: 'Tem certeza?',
+    text: 'Esta ação é irreversível.',
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: '#d33',
+    confirmButtonText: 'Sim, excluir',
+    cancelButtonText: 'Cancelar'
+  });
 
-    if (isConfirmed) {
-      try {
-        await deleteUser(user);
-        Swal.fire("Excluído", "Sua conta foi removida.", "success").then(() => {
-          window.location.href = "index.html";
-        });
-      } catch (error) {
+  if (isConfirmed) {
+    try {
+      await deleteUser(user);
+      Swal.fire("Excluído", "Sua conta foi removida.", "success").then(() => {
+        window.location.href = "index.html";
+      });
+    } catch (error) {
+      if (error.code === 'auth/requires-recent-login') {
+        Swal.fire("Sessão expirada", "Faça login novamente e tente excluir a conta.", "error");
+      } else {
         showAlertaErro("Erro", "Falha ao excluir conta.");
       }
     }
-  });
+  }
 });
 
 // Menu hambúrguer (fora de onAuthStateChanged, pois não depende de login)
