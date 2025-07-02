@@ -12,6 +12,8 @@
   <!-- Firebase -->
   <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth-compat.js"></script>
+  <!-- SweetAlert2 CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <body>
 
@@ -39,7 +41,9 @@
     <a href="user-perfil.html"><i class="fas fa-user"></i> Perfil</a>
     <a href="meus-anuncios.html"><i class="fas fa-grip-vertical"></i> Meus Anúncios</a>
     <a href="#"><i class="fas fa-cog"></i> Configurações</a>
-    <a href="#" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Sair</a>
+    <a href="#" class="botao-sair" onclick="confirmarLogout()">
+  <i class="fas fa-sign-out-alt"></i> Sair
+</a>
   </div>
 </div>
   </div>
