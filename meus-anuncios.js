@@ -162,3 +162,20 @@ function exibirAnuncios(anuncios) {
 function refStorage(path) {
   return ref(storage, path);
 }
+
+document.addEventListener("DOMContentLoaded", () => {
+  const botaoMenu = document.querySelector(".botao-menu");
+  const menuOpcoes = document.getElementById("menuHamburguerOpcoes");
+
+  botaoMenu?.addEventListener("click", (e) => {
+    e.stopPropagation();
+    menuOpcoes.classList.toggle("ativo");
+  });
+
+  // Fecha o menu se clicar fora
+  document.addEventListener("click", (e) => {
+    if (!menuOpcoes.contains(e.target) && !botaoMenu.contains(e.target)) {
+      menuOpcoes.classList.remove("ativo");
+    }
+  });
+});
