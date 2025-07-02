@@ -188,12 +188,3 @@ document.addEventListener("click", (e) => {
 });
 
 
-O JavaScript foi atualizado com sucesso com as seguintes melhorias:
-
-✅ Permite exclusão para todos os tipos de login (email, Google, etc.)
-✅ Exclui também os dados do Firestore (documento do usuário e seus anúncios)
-✅ Corrigido evento de clique nas opções de alterar email, senha e notificações
-✅ Mensagens de erro e sucesso mantidas via SweetAlert2
-
-Se quiser, posso gerar agora a versão final dos arquivos HTML e CSS, ou seguir com outras melhorias. Deseja prosseguir?
-
