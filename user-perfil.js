@@ -5,12 +5,13 @@ import { getFirestore, doc, setDoc, getDoc } from "https://www.gstatic.com/fireb
 import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-storage.js";
 
 const firebaseConfig = {
-  apiKey: "SUA_API_KEY",
-  authDomain: "SEU_DOMINIO.firebaseapp.com",
-  projectId: "SEU_PROJECT_ID",
-  storageBucket: "SEU_BUCKET.appspot.com",
-  messagingSenderId: "ID",
-  appId: "APP_ID"
+  apiKey: "AIzaSyDhjUescYhrZ1e12M6nv5mnWxDovNcGxw0",
+  authDomain: "clickserra-anuncios.firebaseapp.com",
+  databaseURL: "https://clickserra-anuncios-default-rtdb.firebaseio.com",
+  projectId: "clickserra-anuncios",
+  storageBucket: "clickserra-anuncios.appspot.com",
+  messagingSenderId: "251868045964",
+  appId: "1:251868045964:web:34f527f3d7c380746211a9"
 };
 
 const app = initializeApp(firebaseConfig);
