@@ -367,7 +367,6 @@ footer.visible {
   font-size: 12px;
 }
 
-/* Botão Anunciar Destaque */
 @keyframes pulsar {
   0%, 100% {
     transform: scale(1);
@@ -381,13 +380,13 @@ footer.visible {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 6px; /* espaço entre ícone e texto */
+  gap: 6px;
   padding: 0;
   background: none;
   border: none;
   border-radius: 0;
   box-shadow: none;
-  color: #ff9800; /* ou a cor que preferir */
+  color: #ff9800;
   font-weight: bold;
   font-size: 16px;
   cursor: pointer;
@@ -397,7 +396,7 @@ footer.visible {
 }
 
 .botao-anunciar-destaque:hover {
-  transform: scale(1.1); /* leve aumento ao hover (opcional) */
+  transform: scale(1.1);
 }
 
 .botao-anunciar-destaque i {
