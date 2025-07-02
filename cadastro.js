@@ -88,7 +88,7 @@ window.loginComGoogle = async function () {
     localStorage.setItem('usuarioNome', user.displayName || '');
 
     alert("Login com Google realizado com sucesso!");
-    window.location.href = "index.html";
+    window.location.href = "user-perfil.html";
 
   } catch (error) {
     console.error("Erro no login com Google:", error);
