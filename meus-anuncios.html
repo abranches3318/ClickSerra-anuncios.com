@@ -1,1 +1,49 @@
 
+<!DOCTYPE html><html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Meus Anúncios</title>
+  <link rel="stylesheet" href="meus-anuncios.css">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" crossorigin="anonymous" />
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script type="module" src="meus-anuncios.js" defer></script>
+</head>
+<body>
+  <header class="top-bar">
+    <button class="voltar" onclick="window.location.href='index.html'">
+      <i class="fas fa-home"></i>
+    </button>
+    <div class="menu-hamburguer" id="menuHamburguer">
+      <button class="botao-menu" onclick="toggleMenuHamburguer()">
+        <i class="fas fa-bars"></i>
+      </button>
+      <div class="menu-hamburguer-opcoes" id="menuHamburguerOpcoes">
+        <a href="criar-anuncio.html"><i class="fas fa-bullhorn"></i> Anunciar</a>
+        <a href="user-perfil.html"><i class="fas fa-user"></i> Perfil</a>
+        <a href="user-configuracoes.html"><i class="fas fa-cog"></i> Configurações</a>
+      </div>
+    </div>
+  </header>  <main class="conteudo">
+    <h2>Meus Anúncios</h2><div class="filtros">
+  <label for="filtro-status">Status:</label>
+  <select id="filtro-status">
+    <option value="todos">Todos</option>
+    <option value="ativo">Ativo</option>
+    <option value="suspenso">Suspenso</option>
+  </select>
+
+  <label for="filtro-ordem">Ordenar por:</label>
+  <select id="filtro-ordem">
+    <option value="desc">Mais recentes</option>
+    <option value="asc">Mais antigos</option>
+  </select>
+</div>
+
+<div id="lista-anuncios" class="lista-anuncios">
+  <!-- Cards dos anúncios serão inseridos aqui via JavaScript -->
+</div>
+
+  </main>
+</body>
+</html>
