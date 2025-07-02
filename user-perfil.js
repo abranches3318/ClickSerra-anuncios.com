@@ -49,6 +49,27 @@ inputFoto.addEventListener("change", async (e) => {
   await setDoc(doc(db, "users", user.uid), { fotoPerfilUrl: url }, { merge: true });
 });
 
+// Alterna o menu hambúrguer
+function toggleMenuHamburguer() {
+  const menu = document.getElementById("menuHamburguer");
+  menu.classList.toggle("ativo");
+}
+
+// Fecha o menu hambúrguer se clicar fora
+document.addEventListener("click", function (event) {
+  const menu = document.getElementById("menuHamburguer");
+  const botao = menu.querySelector(".menu");
+  const opcoes = document.getElementById("menuHamburguerOpcoes");
+
+  const clicouFora = !menu.contains(event.target);
+  const clicouNoBotao = botao.contains(event.target);
+
+  // Fecha se clicou fora e menu estiver aberto
+  if (!clicouNoBotao && clicouFora && menu.classList.contains("ativo")) {
+    menu.classList.remove("ativo");
+  }
+});
+
 // CEP busca
 const cepInput = document.getElementById("cep");
 cepInput.addEventListener("blur", async () => {
