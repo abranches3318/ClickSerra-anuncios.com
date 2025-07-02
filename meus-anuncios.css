@@ -1,1 +1,248 @@
+/* === GERAL === */
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  background: #f9f9f9;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
 
+.top-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 15px;
+  background-color: #003d66;
+  color: white;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+.top-bar button {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 20px;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.top-bar button:hover {
+  transform: scale(1.1);
+}
+
+.menu-hamburguer {
+  position: relative;
+}
+
+.menu-hamburguer-opcoes {
+  display: none;
+  position: absolute;
+  right: 0;
+  top: 40px;
+  background-color: white;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+  z-index: 999;
+  min-width: 160px;
+}
+
+.menu-hamburguer-opcoes a {
+  display: block;
+  padding: 10px;
+  color: #005288;
+  text-decoration: none;
+  border-bottom: 1px solid #eee;
+}
+
+.menu-hamburguer-opcoes a:last-child {
+  border-bottom: none;
+}
+
+.menu-hamburguer.ativo .menu-hamburguer-opcoes {
+  display: block;
+}
+
+/* === CONTEÚDO === */
+
+.anuncios-wrapper {
+  display: flex;
+  flex: 1;
+  min-height: calc(100vh - 60px); /* ajustado para top-bar */
+}
+
+.anuncios-sidebar {
+  width: 240px;
+  background-color: #fff;
+  border-right: 1px solid #ddd;
+  padding: 20px 15px;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+}
+
+.anuncios-sidebar h3 {
+  margin-top: 0;
+  margin-bottom: 20px;
+  color: #003d66;
+}
+
+.filtros {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.filtros select {
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 14px;
+}
+
+/* === LISTAGEM === */
+
+.anuncios-conteudo {
+  flex: 1;
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.anuncio-card {
+  display: flex;
+  gap: 20px;
+  padding: 15px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: white;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+  align-items: flex-start;
+  position: relative;
+}
+
+.anuncio-card img {
+  width: 120px;
+  height: 90px;
+  object-fit: cover;
+  border-radius: 6px;
+  border: 1px solid #ddd;
+}
+
+.anuncio-info {
+  flex: 1;
+}
+
+.anuncio-info h4 {
+  margin: 0;
+  color: #003d66;
+  font-size: 18px;
+}
+
+.anuncio-info p {
+  margin: 5px 0;
+  color: #555;
+  font-size: 14px;
+}
+
+.anuncio-status {
+  display: inline-block;
+  font-size: 13px;
+  font-weight: bold;
+  padding: 4px 8px;
+  border-radius: 4px;
+  color: white;
+}
+
+.status-ativo {
+  background-color: #28a745;
+}
+
+.status-suspenso {
+  background-color: #dc3545;
+}
+
+/* === BOTÕES === */
+
+.botoes-anuncio {
+  margin-top: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.botoes-anuncio button {
+  padding: 6px 12px;
+  font-size: 13px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.2s;
+}
+
+.btn-editar {
+  background-color: #007bff;
+  color: white;
+}
+
+.btn-editar:hover {
+  background-color: #0056b3;
+}
+
+.btn-suspender {
+  background-color: #ffc107;
+  color: #000;
+}
+
+.btn-suspender:hover {
+  background-color: #e0a800;
+}
+
+.btn-reativar {
+  background-color: #17a2b8;
+  color: white;
+}
+
+.btn-reativar:hover {
+  background-color: #117a8b;
+}
+
+.btn-excluir {
+  background-color: #dc3545;
+  color: white;
+}
+
+.btn-excluir:hover {
+  background-color: #c82333;
+}
+
+/* === Responsivo === */
+
+@media (max-width: 768px) {
+  .anuncios-wrapper {
+    flex-direction: column;
+  }
+
+  .anuncios-sidebar {
+    width: 100%;
+    border-right: none;
+    border-bottom: 1px solid #ddd;
+    box-shadow: none;
+  }
+
+  .anuncio-card {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .anuncio-info {
+    text-align: center;
+  }
+
+  .botoes-anuncio {
+    justify-content: center;
+  }
+}
