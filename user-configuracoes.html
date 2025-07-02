@@ -2,9 +2,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Configurações</title>
+  <title>Configurações do Usuário</title>
   <link rel="stylesheet" href="user-configuracoes.css">
-  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" crossorigin="anonymous">
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <script type="module" src="user-configuracoes.js" defer></script>
 </head>
 <body>
@@ -13,7 +14,6 @@
   <button class="botao-menu" onclick="toggleMenuHamburguer()">
     <i class="fas fa-bars"></i>
   </button>
-
   <div class="menu-hamburguer-opcoes" id="menuHamburguerOpcoes">
     <a href="criar-anuncio.html"><i class="fas fa-bullhorn"></i> Anunciar</a>
     <a href="meus-anuncios.html"><i class="fas fa-grip-vertical"></i> Meus Anúncios</a>
@@ -24,13 +24,13 @@
   </header>  <main class="conteudo">
     <h2>Configurações da Conta</h2>
     <ul class="lista-configuracoes">
-      <li onclick="abrirModal('senha')"><i class="fas fa-lock"></i> Alterar Senha</li>
-      <li onclick="abrirModal('email')"><i class="fas fa-envelope"></i> Alterar Email</li>
-      <li onclick="abrirModal('notificacoes')"><i class="fas fa-bell"></i> Notificações</li>
-      <li onclick="abrirModal('excluir')"><i class="fas fa-trash-alt"></i> Excluir Conta</li>
-      <li onclick="window.location.href='pagamento.html'"><i class="fas fa-credit-card"></i> Gerenciar Pagamento</li>
-      <li onclick="window.location.href='favoritos.html'"><i class="fas fa-star"></i> Favoritos</li>
+      <li><a href="#" class="alterar-email"><i class="fas fa-envelope"></i> Alterar Email</a></li>
+      <li><a href="#" class="alterar-senha"><i class="fas fa-key"></i> Alterar Senha</a></li>
+      <li><a href="#" class="excluir-conta"><i class="fas fa-trash-alt"></i> Excluir Conta</a></li>
+      <li><a href="pagamento.html"><i class="fas fa-credit-card"></i> Gerenciar Pagamento</a></li>
+      <li><a href="favoritos.html"><i class="fas fa-heart"></i> Favoritos</a></li>
+      <li><a href="#" class="config-notificacoes"><i class="fas fa-bell"></i> Notificações</a></li>
     </ul>
-  </main>  <!-- Modais -->  <div class="modal" id="modalSenha">
-    <div class="modal-content">
-      <h3>Alterar
+  </main>
+</body>
+</html>
