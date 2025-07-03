@@ -163,24 +163,14 @@ function refStorage(path) {
   return ref(storage, path);
 }
 
+// Menu hamburguer
+const botaoMenu = document.querySelector(".botao-menu");
+const menuOpcoes = document.getElementById("menuHamburguerOpcoes");
+
 document.addEventListener("click", (e) => {
-  const menu = document.getElementById("menuHamburguer");
-  const botao = menu?.querySelector(".botao-menu");
-
-  if (botao?.contains(e.target)) {
-    menu.classList.toggle("ativo");
-  } else if (!menu?.contains(e.target)) {
-    menu?.classList.remove("ativo");
+  if (botaoMenu.contains(e.target)) {
+    menuOpcoes.classList.toggle("ativo");
+  } else if (!menuOpcoes.contains(e.target)) {
+    menuOpcoes.classList.remove("ativo");
   }
-});
-});
-  }
-});
-
-  // Fecha o menu se clicar fora
-  document.addEventListener("click", (e) => {
-    if (!menuOpcoes.contains(e.target) && !botaoMenu.contains(e.target)) {
-      menuOpcoes.classList.remove("ativo");
-    }
-  });
 });
