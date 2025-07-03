@@ -163,14 +163,16 @@ function refStorage(path) {
   return ref(storage, path);
 }
 
-document.addEventListener("DOMContentLoaded", () => {
-  const botaoMenu = document.querySelector(".botao-menu");
-  const menuOpcoes = document.getElementById("menuHamburguerOpcoes");
+document.addEventListener("click", (e) => {
+  const menu = document.getElementById("menuHamburguer");
+  const botao = menu?.querySelector(".botao-menu");
 
-  botaoMenu?.addEventListener("click", (e) => {
-    e.stopPropagation();
-    menuOpcoes.classList.toggle("ativo");
-  });
+  if (botao?.contains(e.target)) {
+    menu.classList.toggle("ativo");
+  } else if (!menu?.contains(e.target)) {
+    menu?.classList.remove("ativo");
+  }
+});
 
   // Fecha o menu se clicar fora
   document.addEventListener("click", (e) => {
