@@ -14,14 +14,11 @@ body {
 
 .top-bar {
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  padding: 10px 15px;
-  background-color: #007BFF
+  justify-content: space-between;
+  background: #007BFF;
   color: white;
-  position: sticky;
-  top: 0;
-  z-index: 1000;
+  padding: 10px 20px;
 }
 
 .top-bar button {
