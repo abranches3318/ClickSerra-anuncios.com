@@ -163,14 +163,22 @@ function refStorage(path) {
   return ref(storage, path);
 }
 
+// Controle do menu hambúrguer (estilo usado nas outras páginas)
+function toggleMenuHamburguer() {
+  const menu = document.getElementById("menuHamburguer");
+  menu.classList.toggle("ativo");
+}
+
 document.addEventListener("click", (e) => {
   const menu = document.getElementById("menuHamburguer");
   const botao = menu?.querySelector(".botao-menu");
 
   if (botao?.contains(e.target)) {
-    menu.classList.toggle("ativo");
+    // Já tratado no botão, não faz nada aqui
   } else if (!menu?.contains(e.target)) {
     menu?.classList.remove("ativo");
+  }
+});
   }
 });
 
