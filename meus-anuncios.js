@@ -163,14 +163,14 @@ function refStorage(path) {
   return ref(storage, path);
 }
 
-// Menu hamburguer
-const botaoMenu = document.querySelector(".botao-menu");
-const menuOpcoes = document.getElementById("menuHamburguerOpcoes");
-
+// Menu hambúrguer
 document.addEventListener("click", (e) => {
-  if (botaoMenu.contains(e.target)) {
-    menuOpcoes.classList.toggle("ativo");
-  } else if (!menuOpcoes.contains(e.target)) {
-    menuOpcoes.classList.remove("ativo");
+  const menu = document.getElementById("menuHamburguer");
+  const botao = menu?.querySelector(".botao-menu");
+
+  if (botao?.contains(e.target)) {
+    menu.classList.toggle("ativo");
+  } else if (!menu?.contains(e.target)) {
+    menu?.classList.remove("ativo");
   }
 });
