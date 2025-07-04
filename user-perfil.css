@@ -140,6 +140,17 @@ form {
   display: none;
 }
 
+.foto-perfil {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  object-fit: cover;
+  cursor: pointer;
+  border: 3px solid #007BFF;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+  transition: transform 0.2s;
+}
+
 .botao-salvar,
 .botao-editar {
   background-color: #003d66;
