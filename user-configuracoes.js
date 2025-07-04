@@ -52,7 +52,23 @@ onAuthStateChanged(auth, (user) => {
     Swal.fire("Erro", "Usuário não autenticado", "error");
     return;
   }
+  
+document.addEventListener("DOMContentLoaded", () => {
+  const foto = document.getElementById("fotoPerfil");
+  const input = document.getElementById("inputFotoPerfil");
 
+  console.log("Foto encontrada:", !!foto);
+  console.log("Input encontrado:", !!input);
+
+  foto?.addEventListener("click", () => {
+    console.log("Clique na imagem detectado");
+  });
+
+  input?.addEventListener("change", () => {
+    console.log("Arquivo selecionado");
+  });
+});
+  
   const inputFoto = document.getElementById("inputFotoPerfil");
   const imgPreview = document.getElementById("fotoPerfil");
 
