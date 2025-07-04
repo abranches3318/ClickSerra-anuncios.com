@@ -54,24 +54,31 @@ onAuthStateChanged(auth, (user) => {
     return;
   }
 
-  const inputFoto = document.getElementById("inputFotoPerfil");
-  const imgPreview = document.getElementById("fotoPerfil");
+const inputFoto = document.getElementById("inputFotoPerfil");
+const imgPreview = document.getElementById("fotoPerfil");
 
-  imgPreview?.addEventListener("click", () => inputFoto.click());
+if (imgPreview && inputFoto) {
+  // Torna o clique na imagem confiável
+  imgPreview.addEventListener("click", () => {
+    inputFoto.click();
+  });
 
-  inputFoto?.addEventListener("change", async (event) => {
+  // Quando o usuário selecionar uma imagem
+  inputFoto.addEventListener("change", async (event) => {
     const file = event.target.files[0];
     if (!file) return;
 
     const reader = new FileReader();
-    reader.onload = async () => {
-      imgPreview.src = reader.result;
+
+    reader.onload = async function () {
+      const previewUrl = reader.result;
+      imgPreview.src = previewUrl;
 
       const confirm = await Swal.fire({
-        title: 'Confirmar troca da foto?',
-        text: 'Deseja salvar essa nova imagem de perfil?',
-        imageUrl: reader.result,
-        imageAlt: 'Pré-visualização da nova imagem',
+        title: 'Confirmar nova foto?',
+        text: 'Deseja realmente usar esta imagem?',
+        imageUrl: previewUrl,
+        imageAlt: 'Pré-visualização',
         showCancelButton: true,
         confirmButtonText: 'Sim, salvar',
         cancelButtonText: 'Cancelar'
@@ -87,13 +94,25 @@ onAuthStateChanged(auth, (user) => {
           imgPreview.src = url;
 
           await Swal.fire('Sucesso', 'Foto de perfil atualizada!', 'success');
-        } catch (e) {
-          showAlertaErro("Erro", "Falha ao salvar a nova imagem.");
+        } catch (error) {
+          console.error(error);
+          showAlertaErro('Erro ao salvar imagem', error.message || 'Falha desconhecida.');
+        }
+      } else {
+        // Volta à imagem anterior, se cancelado
+        const caminho = `usuarios/${user.uid}/avatar.jpg`;
+        try {
+          const url = await getDownloadURL(ref(storage, caminho));
+          imgPreview.src = url;
+        } catch {
+          imgPreview.src = 'assets/perfil-padrao.jpg';
         }
       }
     };
+
     reader.readAsDataURL(file);
   });
+}
 
   function verificarLoginSenha() {
     return user?.providerData[0]?.providerId === "password";
