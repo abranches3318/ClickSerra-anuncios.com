@@ -17,6 +17,12 @@ import {
   query,
   where
 } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+import {
+  getStorage,
+  ref,
+  uploadBytes,
+  getDownloadURL
+} from "https://www.gstatic.com/firebasejs/10.12.0/firebase-storage.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyDhjUescYhrZ1e12M6nv5mnWxDovNcGxw0",
@@ -31,6 +37,7 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
+const storage = getStorage(app);
 
 function showAlertaErro(titulo, mensagem) {
   Swal.fire({
@@ -46,6 +53,47 @@ onAuthStateChanged(auth, (user) => {
     Swal.fire("Erro", "Usuário não autenticado", "error");
     return;
   }
+
+  const inputFoto = document.getElementById("inputFotoPerfil");
+  const imgPreview = document.getElementById("fotoPerfil");
+
+  imgPreview?.addEventListener("click", () => inputFoto.click());
+
+  inputFoto?.addEventListener("change", async (event) => {
+    const file = event.target.files[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = async () => {
+      imgPreview.src = reader.result;
+
+      const confirm = await Swal.fire({
+        title: 'Confirmar troca da foto?',
+        text: 'Deseja salvar essa nova imagem de perfil?',
+        imageUrl: reader.result,
+        imageAlt: 'Pré-visualização da nova imagem',
+        showCancelButton: true,
+        confirmButtonText: 'Sim, salvar',
+        cancelButtonText: 'Cancelar'
+      });
+
+      if (confirm.isConfirmed) {
+        try {
+          const caminho = `usuarios/${user.uid}/avatar.jpg`;
+          const storageRef = ref(storage, caminho);
+          await uploadBytes(storageRef, file);
+
+          const url = await getDownloadURL(storageRef);
+          imgPreview.src = url;
+
+          await Swal.fire('Sucesso', 'Foto de perfil atualizada!', 'success');
+        } catch (e) {
+          showAlertaErro("Erro", "Falha ao salvar a nova imagem.");
+        }
+      }
+    };
+    reader.readAsDataURL(file);
+  });
 
   function verificarLoginSenha() {
     return user?.providerData[0]?.providerId === "password";
@@ -186,5 +234,6 @@ document.addEventListener("click", (e) => {
     menu?.classList.remove("ativo");
   }
 });
+
 
 
