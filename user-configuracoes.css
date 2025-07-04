@@ -158,13 +158,13 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-bottom: 20px;
+  margin-bottom: 30px;
   position: relative;
 }
 
 .foto-perfil {
-  width: 140px;
-  height: 140px;
+  width: 120px;
+  height: 120px;
   border-radius: 50%;
   border: 3px solid #007BFF;
   object-fit: cover;
@@ -184,8 +184,8 @@ body {
 
 /* Texto opcional abaixo da imagem */
 .foto-perfil-dica {
-  margin-top: 10px;
-  color: #666;
+  margin-top: 8px;
+  color: #555;
   font-size: 14px;
   text-align: center;
 }
