@@ -27,7 +27,6 @@ import {
 const firebaseConfig = {
   apiKey: "AIzaSyDhjUescYhrZ1e12M6nv5mnWxDovNcGxw0",
   authDomain: "clickserra-anuncios.firebaseapp.com",
-  databaseURL: "https://clickserra-anuncios-default-rtdb.firebaseio.com",
   projectId: "clickserra-anuncios",
   storageBucket: "clickserra-anuncios.appspot.com",
   messagingSenderId: "251868045964",
@@ -54,65 +53,64 @@ onAuthStateChanged(auth, (user) => {
     return;
   }
 
-const inputFoto = document.getElementById("inputFotoPerfil");
-const imgPreview = document.getElementById("fotoPerfil");
+  const inputFoto = document.getElementById("inputFotoPerfil");
+  const imgPreview = document.getElementById("fotoPerfil");
 
-if (imgPreview && inputFoto) {
-  // Torna o clique na imagem confiável
-  imgPreview.addEventListener("click", () => {
-    inputFoto.click();
-  });
+  if (imgPreview && inputFoto) {
+    imgPreview.addEventListener("click", () => {
+      console.log("Clique na imagem detectado");
+      inputFoto.click();
+    });
 
-  // Quando o usuário selecionar uma imagem
-  inputFoto.addEventListener("change", async (event) => {
-    const file = event.target.files[0];
-    if (!file) return;
+    inputFoto.addEventListener("change", (event) => {
+      const file = event.target.files[0];
+      if (!file) return;
 
-    const reader = new FileReader();
+      const reader = new FileReader();
 
-    reader.onload = async function () {
-      const previewUrl = reader.result;
-      imgPreview.src = previewUrl;
+      reader.onload = function () {
+        const previewUrl = reader.result;
+        imgPreview.src = previewUrl;
 
-      const confirm = await Swal.fire({
-        title: 'Confirmar nova foto?',
-        text: 'Deseja realmente usar esta imagem?',
-        imageUrl: previewUrl,
-        imageAlt: 'Pré-visualização',
-        showCancelButton: true,
-        confirmButtonText: 'Sim, salvar',
-        cancelButtonText: 'Cancelar'
-      });
+        Swal.fire({
+          title: 'Confirmar nova foto?',
+          text: 'Deseja realmente usar esta imagem?',
+          imageUrl: previewUrl,
+          imageAlt: 'Pré-visualização',
+          showCancelButton: true,
+          confirmButtonText: 'Sim, salvar',
+          cancelButtonText: 'Cancelar'
+        }).then(async (confirm) => {
+          if (confirm.isConfirmed) {
+            try {
+              const caminho = `usuarios/${user.uid}/avatar.jpg`;
+              const storageRef = ref(storage, caminho);
+              await uploadBytes(storageRef, file);
 
-      if (confirm.isConfirmed) {
-        try {
-          const caminho = `usuarios/${user.uid}/avatar.jpg`;
-          const storageRef = ref(storage, caminho);
-          await uploadBytes(storageRef, file);
+              const url = await getDownloadURL(storageRef);
+              imgPreview.src = url;
 
-          const url = await getDownloadURL(storageRef);
-          imgPreview.src = url;
+              await Swal.fire('Sucesso', 'Foto de perfil atualizada!', 'success');
+            } catch (error) {
+              console.error(error);
+              showAlertaErro('Erro ao salvar imagem', error.message || 'Falha desconhecida.');
+            }
+          } else {
+            // Reverter para a imagem anterior
+            const caminho = `usuarios/${user.uid}/avatar.jpg`;
+            try {
+              const url = await getDownloadURL(ref(storage, caminho));
+              imgPreview.src = url;
+            } catch {
+              imgPreview.src = 'assets/perfil-padrao.jpg';
+            }
+          }
+        });
+      };
 
-          await Swal.fire('Sucesso', 'Foto de perfil atualizada!', 'success');
-        } catch (error) {
-          console.error(error);
-          showAlertaErro('Erro ao salvar imagem', error.message || 'Falha desconhecida.');
-        }
-      } else {
-        // Volta à imagem anterior, se cancelado
-        const caminho = `usuarios/${user.uid}/avatar.jpg`;
-        try {
-          const url = await getDownloadURL(ref(storage, caminho));
-          imgPreview.src = url;
-        } catch {
-          imgPreview.src = 'assets/perfil-padrao.jpg';
-        }
-      }
-    };
-
-    reader.readAsDataURL(file);
-  });
-}
+      reader.readAsDataURL(file);
+    });
+  }
 
   function verificarLoginSenha() {
     return user?.providerData[0]?.providerId === "password";
@@ -253,6 +251,3 @@ document.addEventListener("click", (e) => {
     menu?.classList.remove("ativo");
   }
 });
-
-
-
