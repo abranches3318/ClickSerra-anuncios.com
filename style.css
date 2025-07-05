@@ -153,22 +153,39 @@ body {
   color: #a94442;
 }
 
+
 .perfil-index {
   display: flex;
   align-items: center;
-  flex-direction: column;
+  justify-content: flex-end;
+  gap: 10px;
   margin-left: auto;
+  padding: 8px 12px;
+  background-color: transparent;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.bem-vindo-msg {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #333;
+  margin: 0;
+  white-space: nowrap;
 }
 
 .img-perfil-index {
-  width: 40px;
-  height: 40px;
+  width: 44px;
+  height: 44px;
   border-radius: 50%;
   object-fit: cover;
+  border: 2px solid #fff;
+  box-shadow: 0 0 6px rgba(0, 0, 0, 0.2);
+  transition: transform 0.2s ease;
+  cursor: pointer;
 }
-.bem-vindo-msg {
-  font-size: 0.8rem;
-  margin-top: 2px;
+
+.img-perfil-index:hover {
+  transform: scale(1.05);
 }
 
 /* Barra de Navegação */
