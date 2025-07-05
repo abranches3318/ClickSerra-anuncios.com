@@ -153,21 +153,6 @@ body {
   color: #a94442;
 }
 
-/* Barra de Navegação */
-.barra-navegacao {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  background-color: #005288;
-  color: white;
-  padding: 6px 12px;
-  position: fixed;
-  top: 40px;
-  left: 0;
-  right: 0;
-  z-index: 1000;
-}
-
 .perfil-index {
   display: flex;
   align-items: center;
@@ -185,6 +170,22 @@ body {
   font-size: 0.8rem;
   margin-top: 2px;
 }
+
+/* Barra de Navegação */
+.barra-navegacao {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #005288;
+  color: white;
+  padding: 6px 12px;
+  position: fixed;
+  top: 40px;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+}
+
 
 .logo-container {
   display: flex;
