@@ -9,7 +9,7 @@ const firebaseConfig = {
   authDomain: "clickserra-anuncios.firebaseapp.com",
   databaseURL: "https://clickserra-anuncios-default-rtdb.firebaseio.com",
   projectId: "clickserra-anuncios",
-  storageBucket: "clickserra-anuncios.appspot.com",
+  storageBucket: "clickserra-anuncios.firebasestorage.app"
   messagingSenderId: "251868045964",
   appId: "1:251868045964:web:34f527f3d7c380746211a9"
 };
