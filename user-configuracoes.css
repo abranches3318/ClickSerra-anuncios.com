@@ -4,7 +4,7 @@
 }
 
 body {
-  font-family: Arial, sans-serif;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   margin: 0;
   background: #f9f9f9;
   display: flex;
@@ -12,6 +12,7 @@ body {
   height: 100vh;
 }
 
+/* ===== BARRA SUPERIOR ===== */
 .top-bar {
   display: flex;
   align-items: center;
@@ -19,6 +20,8 @@ body {
   background: #007BFF;
   color: white;
   padding: 10px 20px;
+  height: 60px;
+  position: relative;
 }
 
 .top-bar button {
@@ -34,6 +37,7 @@ body {
   transform: scale(1.1);
 }
 
+/* ===== MENU HAMBÚRGUER ===== */
 .menu-hamburguer {
   position: relative;
 }
@@ -57,6 +61,11 @@ body {
   color: #005288;
   text-decoration: none;
   border-bottom: 1px solid #eee;
+  transition: background-color 0.2s;
+}
+
+.menu-hamburguer-opcoes a:hover {
+  background-color: #f4f4f4;
 }
 
 .menu-hamburguer-opcoes a:last-child {
@@ -67,20 +76,22 @@ body {
   display: block;
 }
 
-/* === CONFIGURAÇÕES === */
+/* ===== CONFIGURAÇÕES ===== */
 
 .config-wrapper {
   display: flex;
   flex: 1;
   min-height: calc(100vh - 60px); /* Altura da barra superior */
+  background: #fafafa;
 }
 
+/* ===== MENU LATERAL ESQUERDO ===== */
 .config-sidebar {
   width: 240px;
   background-color: #fff;
   border-right: 1px solid #ddd;
   padding: 20px 15px;
-  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.05);
 }
 
 .config-sidebar h3 {
@@ -88,6 +99,7 @@ body {
   margin-bottom: 20px;
   color: #003d66;
   font-size: 20px;
+  font-weight: 600;
 }
 
 .lista-configuracoes {
@@ -100,6 +112,7 @@ body {
   margin-bottom: 15px;
 }
 
+/* ===== BOTÕES DAS CONFIGS ===== */
 .config-btn {
   display: flex;
   align-items: center;
@@ -112,7 +125,7 @@ body {
   border-radius: 6px;
   font-size: 15px;
   cursor: pointer;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
   text-align: left;
   text-decoration: none;
   transition: all 0.2s ease;
@@ -126,15 +139,16 @@ body {
 
 .config-btn i {
   font-size: 18px;
+  color: #007bff;
 }
 
-/* Conteúdo à direita */
+/* ===== ÁREA DE CONTEÚDO (SE FOR USAR DEPOIS) ===== */
 .config-conteudo {
   flex: 1;
   padding: 30px;
 }
 
-/* Responsivo */
+/* ===== RESPONSIVO ===== */
 @media (max-width: 768px) {
   .config-wrapper {
     flex-direction: column;
@@ -151,4 +165,3 @@ body {
     padding: 20px;
   }
 }
-
