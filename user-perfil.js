@@ -1,4 +1,4 @@
-// Firebase inicialização (modifique para sua config)
+// Firebase inicialização
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
 import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
 import { getFirestore, doc, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
@@ -9,7 +9,7 @@ const firebaseConfig = {
   authDomain: "clickserra-anuncios.firebaseapp.com",
   databaseURL: "https://clickserra-anuncios-default-rtdb.firebaseio.com",
   projectId: "clickserra-anuncios",
-  storageBucket: "clickserra-anuncios.firebasestorage.app",
+  storageBucket: "clickserra-anuncios.appspot.com",
   messagingSenderId: "251868045964",
   appId: "1:251868045964:web:34f527f3d7c380746211a9"
 };
@@ -25,6 +25,7 @@ const btnEditar = document.getElementById("botaoEditar");
 const inputFoto = document.getElementById("inputFotoPerfil");
 const imagem = document.getElementById("fotoPerfil");
 
+// Bloqueia edição por padrão
 function setFormDisabled(disabled) {
   [...form.elements].forEach(el => {
     if (el.id !== "botaoEditar" && el.type !== "button" && el.id !== "botaoSalvar") {
@@ -35,83 +36,19 @@ function setFormDisabled(disabled) {
   btnEditar.style.display = disabled ? "block" : "none";
 }
 
-document.addEventListener("DOMContentLoaded", () => {
-  const foto = document.getElementById("fotoPerfil");
-  const input = document.getElementById("inputFotoPerfil");
-
-  foto?.addEventListener("click", () => {
-    input?.click();
-  });
-
-  input?.addEventListener("change", async (event) => {
-    const file = event.target.files[0];
-    if (!file) return;
-
-    const reader = new FileReader();
-    reader.onload = function () {
-      const previewUrl = reader.result;
-      imagem.src = previewUrl;
-
-      Swal.fire({
-        title: 'Confirmar nova foto?',
-        text: 'Deseja realmente usar esta imagem?',
-        imageUrl: previewUrl,
-        imageAlt: 'Pré-visualização',
-        showCancelButton: true,
-        confirmButtonText: 'Sim, salvar',
-        cancelButtonText: 'Cancelar'
-      }).then(async (confirm) => {
-        if (confirm.isConfirmed) {
-          try {
-            const user = auth.currentUser;
-            const caminho = `usuarios/${user.uid}/avatar.jpg`;
-            const storageRef = ref(storage, caminho);
-            await uploadBytes(storageRef, file);
-
-            const url = await getDownloadURL(storageRef);
-            imagem.src = url;
-
-            await Swal.fire('Sucesso', 'Foto de perfil atualizada!', 'success');
-          } catch (error) {
-            console.error(error);
-            Swal.fire('Erro ao salvar imagem', error.message || 'Falha desconhecida.', 'error');
-          }
-        } else {
-          try {
-            const user = auth.currentUser;
-            const caminho = `usuarios/${user.uid}/avatar.jpg`;
-            const url = await getDownloadURL(ref(storage, caminho));
-            imagem.src = url;
-          } catch {
-            imagem.src = "imagem/usuario.png";
-          }
-        }
-      });
-    };
-
-    reader.readAsDataURL(file);
-  });
-});
-
-// Alterna o menu hambúrguer
+// Menu hambúrguer
 function toggleMenuHamburguer() {
   const menu = document.getElementById("menuHamburguer");
   menu.classList.toggle("ativo");
 }
 window.toggleMenuHamburguer = toggleMenuHamburguer;
 
-// Fecha o menu hambúrguer se clicar fora
 document.addEventListener("click", function (event) {
   const menu = document.getElementById("menuHamburguer");
-  const botao = menu.querySelector(".botao-menu");
-  const clicouFora = !menu.contains(event.target);
-  const clicouNoBotao = botao.contains(event.target);
-  if (!clicouNoBotao && clicouFora && menu.classList.contains("ativo")) {
-    menu.classList.remove("ativo");
-  }
+  if (!menu.contains(event.target)) menu.classList.remove("ativo");
 });
 
-// CEP busca
+// CEP
 document.getElementById("cep").addEventListener("blur", async () => {
   const cep = document.getElementById("cep").value.replace(/\D/g, "");
   if (cep.length !== 8) return;
@@ -122,13 +59,14 @@ document.getElementById("cep").addEventListener("blur", async () => {
   }
 });
 
-// Empresa checkbox
-document.getElementById("ehEmpresa").addEventListener("change", () => {
+// Empresa
+const cbEmpresa = document.getElementById("ehEmpresa");
+cbEmpresa.addEventListener("change", () => {
   document.getElementById("nomeCompleto").disabled = cbEmpresa.checked;
   document.getElementById("nomeEmpresa").disabled = !cbEmpresa.checked;
 });
 
-// Autenticação e preenchimento
+// Autenticação e dados iniciais
 onAuthStateChanged(auth, async (user) => {
   if (!user) return;
   const refDoc = doc(db, "users", user.uid);
@@ -148,18 +86,25 @@ onAuthStateChanged(auth, async (user) => {
     form.facebook.value = d.facebook || "";
     form.ehWhatsapp.checked = d.ehWhatsapp || false;
     form.ehEmpresa.checked = d.ehEmpresa || false;
-    if (d.fotoPerfilUrl) imagem.src = d.fotoPerfilUrl;
-    else imagem.src = "imagem/usuario.png";
+
+    try {
+      const url = d.fotoPerfilUrl || await getDownloadURL(ref(storage, `usuarios/${user.uid}/avatar.jpg`));
+      imagem.src = url;
+    } catch {
+      imagem.src = "imagens/usuario.png";
+    }
+
     cbEmpresa.dispatchEvent(new Event("change"));
     setFormDisabled(true);
   } else {
-    imagem.src = "imagem/usuario.png";
-    setFormDisabled(false);
+    imagem.src = "imagens/usuario.png";
+    setFormDisabled(true);
   }
 });
 
 btnEditar.addEventListener("click", () => setFormDisabled(false));
 
+// Salvar perfil
 form.addEventListener("submit", async (e) => {
   e.preventDefault();
   const user = auth.currentUser;
@@ -182,7 +127,73 @@ form.addEventListener("submit", async (e) => {
   };
 
   await setDoc(doc(db, "users", user.uid), dados, { merge: true });
+  Swal.fire("Sucesso", "Perfil salvo com sucesso!", "success");
   setFormDisabled(true);
-  alert("Perfil salvo com sucesso!");
-  window.location.href = "index.html";
+});
+
+// Upload com Cropper
+imagem.addEventListener("click", () => inputFoto.click());
+
+inputFoto.addEventListener("change", async (e) => {
+  const file = e.target.files[0];
+  if (!file) return;
+
+  const reader = new FileReader();
+  reader.onload = function () {
+    const base64 = reader.result;
+
+    Swal.fire({
+      title: "Ajuste sua foto",
+      html: '<div><img id="crop-image" style="max-width:100%"></div>',
+      showCancelButton: true,
+      confirmButtonText: "Salvar",
+      cancelButtonText: "Cancelar",
+      willOpen: () => {
+        const image = document.getElementById("crop-image");
+        image.src = base64;
+
+        window.cropper = new Cropper(image, {
+          aspectRatio: 1,
+          viewMode: 1,
+          autoCropArea: 1,
+          movable: true,
+          zoomable: true,
+          rotatable: false,
+          scalable: false,
+        });
+      },
+      preConfirm: async () => {
+        return new Promise((resolve) => {
+          window.cropper.getCroppedCanvas({ width: 300, height: 300 }).toBlob(blob => {
+            resolve(blob);
+          }, 'image/jpeg');
+        });
+      },
+      didClose: () => {
+        window.cropper.destroy();
+        delete window.cropper;
+      }
+    }).then(async result => {
+      if (result.isConfirmed && result.value) {
+        try {
+          const user = auth.currentUser;
+          const caminho = `usuarios/${user.uid}/avatar.jpg`;
+          const storageRef = ref(storage, caminho);
+
+          await uploadBytes(storageRef, result.value);
+          const url = await getDownloadURL(storageRef);
+          imagem.src = url;
+
+          await setDoc(doc(db, "users", user.uid), { fotoPerfilUrl: url }, { merge: true });
+
+          Swal.fire("Sucesso", "Foto atualizada!", "success");
+        } catch (err) {
+          console.error(err);
+          Swal.fire("Erro", "Falha ao salvar imagem: " + err.message, "error");
+        }
+      }
+    });
+  };
+
+  reader.readAsDataURL(file);
 });
