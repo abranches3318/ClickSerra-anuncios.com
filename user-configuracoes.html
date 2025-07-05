@@ -10,12 +10,15 @@
   <script type="module" src="user-configuracoes.js" defer></script>
 </head>
 <body>
+
+  <!-- Topo com botão home e menu -->
   <header class="top-bar">
-    <button class="voltar" onclick="window.location.href='index.html'">
+    <button class="voltar" onclick="window.location.href='index.html'" aria-label="Voltar à página inicial">
       <i class="fas fa-home"></i>
     </button>
+
     <div class="menu-hamburguer" id="menuHamburguer">
-      <button class="botao-menu" onclick="toggleMenuHamburguer()">
+      <button class="botao-menu" aria-label="Menu" onclick="toggleMenuHamburguer()">
         <i class="fas fa-bars"></i>
       </button>
       <div class="menu-hamburguer-opcoes" id="menuHamburguerOpcoes">
@@ -26,6 +29,7 @@
     </div>
   </header>
 
+  <!-- Área principal -->
   <div class="config-wrapper">
     <aside class="config-sidebar">
       <h3>Configurações</h3>
@@ -39,5 +43,12 @@
       </ul>
     </aside>
   </div>
+
+  <script>
+    function toggleMenuHamburguer() {
+      const menu = document.getElementById('menuHamburguer');
+      menu.classList.toggle('ativo');
+    }
+  </script>
 </body>
 </html>
