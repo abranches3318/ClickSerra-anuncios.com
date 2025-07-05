@@ -1,4 +1,4 @@
-// Firebase inicialização (modifique para sua config)
+// Firebase inicialização
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
 import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
 import { getFirestore, doc, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
@@ -7,9 +7,8 @@ import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstati
 const firebaseConfig = {
   apiKey: "AIzaSyDhjUescYhrZ1e12M6nv5mnWxDovNcGxw0",
   authDomain: "clickserra-anuncios.firebaseapp.com",
-  databaseURL: "https://clickserra-anuncios-default-rtdb.firebaseio.com",
   projectId: "clickserra-anuncios",
-  storageBucket: "clickserra-anuncios.firebasestorage.app"
+  storageBucket: "clickserra-anuncios.firebasestorage.app",
   messagingSenderId: "251868045964",
   appId: "1:251868045964:web:34f527f3d7c380746211a9"
 };
@@ -22,7 +21,7 @@ const storage = getStorage(app);
 const form = document.getElementById("formPerfil");
 const btnSalvar = document.getElementById("botaoSalvar");
 const btnEditar = document.getElementById("botaoEditar");
-const inputFoto = document.getElementById("uploadFotoPerfil");
+const inputFoto = document.getElementById("inputFotoPerfil");
 const imagem = document.getElementById("fotoPerfil");
 
 function setFormDisabled(disabled) {
@@ -35,126 +34,14 @@ function setFormDisabled(disabled) {
   btnEditar.style.display = disabled ? "block" : "none";
 }
 
-document.addEventListener("DOMContentLoaded", () => {
-  const foto = document.getElementById("fotoPerfil");
-  const input = document.getElementById("inputFotoPerfil");
-
-  console.log("Foto encontrada:", !!foto);
-  console.log("Input encontrado:", !!input);
-
-  foto?.addEventListener("click", () => {
-    console.log("Clique na imagem detectado");
-  });
-
-  input?.addEventListener("change", () => {
-    console.log("Arquivo selecionado");
-  });
-});
-  
-  const inputFoto = document.getElementById("inputFotoPerfil");
-  const imgPreview = document.getElementById("fotoPerfil");
-
-  if (imgPreview && inputFoto) {
-    imgPreview.addEventListener("click", () => {
-      console.log("Clique na imagem detectado");
-      inputFoto.click();
-    });
-
-    inputFoto.addEventListener("change", (event) => {
-      const file = event.target.files[0];
-      if (!file) return;
-
-      const reader = new FileReader();
-
-      reader.onload = function () {
-        const previewUrl = reader.result;
-        imgPreview.src = previewUrl;
-
-        Swal.fire({
-          title: 'Confirmar nova foto?',
-          text: 'Deseja realmente usar esta imagem?',
-          imageUrl: previewUrl,
-          imageAlt: 'Pré-visualização',
-          showCancelButton: true,
-          confirmButtonText: 'Sim, salvar',
-          cancelButtonText: 'Cancelar'
-        }).then(async (confirm) => {
-          if (confirm.isConfirmed) {
-            try {
-              const caminho = `usuarios/${user.uid}/avatar.jpg`;
-              const storageRef = ref(storage, caminho);
-              await uploadBytes(storageRef, file);
-
-              const url = await getDownloadURL(storageRef);
-              imgPreview.src = url;
-
-              await Swal.fire('Sucesso', 'Foto de perfil atualizada!', 'success');
-            } catch (error) {
-              console.error(error);
-              showAlertaErro('Erro ao salvar imagem', error.message || 'Falha desconhecida.');
-            }
-          } else {
-            // Reverter para a imagem anterior
-            const caminho = `usuarios/${user.uid}/avatar.jpg`;
-            try {
-              const url = await getDownloadURL(ref(storage, caminho));
-              imgPreview.src = url;
-            } catch {
-              imgPreview.src = 'assets/perfil-padrao.jpg';
-            }
-          }
-        });
-      };
-
-      reader.readAsDataURL(file);
-    });
-  }
-
-// Alterna o menu hambúrguer
-function toggleMenuHamburguer() {
-  const menu = document.getElementById("menuHamburguer");
-  menu.classList.toggle("ativo");
+function showAlertaErro(titulo, mensagem) {
+  Swal.fire({ icon: 'error', title: titulo, text: mensagem });
 }
-window.toggleMenuHamburguer = toggleMenuHamburguer;
 
-
-// Fecha o menu hambúrguer se clicar fora
-document.addEventListener("click", function (event) {
-  const menu = document.getElementById("menuHamburguer");
-  const botao = menu.querySelector(".botao-menu");
-  const opcoes = document.getElementById("menuHamburguerOpcoes");
-
-  const clicouFora = !menu.contains(event.target);
-  const clicouNoBotao = botao.contains(event.target);
-
-  // Fecha se clicou fora e menu estiver aberto
-  if (!clicouNoBotao && clicouFora && menu.classList.contains("ativo")) {
-    menu.classList.remove("ativo");
-  }
-});
-
-// CEP busca
-const cepInput = document.getElementById("cep");
-cepInput.addEventListener("blur", async () => {
-  const cep = cepInput.value.replace(/\D/g, "");
-  if (cep.length !== 8) return;
-  const res = await fetch(`https://viacep.com.br/ws/${cep}/json/`);
-  const data = await res.json();
-  if (!data.erro) {
-    document.getElementById("endereco").value = `${data.logradouro}, ${data.bairro}, ${data.localidade} - ${data.uf}`;
-  }
-});
-
-// Empresa checkbox
-const cbEmpresa = document.getElementById("ehEmpresa");
-cbEmpresa.addEventListener("change", () => {
-  document.getElementById("nomeCompleto").disabled = cbEmpresa.checked;
-  document.getElementById("nomeEmpresa").disabled = !cbEmpresa.checked;
-});
-
-// Autenticação e preenchimento
 onAuthStateChanged(auth, async (user) => {
   if (!user) return;
+
+  // Preencher dados do Firestore
   const refDoc = doc(db, "users", user.uid);
   const snap = await getDoc(refDoc);
   if (snap.exists()) {
@@ -173,16 +60,59 @@ onAuthStateChanged(auth, async (user) => {
     form.ehWhatsapp.checked = d.ehWhatsapp || false;
     form.ehEmpresa.checked = d.ehEmpresa || false;
     if (d.fotoPerfilUrl) imagem.src = d.fotoPerfilUrl;
-    cbEmpresa.dispatchEvent(new Event("change"));
     setFormDisabled(true);
   } else {
     setFormDisabled(false);
   }
+
+  // Clique na imagem de perfil
+  imagem.addEventListener("click", () => inputFoto.click());
+
+  inputFoto.addEventListener("change", async (event) => {
+    const file = event.target.files[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = () => {
+      const previewUrl = reader.result;
+      imagem.src = previewUrl;
+
+      Swal.fire({
+        title: 'Confirmar nova foto?',
+        imageUrl: previewUrl,
+        showCancelButton: true,
+        confirmButtonText: 'Sim, salvar',
+        cancelButtonText: 'Cancelar'
+      }).then(async (res) => {
+        if (res.isConfirmed) {
+          try {
+            const caminho = `usuarios/${user.uid}/avatar.jpg`;
+            const storageRef = ref(storage, caminho);
+            await uploadBytes(storageRef, file);
+            const url = await getDownloadURL(storageRef);
+            imagem.src = url;
+            await setDoc(refDoc, { fotoPerfilUrl: url }, { merge: true });
+            Swal.fire('Sucesso', 'Foto de perfil atualizada!', 'success');
+          } catch (error) {
+            showAlertaErro("Erro", error.message);
+          }
+        } else {
+          try {
+            const url = await getDownloadURL(ref(storage, `usuarios/${user.uid}/avatar.jpg`));
+            imagem.src = url;
+          } catch {
+            imagem.src = "assets/perfil-padrao.jpg";
+          }
+        }
+      });
+    };
+    reader.readAsDataURL(file);
+  });
 });
 
-btnEditar.addEventListener("click", () => setFormDisabled(false));
+btnEditar?.addEventListener("click", () => setFormDisabled(false));
 
-form.addEventListener("submit", async (e) => {
+form?.addEventListener("submit", async (e) => {
   e.preventDefault();
   const user = auth.currentUser;
   if (!user) return;
@@ -205,6 +135,43 @@ form.addEventListener("submit", async (e) => {
 
   await setDoc(doc(db, "users", user.uid), dados, { merge: true });
   setFormDisabled(true);
-  alert("Perfil salvo com sucesso!");
-  window.location.href = "index.html";
+  Swal.fire("Salvo", "Perfil salvo com sucesso!", "success");
 });
+
+// CEP auto-preenchimento
+const cepInput = document.getElementById("cep");
+cepInput?.addEventListener("blur", async () => {
+  const cep = cepInput.value.replace(/\D/g, "");
+  if (cep.length !== 8) return;
+  const res = await fetch(`https://viacep.com.br/ws/${cep}/json/`);
+  const data = await res.json();
+  if (!data.erro) {
+    document.getElementById("endereco").value = `${data.logradouro}, ${data.bairro}, ${data.localidade} - ${data.uf}`;
+  }
+});
+
+// Checkbox empresa
+const cbEmpresa = document.getElementById("ehEmpresa");
+cbEmpresa?.addEventListener("change", () => {
+  document.getElementById("nomeCompleto").disabled = cbEmpresa.checked;
+  document.getElementById("nomeEmpresa").disabled = !cbEmpresa.checked;
+});
+
+// Menu hambúrguer
+function toggleMenuHamburguer() {
+  const menu = document.getElementById("menuHamburguer");
+  menu.classList.toggle("ativo");
+}
+window.toggleMenuHamburguer = toggleMenuHamburguer;
+
+document.addEventListener("click", (e) => {
+  const menu = document.getElementById("menuHamburguer");
+  const botao = menu?.querySelector(".botao-menu");
+
+  if (botao?.contains(e.target)) {
+    menu.classList.toggle("ativo");
+  } else if (!menu?.contains(e.target)) {
+    menu?.classList.remove("ativo");
+  }
+});
+
