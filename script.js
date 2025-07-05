@@ -11,6 +11,7 @@ const firebaseConfig = {
 
 firebase.initializeApp(firebaseConfig);
 const auth = firebase.auth();
+const db = firebase.firestore();
 
 // Menu hambúrguer
 const botaoMenu = document.getElementById('botaoMenu');
@@ -80,17 +81,54 @@ if (botaoConta && menuConta && menuSuspenso) {
   });
 }
 
-auth.onAuthStateChanged((user) => {
+auth.onAuthStateChanged(async (user) => {
   const menuConta = document.getElementById("menuConta");
   const menuHamburguer = document.getElementById("menuHamburguer");
 
-  if (user) {
+ if (user) {
     if (menuConta) menuConta.style.display = "flex";
     if (menuHamburguer) menuHamburguer.style.display = "none";
+
+    const divPerfil = document.getElementById("perfilIndex");
+    const img = document.getElementById("fotoPerfilIndex");
+    const nome = document.getElementById("bemVindoNome");
+
+    if (divPerfil && img && nome) {
+      let nomeUsuario = "";
+      let fotoUrl = "imagens/usuario.png";
+
+      try {
+        const docRef = db.collection("users").doc(user.uid);
+        const docSnap = await docRef.get();
+
+        if (docSnap.exists) {
+          const data = docSnap.data();
+          if (data.nome) {
+            nomeUsuario = data.nome.split(" ")[0];
+          }
+          if (data.fotoPerfilUrl) {
+            fotoUrl = data.fotoPerfilUrl;
+          }
+        } else if (user.displayName) {
+          nomeUsuario = user.displayName.split(" ")[0];
+        }
+
+        if (user.photoURL && !fotoUrl.includes("usuarios/")) {
+          fotoUrl = user.photoURL;
+        }
+      } catch (error) {
+        console.error("Erro ao buscar dados do perfil:", error);
+      }
+
+      img.src = fotoUrl;
+      nome.textContent = `Bem-vindo${nomeUsuario ? ` ${nomeUsuario}` : ""}`;
+      divPerfil.style.display = "flex";
+    }
+
   } else {
     if (menuConta) {
       menuConta.style.display = "none";
-      menuConta.classList.remove("ativo"); // fecha o menu suspenso se estiver aberto
+      menuConta.classList.remove("ativo");
     }
     if (menuHamburguer) menuHamburguer.style.display = "flex";
   }
