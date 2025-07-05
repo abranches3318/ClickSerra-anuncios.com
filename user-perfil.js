@@ -28,7 +28,11 @@ const imagem = document.getElementById("fotoPerfil");
 // Bloqueia edição por padrão
 function setFormDisabled(disabled) {
   [...form.elements].forEach(el => {
-    if (el.id !== "botaoEditar" && el.type !== "button" && el.id !== "botaoSalvar") {
+    if (
+      el.id !== "botaoEditar" &&
+      el.id !== "botaoSalvar" &&
+      el.id !== "inputFotoPerfil"
+    ) {
       el.disabled = disabled;
     }
   });
