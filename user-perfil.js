@@ -91,12 +91,21 @@ onAuthStateChanged(auth, async (user) => {
     form.ehWhatsapp.checked = d.ehWhatsapp || false;
     form.ehEmpresa.checked = d.ehEmpresa || false;
 
-    try {
-      const url = d.fotoPerfilUrl || await getDownloadURL(ref(storage, `usuarios/${user.uid}/avatar.jpg`));
-      imagem.src = url;
-    } catch {
-      imagem.src = "imagens/usuario.png";
+   try {
+  let fotoUrl = d.fotoPerfilUrl;
+
+  // Se não houver foto no Firestore e login for com Google, tenta usar a photoURL do Google
+  if (!fotoUrl && user.providerData[0]?.providerId === 'google.com') {
+    fotoUrl = user.photoURL;
+    if (fotoUrl) {
+      await setDoc(doc(db, "users", user.uid), { fotoPerfilUrl: fotoUrl }, { merge: true });
     }
+  }
+
+  imagem.src = fotoUrl || await getDownloadURL(ref(storage, `usuarios/${user.uid}/avatar.jpg`));
+} catch {
+  imagem.src = "imagens/usuario.png";
+}
 
     cbEmpresa.dispatchEvent(new Event("change"));
     setFormDisabled(true);
