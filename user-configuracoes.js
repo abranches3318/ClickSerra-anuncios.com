@@ -3,10 +3,10 @@ import {
   getAuth,
   onAuthStateChanged,
   sendPasswordResetEmail,
-  updateEmail,
-  deleteUser,
+  updatePassword,
   EmailAuthProvider,
-  reauthenticateWithCredential
+  reauthenticateWithCredential,
+  deleteUser
 } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
 import {
   getFirestore,
@@ -20,8 +20,7 @@ import {
 import {
   getStorage,
   ref,
-  uploadBytes,
-  getDownloadURL
+  deleteObject
 } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-storage.js";
 
 const firebaseConfig = {
@@ -53,15 +52,13 @@ onAuthStateChanged(auth, (user) => {
     return;
   }
 
-  function verificarLoginSenha() {
-    return user?.providerData[0]?.providerId === "password";
-  }
+  const isSenha = user.providerData[0]?.providerId === "password";
 
   async function reautenticarUsuario() {
     const { value: senha } = await Swal.fire({
       title: 'Confirme sua senha',
       input: 'password',
-      inputPlaceholder: 'Digite sua senha',
+      inputPlaceholder: 'Digite sua senha atual',
       showCancelButton: true,
       confirmButtonText: 'Confirmar',
       cancelButtonText: 'Cancelar'
@@ -73,122 +70,142 @@ onAuthStateChanged(auth, (user) => {
       const cred = EmailAuthProvider.credential(user.email, senha);
       return await reauthenticateWithCredential(user, cred);
     } catch (error) {
-      showAlertaErro("Falha na autenticação", "Senha incorreta ou sessão expirada.");
+      showAlertaErro("Erro de autenticação", "Senha incorreta ou sessão expirada.");
       return null;
     }
   }
 
-  document.querySelector(".alterar-email")?.addEventListener("click", async () => {
-    if (!verificarLoginSenha()) {
-      showAlertaErro("Indisponível para contas Google/Facebook.");
-      return;
-    }
-
-    const reauth = await reautenticarUsuario();
-    if (!reauth) return;
-
-    const { value: novoEmail } = await Swal.fire({
-      title: 'Novo Email',
-      input: 'email',
-      inputLabel: 'Digite seu novo email',
-      inputPlaceholder: 'usuario@email.com',
-      showCancelButton: true
-    });
-
-    if (novoEmail) {
-      try {
-        await updateEmail(user, novoEmail);
-        Swal.fire('Sucesso', 'Email atualizado com sucesso.', 'success');
-      } catch (error) {
-        showAlertaErro("Erro", "Falha ao atualizar o email.");
-      }
-    }
-  });
-
+  // ALTERAR SENHA
   document.querySelector(".alterar-senha")?.addEventListener("click", async () => {
-    if (!verificarLoginSenha()) {
+    if (!isSenha) {
       showAlertaErro("Indisponível para contas Google/Facebook.");
       return;
     }
 
-    const { isConfirmed } = await Swal.fire({
-      title: 'Redefinir Senha',
-      text: 'Deseja receber um link de redefinição?',
-      icon: 'question',
+    const { value: opcao } = await Swal.fire({
+      title: "Redefinir Senha",
+      input: "radio",
+      inputOptions: {
+        redefinir: "Esqueci minha senha (receber email)",
+        alterar: "Lembrar senha atual e alterar direto"
+      },
+      inputValidator: (value) => !value && "Escolha uma opção.",
       showCancelButton: true,
-      confirmButtonText: 'Sim',
-      cancelButtonText: 'Cancelar'
+      confirmButtonText: "Continuar"
     });
 
-    if (isConfirmed) {
+    if (!opcao) return;
+
+    if (opcao === "redefinir") {
       try {
         await sendPasswordResetEmail(auth, user.email);
-        Swal.fire("Enviado", "Email de redefinição enviado.", "success");
+        Swal.fire("Enviado", "Link enviado para seu email.", "success");
       } catch (error) {
         showAlertaErro("Erro", "Não foi possível enviar o email.");
       }
     }
+
+    if (opcao === "alterar") {
+      const reauth = await reautenticarUsuario();
+      if (!reauth) return;
+
+      const { value: formData } = await Swal.fire({
+        title: "Alterar Senha",
+        html: `
+          <input id="novaSenha" type="password" placeholder="Nova senha" class="swal2-input">
+          <input id="confirmarSenha" type="password" placeholder="Confirmar nova senha" class="swal2-input">
+        `,
+        focusConfirm: false,
+        showCancelButton: true,
+        confirmButtonText: "Atualizar",
+        preConfirm: () => {
+          const nova = document.getElementById("novaSenha").value;
+          const confirmar = document.getElementById("confirmarSenha").value;
+
+          if (!nova || !confirmar) return Swal.showValidationMessage("Preencha todos os campos.");
+          if (nova !== confirmar) return Swal.showValidationMessage("As senhas não coincidem.");
+          if (nova.length < 8) return Swal.showValidationMessage("Mínimo 8 caracteres.");
+          if (!/[A-Z]/.test(nova)) return Swal.showValidationMessage("Inclua letra maiúscula.");
+          if (!/[a-z]/.test(nova)) return Swal.showValidationMessage("Inclua letra minúscula.");
+          if (!/\d/.test(nova)) return Swal.showValidationMessage("Inclua um número.");
+          if (!/[!@#$%^&*(),.?":{}|<>]/.test(nova)) return Swal.showValidationMessage("Inclua caractere especial.");
+          if (nova === document.getElementById("novaSenha").value) return nova;
+        }
+      });
+
+      if (formData) {
+        try {
+          await updatePassword(user, formData);
+          Swal.fire("Sucesso", "Senha alterada com sucesso.", "success");
+        } catch (error) {
+          showAlertaErro("Erro", "Não foi possível alterar a senha.");
+        }
+      }
+    }
   });
 
+  // EXCLUIR CONTA
   document.querySelector(".excluir-conta")?.addEventListener("click", async () => {
-    const isSenha = user?.providerData[0]?.providerId === "password";
     if (isSenha) {
       const reauth = await reautenticarUsuario();
       if (!reauth) return;
     }
 
     const { isConfirmed } = await Swal.fire({
-      title: 'Tem certeza?',
-      text: 'Esta ação é irreversível. Todos os seus dados serão excluídos.',
-      icon: 'warning',
+      title: "Tem certeza?",
+      text: "Sua conta e dados serão permanentemente apagados.",
+      icon: "warning",
       showCancelButton: true,
-      confirmButtonColor: '#d33',
-      confirmButtonText: 'Sim, excluir',
-      cancelButtonText: 'Cancelar'
+      confirmButtonColor: "#d33",
+      confirmButtonText: "Sim, excluir",
+      cancelButtonText: "Cancelar"
     });
 
-    if (isConfirmed) {
-      try {
-        await deleteDoc(doc(db, "usuarios", user.uid));
+    if (!isConfirmed) return;
 
-        const anunciosQuery = query(collection(db, "anuncios"), where("uid", "==", user.uid));
-        const anunciosSnapshot = await getDocs(anunciosQuery);
-        for (const docSnap of anunciosSnapshot.docs) {
-          await deleteDoc(docSnap.ref);
-        }
+    try {
+      // Exclui imagem de perfil
+      const fotoRef = ref(storage, `usuarios/${user.uid}/avatar.jpg`);
+      await deleteObject(fotoRef).catch(() => {}); // ignora se não existir
 
-        await deleteUser(user);
+      // Exclui documentos Firestore
+      await deleteDoc(doc(db, "usuarios", user.uid));
+      const anunciosQuery = query(collection(db, "anuncios"), where("uid", "==", user.uid));
+      const anunciosSnapshot = await getDocs(anunciosQuery);
+      for (const anuncio of anunciosSnapshot.docs) {
+        await deleteDoc(anuncio.ref);
+      }
 
-        Swal.fire("Excluído", "Sua conta e dados foram removidos.", "success").then(() => {
-          window.location.href = "index.html";
-        });
-      } catch (error) {
-        if (error.code === 'auth/requires-recent-login') {
-          Swal.fire("Sessão expirada", "Faça login novamente e tente excluir a conta.", "error");
-        } else {
-          showAlertaErro("Erro", "Falha ao excluir conta ou dados.");
-        }
+      // Exclui conta
+      await deleteUser(user);
+
+      Swal.fire("Conta excluída", "Seus dados foram removidos.", "success").then(() => {
+        window.location.href = "index.html";
+      });
+    } catch (error) {
+      console.error(error);
+      if (error.code === 'auth/requires-recent-login') {
+        showAlertaErro("Sessão expirada", "Faça login novamente e tente excluir a conta.");
+      } else {
+        showAlertaErro("Erro", "Erro ao excluir conta.");
       }
     }
   });
 
-  document.querySelector(".config-notificacoes")?.addEventListener("click", async () => {
-    Swal.fire({
-      title: 'Notificações',
-      text: 'Configuração de notificações em breve.',
-      icon: 'info',
-      confirmButtonText: 'OK'
-    });
+  // Notificações placeholder
+  document.querySelector(".config-notificacoes")?.addEventListener("click", () => {
+    Swal.fire("Em breve", "Configurações de notificações disponíveis em breve.", "info");
   });
 });
 
+// Fecha menu hambúrguer ao clicar fora
 document.addEventListener("click", (e) => {
   const menu = document.getElementById("menuHamburguer");
   const botao = menu?.querySelector(".botao-menu");
-
   if (botao?.contains(e.target)) {
     menu.classList.toggle("ativo");
   } else if (!menu?.contains(e.target)) {
     menu?.classList.remove("ativo");
   }
 });
+
