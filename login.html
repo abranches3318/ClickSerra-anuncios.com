@@ -46,8 +46,8 @@
 
         <div class="campo-senha">
           <input type="password" id="senhaTelefone" placeholder="Digite sua senha" />
-          <button type="button" class="toggle-senha" onclick="toggleSenhaTelefone()" aria-label="Revelar senha">
-            <img id="iconeOlhoTelefone" src="imagens/ocultar-senha.png" alt="Mostrar senha" />
+          <button type="button" class="toggle-senha" onclick="toggleSenha('confirmarSenha', 'iconeConfirmarSenha')" aria-label="Revelar senha">
+            <img id="iconeConfirmarSenha" src="imagens/ocultar-senha.png" alt="Mostrar senha" />
           </button>
         </div>
 
@@ -87,27 +87,6 @@
       menu.style.display = menu.style.display === 'flex' ? 'none' : 'flex';
     }
 
-    // Revelar/ocultar senha do login
-    function toggleSenha() {
-      const campo = document.getElementById('senhaLogin');
-      const icone = document.getElementById('iconeOlho');
-      const mostrar = campo.type === 'password';
-
-      campo.type = mostrar ? 'text' : 'password';
-      icone.src = mostrar ? 'imagens/revelar-senha.png' : 'imagens/ocultar-senha.png';
-      icone.alt = mostrar ? 'Ocultar senha' : 'Mostrar senha';
-    }
-
-    // Revelar/ocultar senha do telefone
-    function toggleSenhaTelefone() {
-      const campo = document.getElementById('senhaTelefone');
-      const icone = document.getElementById('iconeOlhoTelefone');
-      const mostrar = campo.type === 'password';
-
-      campo.type = mostrar ? 'text' : 'password';
-      icone.src = mostrar ? 'imagens/revelar-senha.png' : 'imagens/ocultar-senha.png';
-      icone.alt = mostrar ? 'Ocultar senha' : 'Mostrar senha';
-    }
   </script>
 </body>
 </html>
