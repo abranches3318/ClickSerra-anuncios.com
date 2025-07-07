@@ -32,22 +32,29 @@
       <!-- Login com Google -->
       <div class="social-login">
         <button class="google" id="btnGoogle" onclick="loginComGoogle()">Continuar com Google</button>
-        <!-- <button class="facebook">Entrar com Facebook</button> -->
       </div>
 
       <p class="ou">ou</p>
 
       <!-- Login com Telefone -->
-      <div class="login-telefone">
-        <input type="tel" id="telefoneLogin" placeholder="Digite seu telefone com DDD" />
-        <button id="enviarSMS" onclick="enviarCodigoSMS()">Enviar Código</button>
-
-        <div id="codigoContainer" style="display: none; margin-top: 10px;">
-          <input type="text" id="codigoSMS" placeholder="Código SMS recebido" />
-          <button onclick="confirmarCodigoSMS()">Confirmar Código</button>
-        </div>
+      <div class="social-login">
+        <button id="btnTelefone" class="telefone" onclick="iniciarLoginTelefone()">Continuar com Telefone</button>
       </div>
 
+      <!-- Inputs dinâmicos para telefone/senha -->
+      <div id="areaTelefone" style="display: none; margin-top: 15px;">
+        <input type="tel" id="telefoneLogin" placeholder="Digite seu telefone" />
+        <input type="password" id="senhaTelefone" placeholder="Crie sua senha" />
+        <button onclick="enviarCodigoSMS()">Confirmar e Enviar SMS</button>
+      </div>
+
+      <!-- Campo para confirmar código SMS -->
+      <div id="codigoContainer" style="display: none; margin-top: 15px;">
+        <input type="text" id="codigoSMS" placeholder="Código SMS recebido" />
+        <button onclick="confirmarCodigoSMS()">Confirmar Código</button>
+      </div>
+
+      <!-- Link cadastro -->
       <p class="troca-tela">
         Não tem uma conta? <a href="cadastro.html">Cadastre-se</a>
       </p>
@@ -67,9 +74,11 @@
     </ul>
   </nav>
 
+  <!-- Recaptcha invisível para login por telefone -->
+  <div id="recaptcha-container"></div>
+
   <script type="module" src="login.js"></script>
 
-  <!-- Script Menu -->
   <script>
     function toggleMenu() {
       const menu = document.getElementById('menuNavegacao');
