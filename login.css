@@ -5,12 +5,14 @@
   box-sizing: border-box;
 }
 
+/* Fonte padrão */
 body {
   font-family: Arial, sans-serif;
   background: #f0f2f5;
   color: #333;
 }
 
+/* Centralização da área de login */
 .container {
   display: flex;
   justify-content: center;
@@ -18,6 +20,7 @@ body {
   min-height: 100vh;
 }
 
+/* Caixa do formulário */
 .form-box {
   background: #fff;
   padding: 30px 25px;
@@ -28,16 +31,19 @@ body {
   text-align: center;
 }
 
+/* Logo */
 .logo {
   width: 120px;
   margin-bottom: 15px;
 }
 
+/* Título */
 .form-box h2 {
   margin-bottom: 20px;
   color: #005288;
 }
 
+/* Inputs padrão */
 .form-box input[type="email"],
 .form-box input[type="password"],
 .form-box input[type="tel"],
@@ -48,29 +54,30 @@ body {
   border: 1px solid #ccc;
   border-radius: 6px;
   font-size: 16px;
+  box-shadow: none;
+  outline: none;
 }
 
+/* Campo de senha com botão de olho */
 .campo-senha {
   position: relative;
   width: 100%;
   margin-bottom: 15px;
 }
 
-.campo-senha input {
-  width: 100%;
-  padding: 12px 40px 12px 12px;
-  border-radius: 6px;
-  border: 1px solid #ccc;
-  font-size: 16px;
+.campo-senha input[type="password"],
+.campo-senha input[type="text"] {
+  padding-right: 44px; /* Espaço para o botão */
 }
 
+/* Botão de mostrar/ocultar senha */
 .toggle-senha {
   position: absolute;
   top: 50%;
   right: 10px;
   transform: translateY(-50%);
-  height: 24px;
-  width: 24px;
+  height: 28px;
+  width: 28px;
   background: none;
   border: none;
   cursor: pointer;
@@ -79,12 +86,14 @@ body {
   justify-content: center;
   padding: 0;
   z-index: 2;
+  outline: none;
 }
 
 .toggle-senha:hover,
 .toggle-senha:focus {
-  outline: none;
+  background: none;
   box-shadow: none;
+  outline: none;
 }
 
 .toggle-senha img {
@@ -92,24 +101,8 @@ body {
   height: 22px;
   pointer-events: none;
 }
-.toggle-senha {
-  outline: none;
-  box-shadow: none;
-}
 
-/* Para tirar completamente o efeito azul ao clicar no botão */
-.toggle-senha:focus {
-  outline: none;
-  box-shadow: none;
-}
-
-.campo-senha input:focus,
-.campo-senha input:focus-visible {
-  outline: none;
-  box-shadow: none;
-}
-
-
+/* Botões */
 .form-box button[type="submit"],
 .form-box button,
 #btnEnviarSMS,
@@ -126,6 +119,7 @@ body {
   font-size: 15px;
 }
 
+/* Botão azul padrão */
 .form-box button[type="submit"],
 #btnEnviarSMS,
 #codigoContainer button {
@@ -138,6 +132,7 @@ body {
   background-color: #0056b3;
 }
 
+/* Botão Google */
 .google {
   background-color: #DB4437;
 }
@@ -146,6 +141,7 @@ body {
   background-color: #a8332b;
 }
 
+/* Botão Telefone */
 .telefone {
   background-color: #000;
 }
@@ -154,17 +150,20 @@ body {
   background-color: #333;
 }
 
+/* Texto divisório */
 .ou {
   margin: 15px 0 10px;
   font-size: 14px;
   color: #888;
 }
 
-#areaTelefone input,
+/* Inputs extras */
+#formTelefone input,
 #codigoContainer input {
   margin-top: 8px;
 }
 
+/* Redirecionamento para cadastro */
 .troca-tela {
   margin-top: 18px;
   font-size: 14px;
@@ -179,6 +178,7 @@ body {
   text-decoration: underline;
 }
 
+/* Menu hambúrguer */
 .menu-topo {
   position: absolute;
   top: 15px;
@@ -193,6 +193,7 @@ body {
   cursor: pointer;
 }
 
+/* Menu lateral */
 .menu-lateral {
   display: none;
   flex-direction: column;
@@ -219,16 +220,20 @@ body {
   color: #005288;
 }
 
+/* Responsivo */
 @media (max-width: 480px) {
   .form-box {
     padding: 20px;
   }
+
   .logo {
     width: 90px;
   }
+
   .form-box h2 {
     font-size: 20px;
   }
+
   .hamburguer {
     font-size: 20px;
   }
