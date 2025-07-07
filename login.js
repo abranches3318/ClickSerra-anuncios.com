@@ -163,12 +163,14 @@ function formatarTelefoneParaE164(input) {
 }
 
 // Mostrar/ocultar senha (apenas para senhaLogin)
-window.toggleSenha = function () {
-  const campoSenha = document.getElementById('senhaLogin');
-  const icone = document.getElementById('iconeOlho');
 
-  const mostrando = campoSenha.type === 'text';
-  campoSenha.type = mostrando ? 'password' : 'text';
+// Mostrar/ocultar senha ou confirmar senha
+window.toggleSenha = function (campoId, iconeId) {
+  const campo = document.getElementById(campoId);
+  const icone = document.getElementById(iconeId);
+
+  const mostrando = campo.type === 'text';
+  campo.type = mostrando ? 'password' : 'text';
 
   icone.src = mostrando ? 'imagens/ocultar-senha.png' : 'imagens/revelar-senha.png';
   icone.alt = mostrando ? 'Mostrar senha' : 'Ocultar senha';
