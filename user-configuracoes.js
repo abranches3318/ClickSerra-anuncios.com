@@ -4,9 +4,14 @@ import {
   onAuthStateChanged,
   sendPasswordResetEmail,
   updatePassword,
+  updateEmail,
   EmailAuthProvider,
   reauthenticateWithCredential,
-  deleteUser
+  deleteUser,
+  signOut,
+  PhoneAuthProvider,
+  updatePhoneNumber,
+  multiFactor
 } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
 import {
   getFirestore,
@@ -41,7 +46,6 @@ function showError(t, m) {
   Swal.fire({ icon: 'error', title: t, text: m });
 }
 
-// Monta interface de alterar senha
 function promptAlterarSenha(user) {
   Swal.fire({
     title: 'Alterar Senha',
@@ -110,21 +114,15 @@ async function handleExcluirConta(user) {
       await reauthenticateWithCredential(user, cred);
     }
 
-    // exclui doc user
     await deleteDoc(doc(db, 'users', user.uid));
-
-    // excluir anúncios
     const q = query(collection(db, 'anuncios'), where('userId', '==', user.uid));
     const snap = await getDocs(q);
     for (const d of snap.docs) await deleteDoc(doc(db, 'anuncios', d.id));
 
-    // exclui auth
     await deleteUser(user);
-
     await signOut(auth);
     Swal.fire('Conta excluída', 'Sua conta foi removida.', 'success')
       .then(() => window.location.href = 'index.html');
-
   } catch (err) {
     if (err.code === 'auth/requires-recent-login')
       showError('Sessão expirada', 'Faça login novamente');
@@ -132,36 +130,93 @@ async function handleExcluirConta(user) {
   }
 }
 
+function promptAlterarTelefone(user) {
+  Swal.fire({
+    title: 'Alterar Telefone',
+    html: `
+      <input type="password" id="senhaTelefone" class="swal2-input" placeholder="Confirme sua senha">
+      <input type="tel" id="novoTelefone" class="swal2-input" placeholder="Novo número com DDD">
+      <div id="recaptcha-container"></div>
+    `,
+    showCancelButton: true,
+    preConfirm: async () => {
+      const senha = document.getElementById('senhaTelefone').value;
+      const novoTel = document.getElementById('novoTelefone').value;
+      if (!senha || !novoTel) throw 'Preencha todos os campos';
+      return { senha, novoTel };
+    }
+  }).then(async res => {
+    if (!res.isConfirmed) return;
+    try {
+      const cred = EmailAuthProvider.credential(user.email, res.value.senha);
+      await reauthenticateWithCredential(user, cred);
+
+      const provider = new PhoneAuthProvider(auth);
+      window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('recaptcha-container');
+
+      const verificationId = await provider.verifyPhoneNumber(res.value.novoTel, window.recaptchaVerifier);
+      const { value: codigo } = await Swal.fire({
+        title: 'Código SMS', input: 'text', inputLabel: 'Digite o código enviado para seu novo número',
+        showCancelButton: true
+      });
+      if (!codigo) return;
+
+      const phoneCred = PhoneAuthProvider.credential(verificationId, codigo);
+      await updatePhoneNumber(user, phoneCred);
+      Swal.fire('Sucesso', 'Telefone atualizado com sucesso', 'success');
+    } catch (err) {
+      showError('Erro', err.message);
+    }
+  });
+}
+
 onAuthStateChanged(auth, user => {
   if (!user) return Swal.fire('Erro', 'Usuário não autenticado', 'error');
+
+  const provider = user.providerData[0]?.providerId;
+  if (provider === 'google.com') {
+    document.querySelector('.alterar-senha')?.remove();
+    document.querySelector('.alterar-email')?.remove();
+  }
+  if (provider === 'phone') {
+    document.querySelector('.alterar-telefone')?.style.display = 'block';
+  }
 
   document.querySelector('.alterar-senha')?.addEventListener('click', () => {
     promptAlterarSenha(user);
   });
 
+  document.querySelector('.alterar-email')?.addEventListener('click', async () => {
+    const { value: novaSenha } = await Swal.fire({
+      title: 'Confirme sua senha',
+      input: 'password',
+      showCancelButton: true
+    });
+    if (!novaSenha) return;
+    try {
+      const cred = EmailAuthProvider.credential(user.email, novaSenha);
+      await reauthenticateWithCredential(user, cred);
+      const { value: novoEmail } = await Swal.fire({
+        title: 'Novo Email', input: 'email', showCancelButton: true
+      });
+      if (novoEmail) {
+        await updateEmail(user, novoEmail);
+        Swal.fire('Sucesso', 'Email atualizado', 'success');
+      }
+    } catch (err) {
+      showError('Erro', err.message);
+    }
+  });
+
+  document.querySelector('.alterar-telefone')?.addEventListener('click', () => {
+    promptAlterarTelefone(user);
+  });
+
   document.querySelector('.excluir-conta')?.addEventListener('click', () => {
     handleExcluirConta(user);
   });
-
-  document.querySelector('.alterar-email')?.addEventListener('click', async () => {
-    Swal.fire({ title: 'Novo email', input: 'email', showCancelButton: true })
-      .then(async r => {
-        if (!r.value) return;
-        try {
-          await updateEmail(user, r.value);
-          Swal.fire('Sucesso', 'Email atualizado', 'success');
-        } catch (err) {
-          showError('Erro', err.message);
-        }
-      });
-  });
 });
 
-// menu e off-click
-function toggleMenuHamburguer() {
-  document.getElementById('menuHamburguer').classList.toggle('ativo');
-}
-window.toggleMenuHamburguer = toggleMenuHamburguer;
 document.addEventListener('click', e => {
   const m = document.getElementById('menuHamburguer');
   if (m && !m.contains(e.target)) m.classList.remove('ativo');
