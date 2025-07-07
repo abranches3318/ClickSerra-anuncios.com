@@ -72,6 +72,11 @@ body {
   box-sizing: border-box;
 }
 
+.campo-senha input {
+  padding-right: 40px;
+}
+
+
 .toggle-senha {
   position: absolute;
   top: 50%;
