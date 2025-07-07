@@ -56,29 +56,6 @@ body {
   font-size: 16px;
 }
 
-/* Botões principais */
-.form-box button[type="submit"],
-.form-box button,
-#enviarSMS,
-#codigoContainer button {
-  width: 100%;
-  padding: 12px;
-  margin-top: 10px;
-  background-color: #007BFF;
-  color: #fff;
-  font-weight: bold;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-  transition: background 0.3s;
-}
-
-.form-box button:hover,
-#enviarSMS:hover,
-#codigoContainer button:hover {
-  background-color: #0056b3;
-}
-
 /* Campo de senha com ícone */
 .campo-senha {
   position: relative;
@@ -104,14 +81,37 @@ body {
   height: 20px;
 }
 
-/* Texto de divisão */
-.ou {
-  margin: 15px 0 10px;
-  font-size: 14px;
-  color: #888;
+/* Botões gerais */
+.form-box button[type="submit"],
+.form-box button,
+#enviarSMS,
+#codigoContainer button {
+  width: 100%;
+  padding: 12px;
+  margin-top: 10px;
+  color: #fff;
+  font-weight: bold;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.3s;
+  font-size: 15px;
 }
 
-/* Botão Google */
+/* Botão azul (Entrar) */
+.form-box button[type="submit"],
+#enviarSMS,
+#codigoContainer button {
+  background-color: #007BFF;
+}
+
+.form-box button:hover,
+#enviarSMS:hover,
+#codigoContainer button:hover {
+  background-color: #0056b3;
+}
+
+/* Botão Google (vermelho) */
 .google {
   background-color: #DB4437;
 }
@@ -120,13 +120,25 @@ body {
   background-color: #a8332b;
 }
 
-/* Login com telefone */
-.login-telefone input {
-  margin-top: 8px;
+/* Botão Telefone (preto) */
+.telefone {
+  background-color: #000;
 }
 
-#codigoContainer input,
-#codigoContainer button {
+.telefone:hover {
+  background-color: #333;
+}
+
+/* Texto de divisão */
+.ou {
+  margin: 15px 0 10px;
+  font-size: 14px;
+  color: #888;
+}
+
+/* Inputs extras de telefone e código */
+#areaTelefone input,
+#codigoContainer input {
   margin-top: 8px;
 }
 
