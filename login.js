@@ -67,29 +67,57 @@ window.loginComGoogle = async function () {
 // === Login com Telefone ===
 let confirmationResult;
 
-window.enviarCodigoSMS = async function () {
-  const telefone = document.getElementById('telefoneLogin').value;
+window.iniciarLoginTelefone = async function () {
+  const telefone = document.getElementById('telefoneLogin').value.trim();
   const senha = document.getElementById('senhaTelefone').value;
+
+  if (!telefone || !senha) {
+    Swal.fire('Atenção', 'Informe telefone e senha.', 'warning');
+    return;
+  }
 
   try {
     const numeroFormatado = formatarTelefoneParaE164(telefone);
 
-    window.recaptchaVerifier = new RecaptchaVerifier(auth, 'enviarSMS', {
-      size: 'invisible',
-      callback: () => enviarCodigoSMS()
-    });
+    // Tenta login direto (usuário já existente)
+    await signInWithEmailAndPassword(auth, numeroFormatado + '@clickserra.com', senha);
 
-    confirmationResult = await signInWithPhoneNumber(auth, numeroFormatado, window.recaptchaVerifier);
+    localStorage.setItem('usuarioLogado', auth.currentUser.uid);
+    localStorage.setItem('usuarioTelefone', numeroFormatado);
 
-    document.getElementById('codigoContainer').style.display = 'block';
-    document.getElementById('enviarSMS').style.display = 'none';
-    document.getElementById('telefoneLogin').disabled = true;
-    document.getElementById('senhaTelefone').disabled = true;
-  
-    Swal.fire('Código enviado!', 'Verifique seu SMS.', 'success');
+    const destino = localStorage.getItem('destinoAposLogin') || 'index.html';
+    localStorage.removeItem('destinoAposLogin');
+
+    Swal.fire('Bem-vindo!', 'Login com telefone realizado com sucesso.', 'success')
+      .then(() => window.location.href = destino);
+
   } catch (error) {
-    console.error('Erro ao enviar SMS:', error);
-    Swal.fire('Erro', traduzErroFirebase(error.code), 'error');
+    if (error.code === 'auth/user-not-found') {
+      // Primeiro acesso → enviar SMS de verificação
+      try {
+        window.recaptchaVerifier = new RecaptchaVerifier(auth, 'btnEnviarSMS', {
+          size: 'invisible',
+          callback: () => iniciarLoginTelefone()
+        });
+
+        confirmationResult = await signInWithPhoneNumber(auth, formatarTelefoneParaE164(telefone), window.recaptchaVerifier);
+
+        document.getElementById('codigoContainer').style.display = 'block';
+        document.getElementById('btnEnviarSMS').style.display = 'none';
+        document.getElementById('telefoneLogin').disabled = true;
+        document.getElementById('senhaTelefone').disabled = true;
+
+        Swal.fire('Código enviado!', 'Verifique seu SMS para concluir.', 'success');
+
+      } catch (smsError) {
+        console.error('Erro ao enviar SMS:', smsError);
+        Swal.fire('Erro', traduzErroFirebase(smsError.code), 'error');
+      }
+
+    } else {
+      console.error('Erro no login com telefone:', error);
+      Swal.fire('Erro', traduzErroFirebase(error.code), 'error');
+    }
   }
 };
 
@@ -105,13 +133,20 @@ window.confirmarCodigoSMS = async function () {
     const result = await confirmationResult.confirm(codigo);
     const user = result.user;
 
+    // Cria conta fake com email formatado a partir do telefone
+    const emailFake = user.phoneNumber + '@clickserra.com';
+    const senha = document.getElementById('senhaTelefone').value;
+
+    await user.updateEmail(emailFake);
+    await user.updatePassword(senha);
+
     localStorage.setItem('usuarioLogado', user.uid);
     localStorage.setItem('usuarioTelefone', user.phoneNumber);
 
     const destino = localStorage.getItem('destinoAposLogin') || 'index.html';
     localStorage.removeItem('destinoAposLogin');
 
-    Swal.fire('Bem-vindo!', 'Login com telefone realizado com sucesso.', 'success')
+    Swal.fire('Cadastro concluído!', 'Login realizado com sucesso.', 'success')
       .then(() => window.location.href = destino);
 
   } catch (error) {
@@ -123,14 +158,9 @@ window.confirmarCodigoSMS = async function () {
 function formatarTelefoneParaE164(input) {
   const numeros = input.replace(/\D/g, '');
   if (numeros.length === 11) return '+55' + numeros;
-  throw new Error('Telefone inválido. Formato esperado: (DDD) número com 11 dígitos.');
+  if (numeros.length === 13 && numeros.startsWith('55')) return '+' + numeros;
+  throw new Error('Telefone inválido. Use formato +55 (DDD) número.');
 }
-
-// Mostrar os campos de login com telefone
-window.exibirLoginTelefone = function () {
-  document.getElementById('formTelefone').style.display = 'block';
-  document.querySelector('.telefone').style.display = 'none';
-};
 
 // Mostrar/ocultar senha
 window.toggleSenha = function () {
