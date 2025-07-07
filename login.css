@@ -60,18 +60,15 @@ body {
 .campo-senha {
   position: relative;
   width: 100%;
-  margin-bottom: 10px;
-  display: flex;
-  align-items: center;
+  margin-bottom: 15px;
 }
 
 .campo-senha input[type="password"],
 .campo-senha input[type="text"] {
   width: 100%;
   padding: 12px 44px 12px 12px; /* espaço à direita para o botão */
-  border-radius: 6px;
+  border-radius: 5px;
   border: 1px solid #ccc;
-  font-size: 16px;
   box-sizing: border-box;
 }
 
@@ -222,35 +219,6 @@ body {
   color: #005288;
 {
 
-/* Botão de mostrar/ocultar senha */
-.toggle-senha {
-  position: absolute;
-  right: 10px;
-  top: 50%;
-  transform: translateY(-50%);
-  background: none;
-  border: none;
-  padding: 0;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-/* Remove visual de foco padrão (a "caixa azul") */
-.toggle-senha:focus,
-.toggle-senha:focus-visible {
-  outline: none;
-  box-shadow: none;
-  border: none;
-}
-
-/* Imagem do olho */
-.toggle-senha img {
-  width: 20px;
-  height: 20px;
-  pointer-events: none;
-}
 
   
 /* Responsivo */
