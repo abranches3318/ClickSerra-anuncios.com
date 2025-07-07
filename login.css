@@ -1,141 +1,143 @@
-body {
+/* Reset básico */
+* {
   margin: 0;
   padding: 0;
-  font-family: 'Segoe UI', sans-serif;
-  background: url('imagens/fundo-login.jpg') no-repeat center center fixed;
-  background-size: cover;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-}
-
-.container {
-  background-color: rgba(255, 255, 255, 0.96);
-  padding: 40px;
-  border-radius: 10px;
-  box-shadow: 0 0 12px rgba(0, 0, 0, 0.25);
-  text-align: center;
-  width: 90%;
-  max-width: 360px;
-  position: relative;
-}
-
-.logo {
-  width: 100px;
-  margin-bottom: 10px;
-}
-
-h2 {
-  margin: 0 0 20px;
-  color: #2c3e50;
-}
-
-form input {
-  width: 100%;
-  padding: 12px;
-  margin-bottom: 15px;
-  border-radius: 5px;
-  border: 1px solid #ccc;
-  font-size: 1rem;
   box-sizing: border-box;
 }
 
-form button {
+/* Fonte padrão */
+body {
+  font-family: Arial, sans-serif;
+  background: #f0f2f5;
+  color: #333;
+}
+
+/* Centralização da área de login */
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+/* Caixa do formulário */
+.form-box {
+  background: #fff;
+  padding: 30px 25px;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  width: 100%;
+  max-width: 400px;
+  text-align: center;
+}
+
+/* Logo */
+.logo {
+  width: 120px;
+  margin-bottom: 15px;
+}
+
+/* Título */
+.form-box h2 {
+  margin-bottom: 20px;
+  color: #005288;
+}
+
+/* Inputs */
+.form-box input[type="email"],
+.form-box input[type="password"],
+.form-box input[type="tel"],
+.form-box input[type="text"] {
+  width: 100%;
+  padding: 12px 14px;
+  margin: 10px 0;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 16px;
+}
+
+/* Botões principais */
+.form-box button[type="submit"],
+.form-box button,
+#enviarSMS,
+#codigoContainer button {
   width: 100%;
   padding: 12px;
-  background-color: #1e90ff;
-  color: white;
-  border: none;
-  border-radius: 5px;
+  margin-top: 10px;
+  background-color: #007BFF;
+  color: #fff;
   font-weight: bold;
-  cursor: pointer;
-  font-size: 1rem;
-}
-
-form button:hover {
-  background-color: #0f75d1;
-}
-
-.ou {
-  margin: 20px 0 10px;
-  color: #555;
-}
-
-.social-login button {
-  width: 100%;
-  padding: 10px;
-  margin: 5px 0;
   border: none;
-  border-radius: 5px;
-  font-weight: bold;
+  border-radius: 6px;
   cursor: pointer;
-  font-size: 0.95rem;
+  transition: background 0.3s;
 }
 
-.google {
-  background-color: #db4437;
-  color: white;
+.form-box button:hover,
+#enviarSMS:hover,
+#codigoContainer button:hover {
+  background-color: #0056b3;
 }
 
-.facebook {
-  background-color: #3b5998;
-  color: white;
-}
-
-/* Campo de senha com botão lateral */
+/* Campo de senha com ícone */
 .campo-senha {
   position: relative;
 }
 
 .campo-senha input {
-  width: 100%;
-  padding: 12px;
-  padding-right: 45px; /* espaço para o botão */
-  border-radius: 5px;
-  border: 1px solid #ccc;
-  font-size: 1rem;
-  box-sizing: border-box;
+  padding-right: 45px;
 }
 
-/* Botão do olho */
 .toggle-senha {
   position: absolute;
   right: 10px;
   top: 50%;
   transform: translateY(-50%);
-  background: transparent;
+  background: none;
   border: none;
-  cursor: pointer;
   padding: 0;
-  margin: 0;
-  height: 24px;
-  width: 24px;
+  cursor: pointer;
 }
 
-/* Remover outline e sombra azul */
-.toggle-senha:focus,
-.toggle-senha:active {
-  outline: none;
-  box-shadow: none;
-}
-
-/* Ícone de olho */
 .toggle-senha img {
-  width: 22px;
-  height: 22px;
-  object-fit: contain;
-  pointer-events: none;
-  display: block;
+  width: 20px;
+  height: 20px;
 }
 
+/* Texto de divisão */
+.ou {
+  margin: 15px 0 10px;
+  font-size: 14px;
+  color: #888;
+}
+
+/* Botão Google */
+.google {
+  background-color: #DB4437;
+}
+
+.google:hover {
+  background-color: #a8332b;
+}
+
+/* Login com telefone */
+.login-telefone input {
+  margin-top: 8px;
+}
+
+#codigoContainer input,
+#codigoContainer button {
+  margin-top: 8px;
+}
+
+/* Redirecionamento para cadastro */
 .troca-tela {
-  margin-top: 20px;
+  margin-top: 18px;
   font-size: 14px;
 }
 
 .troca-tela a {
-  color: #1e90ff;
+  color: #007BFF;
   text-decoration: none;
 }
 
@@ -143,17 +145,18 @@ form button:hover {
   text-decoration: underline;
 }
 
-/* Menu topo (hambúrguer) */
+/* Menu hambúrguer */
 .menu-topo {
   position: absolute;
-  top: 20px;
-  left: 20px;
+  top: 15px;
+  left: 15px;
 }
 
 .hamburguer {
   font-size: 24px;
   background: none;
   border: none;
+  color: #333;
   cursor: pointer;
 }
 
@@ -161,34 +164,44 @@ form button:hover {
 .menu-lateral {
   display: none;
   flex-direction: column;
-  position: fixed;
-  top: 0;
+  background-color: #fff;
+  position: absolute;
+  top: 60px;
   left: 0;
-  background-color: white;
-  width: 220px;
-  height: 100%;
-  box-shadow: 2px 0 10px rgba(0,0,0,0.2);
-  padding: 20px;
-  z-index: 999;
+  width: 200px;
+  border: 1px solid #ccc;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+  padding: 10px;
 }
 
 .menu-lateral ul {
   list-style: none;
-  padding: 0;
-  margin: 0;
 }
 
-.menu-lateral li {
-  margin-bottom: 15px;
+.menu-lateral ul li {
+  margin: 10px 0;
 }
 
-.menu-lateral a {
+.menu-lateral ul li a {
   text-decoration: none;
-  color: #333;
-  font-weight: bold;
+  color: #005288;
 }
 
-.menu-lateral a:hover {
-  color: #1e90ff;
-}
+/* Responsivo */
+@media (max-width: 480px) {
+  .form-box {
+    padding: 20px;
+  }
 
+  .logo {
+    width: 90px;
+  }
+
+  .form-box h2 {
+    font-size: 20px;
+  }
+
+  .hamburguer {
+    font-size: 20px;
+  }
+}
