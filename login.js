@@ -1,5 +1,3 @@
-// login.js
-
 import {
   signInWithEmailAndPassword,
   signInWithPopup,
@@ -79,7 +77,7 @@ window.iniciarLoginTelefone = async function () {
   try {
     const numeroFormatado = formatarTelefoneParaE164(telefone);
 
-    // Tenta login direto (usuário já existente)
+    // Tenta login direto com email fake baseado no telefone
     await signInWithEmailAndPassword(auth, numeroFormatado + '@clickserra.com', senha);
 
     localStorage.setItem('usuarioLogado', auth.currentUser.uid);
@@ -93,12 +91,14 @@ window.iniciarLoginTelefone = async function () {
 
   } catch (error) {
     if (error.code === 'auth/user-not-found') {
-      // Primeiro acesso → enviar SMS de verificação
+      // Primeiro acesso → envia SMS
       try {
-        window.recaptchaVerifier = new RecaptchaVerifier(auth, 'btnEnviarSMS', {
-          size: 'invisible',
-          callback: () => iniciarLoginTelefone()
-        });
+        if (!window.recaptchaVerifier) {
+          window.recaptchaVerifier = new RecaptchaVerifier('recaptcha-container', {
+            size: 'invisible'
+          }, auth);
+          await window.recaptchaVerifier.render();
+        }
 
         confirmationResult = await signInWithPhoneNumber(auth, formatarTelefoneParaE164(telefone), window.recaptchaVerifier);
 
@@ -133,7 +133,7 @@ window.confirmarCodigoSMS = async function () {
     const result = await confirmationResult.confirm(codigo);
     const user = result.user;
 
-    // Cria conta fake com email formatado a partir do telefone
+    // Cria conta com email baseado no número do telefone
     const emailFake = user.phoneNumber + '@clickserra.com';
     const senha = document.getElementById('senhaTelefone').value;
 
@@ -162,7 +162,7 @@ function formatarTelefoneParaE164(input) {
   throw new Error('Telefone inválido. Use formato +55 (DDD) número.');
 }
 
-// Mostrar/ocultar senha
+// Mostrar/ocultar senha (apenas para senhaLogin)
 window.toggleSenha = function () {
   const campoSenha = document.getElementById('senhaLogin');
   const icone = document.getElementById('iconeOlho');
@@ -174,6 +174,11 @@ window.toggleSenha = function () {
   icone.alt = mostrando ? 'Mostrar senha' : 'Ocultar senha';
 };
 
+// Exibir os campos de telefone
+window.exibirLoginTelefone = function () {
+  document.getElementById('formTelefone').style.display = 'block';
+  document.querySelector('.telefone').style.display = 'none';
+};
 
 // Traduz mensagens de erro do Firebase
 function traduzErroFirebase(codigo) {
@@ -193,14 +198,12 @@ function traduzErroFirebase(codigo) {
   }
 }
 
-// Fechar menu lateral ao clicar fora dele
+// Fecha menu ao clicar fora
 document.addEventListener('click', function (event) {
   const menu = document.getElementById('menuNavegacao');
   const botao = document.querySelector('.hamburguer');
 
-  const clicouFora = !menu.contains(event.target) && !botao.contains(event.target);
-
-  if (menu && menu.style.display === 'flex' && clicouFora) {
+  if (menu && menu.style.display === 'flex' && !menu.contains(event.target) && !botao.contains(event.target)) {
     menu.style.display = 'none';
   }
 });
