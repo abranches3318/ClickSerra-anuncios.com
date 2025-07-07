@@ -1,108 +1,144 @@
+// login.js
+
 import {
   signInWithEmailAndPassword,
   signInWithPopup,
   GoogleAuthProvider,
-  PhoneAuthProvider,
-  signInWithCredential,
-  RecaptchaVerifier,
-  signOut
+  signInWithPhoneNumber,
+  RecaptchaVerifier
 } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
 import { auth } from "/ClickSerra-anuncios.com/firebase-config.js";
 
-// 🔐 SweetAlert padrão de erro
-function erro(titulo, mensagem) {
-  Swal.fire({ icon: 'error', title: titulo, text: mensagem });
-}
-
-// ✅ Login com email e senha
+// === Login com E-mail e Senha ===
 document.getElementById('formLogin').addEventListener('submit', async function (e) {
   e.preventDefault();
+
   const email = document.getElementById('emailLogin').value.trim();
   const senha = document.getElementById('senhaLogin').value;
 
-  if (!email || !senha) return erro('Atenção', 'Preencha email e senha');
+  if (!email || !senha) {
+    Swal.fire('Atenção', 'Preencha e-mail e senha corretamente.', 'warning');
+    return;
+  }
 
   try {
-    const cred = await signInWithEmailAndPassword(auth, email, senha);
-    Swal.fire({ icon: 'success', title: 'Bem-vindo!', text: 'Login realizado com sucesso' })
-      .then(() => window.location.href = 'index.html');
-  } catch (err) {
-    erro('Erro ao logar', traduzErroFirebase(err.code));
+    const userCredential = await signInWithEmailAndPassword(auth, email, senha);
+    const user = userCredential.user;
+
+    localStorage.setItem('usuarioLogado', user.uid);
+    localStorage.setItem('usuarioEmail', user.email);
+
+    const destino = localStorage.getItem('destinoAposLogin') || 'index.html';
+    localStorage.removeItem('destinoAposLogin');
+
+    Swal.fire('Bem-vindo!', 'Login realizado com sucesso.', 'success')
+      .then(() => window.location.href = destino);
+
+  } catch (error) {
+    console.error("Erro no login:", error);
+    Swal.fire('Erro', traduzErroFirebase(error.code), 'error');
   }
 });
 
-// ✅ Login com Google
+// === Login com Google ===
 window.loginComGoogle = async function () {
+  const provider = new GoogleAuthProvider();
+
   try {
-    const provedor = new GoogleAuthProvider();
-    const res = await signInWithPopup(auth, provedor);
-    Swal.fire({ icon: 'success', title: 'Google conectado!', text: 'Login realizado com sucesso' })
-      .then(() => window.location.href = 'index.html');
-  } catch (err) {
-    erro('Erro Google', traduzErroFirebase(err.code));
+    const result = await signInWithPopup(auth, provider);
+    const user = result.user;
+
+    localStorage.setItem('usuarioLogado', user.uid);
+    localStorage.setItem('usuarioEmail', user.email);
+    localStorage.setItem('usuarioNome', user.displayName || '');
+
+    const destino = localStorage.getItem('destinoAposLogin') || 'index.html';
+    localStorage.removeItem('destinoAposLogin');
+
+    Swal.fire('Bem-vindo!', 'Login com Google realizado com sucesso.', 'success')
+      .then(() => window.location.href = destino);
+
+  } catch (error) {
+    console.error("Erro no login com Google:", error);
+    Swal.fire('Erro', traduzErroFirebase(error.code), 'error');
   }
 };
 
-// ✅ Mostrar/ocultar senha
+// === Login com Telefone ===
+let confirmationResult;
+
+window.enviarCodigoSMS = async function () {
+  const telefone = document.getElementById('telefoneLogin').value;
+  const senha = document.getElementById('senhaTelefone').value;
+
+  try {
+    const numeroFormatado = formatarTelefoneParaE164(telefone);
+
+    window.recaptchaVerifier = new RecaptchaVerifier(auth, 'enviarSMS', {
+      size: 'invisible',
+      callback: () => enviarCodigoSMS()
+    });
+
+    confirmationResult = await signInWithPhoneNumber(auth, numeroFormatado, window.recaptchaVerifier);
+
+    document.getElementById('codigoContainer').style.display = 'block';
+    document.getElementById('enviarSMS').style.display = 'none';
+    document.getElementById('telefoneLogin').disabled = true;
+    document.getElementById('senhaTelefone').disabled = true;
+  
+    Swal.fire('Código enviado!', 'Verifique seu SMS.', 'success');
+  } catch (error) {
+    console.error('Erro ao enviar SMS:', error);
+    Swal.fire('Erro', traduzErroFirebase(error.code), 'error');
+  }
+};
+
+window.confirmarCodigoSMS = async function () {
+  const codigo = document.getElementById('codigoSMS').value;
+
+  if (!codigo) {
+    Swal.fire('Erro', 'Informe o código recebido por SMS.', 'error');
+    return;
+  }
+
+  try {
+    const result = await confirmationResult.confirm(codigo);
+    const user = result.user;
+
+    localStorage.setItem('usuarioLogado', user.uid);
+    localStorage.setItem('usuarioTelefone', user.phoneNumber);
+
+    const destino = localStorage.getItem('destinoAposLogin') || 'index.html';
+    localStorage.removeItem('destinoAposLogin');
+
+    Swal.fire('Bem-vindo!', 'Login com telefone realizado com sucesso.', 'success')
+      .then(() => window.location.href = destino);
+
+  } catch (error) {
+    console.error('Erro ao confirmar código:', error);
+    Swal.fire('Erro', traduzErroFirebase(error.code), 'error');
+  }
+};
+
+function formatarTelefoneParaE164(input) {
+  const numeros = input.replace(/\D/g, '');
+  if (numeros.length === 11) return '+55' + numeros;
+  throw new Error('Telefone inválido. Formato esperado: (DDD) número com 11 dígitos.');
+}
+
+// Mostrar/ocultar senha
 window.toggleSenha = function () {
-  const campo = document.getElementById('senhaLogin');
+  const campoSenha = document.getElementById('senhaLogin');
   const icone = document.getElementById('iconeOlho');
-  const mostrando = campo.type === 'text';
-  campo.type = mostrando ? 'password' : 'text';
+
+  const mostrando = campoSenha.type === 'text';
+  campoSenha.type = mostrando ? 'password' : 'text';
+
   icone.src = mostrando ? 'imagens/ocultar-senha.png' : 'imagens/revelar-senha.png';
   icone.alt = mostrando ? 'Mostrar senha' : 'Ocultar senha';
 };
 
-// ✅ Iniciar fluxo de login com telefone
-window.iniciarLoginTelefone = function () {
-  const div = document.getElementById('areaTelefone');
-  div.style.display = 'block';
-  document.getElementById('btnTelefone').style.display = 'none';
-};
-
-// ✅ Enviar SMS
-window.enviarCodigoSMS = async function () {
-  const tel = document.getElementById('telefoneLogin').value.trim();
-  const senha = document.getElementById('senhaTelefone').value;
-
-  if (!tel || !senha) return erro('Campos obrigatórios', 'Preencha telefone e senha');
-
-  try {
-    window.recaptchaVerifier = new RecaptchaVerifier(auth, 'recaptcha-container', {
-      size: 'invisible'
-    });
-
-    const provedor = new PhoneAuthProvider(auth);
-    const verifId = await provedor.verifyPhoneNumber(tel, window.recaptchaVerifier);
-
-    // Oculta inputs, exibe campo do código
-    document.getElementById('areaTelefone').style.display = 'none';
-    document.getElementById('codigoContainer').style.display = 'block';
-    window.confirmationResult = { verifId, tel, senha };
-
-  } catch (err) {
-    erro('Erro ao enviar SMS', traduzErroFirebase(err.code));
-  }
-};
-
-// ✅ Confirmar código do SMS
-window.confirmarCodigoSMS = async function () {
-  const cod = document.getElementById('codigoSMS').value.trim();
-  if (!cod) return erro('Atenção', 'Informe o código recebido');
-
-  try {
-    const cred = PhoneAuthProvider.credential(window.confirmationResult.verifId, cod);
-    const res = await signInWithCredential(auth, cred);
-
-    Swal.fire({ icon: 'success', title: 'Sucesso!', text: 'Login com telefone realizado' })
-      .then(() => window.location.href = 'index.html');
-
-  } catch (err) {
-    erro('Código inválido', traduzErroFirebase(err.code));
-  }
-};
-
-// 🔁 Tradutor de erros do Firebase
+// Traduz mensagens de erro do Firebase
 function traduzErroFirebase(codigo) {
   switch (codigo) {
     case 'auth/user-not-found': return 'Usuário não encontrado.';
@@ -110,20 +146,24 @@ function traduzErroFirebase(codigo) {
     case 'auth/invalid-email': return 'E-mail inválido.';
     case 'auth/missing-password': return 'Senha não informada.';
     case 'auth/too-many-requests': return 'Muitas tentativas. Tente novamente mais tarde.';
-    case 'auth/popup-blocked': return 'Navegador bloqueou o pop-up.';
-    case 'auth/popup-closed-by-user': return 'Pop-up fechado antes da conclusão.';
-    case 'auth/cancelled-popup-request': return 'Solicitação cancelada.';
-    case 'auth/invalid-verification-code': return 'Código inválido.';
-    case 'auth/invalid-phone-number': return 'Telefone inválido.';
+    case 'auth/popup-blocked': return 'O navegador bloqueou o pop-up. Permita e tente novamente.';
+    case 'auth/popup-closed-by-user': return 'O pop-up foi fechado antes da conclusão.';
+    case 'auth/cancelled-popup-request': return 'A solicitação de login foi cancelada.';
+    case 'auth/invalid-phone-number': return 'Número de telefone inválido.';
+    case 'auth/code-expired': return 'O código expirou. Reenvie o SMS.';
+    case 'auth/invalid-verification-code': return 'Código inválido. Verifique o SMS.';
     default: return 'Erro desconhecido. Tente novamente.';
   }
 }
 
-// ✅ Fecha menu lateral ao clicar fora
-document.addEventListener('click', e => {
+// Fechar menu lateral ao clicar fora dele
+document.addEventListener('click', function (event) {
   const menu = document.getElementById('menuNavegacao');
   const botao = document.querySelector('.hamburguer');
-  if (menu && !menu.contains(e.target) && !botao.contains(e.target)) {
+
+  const clicouFora = !menu.contains(event.target) && !botao.contains(event.target);
+
+  if (menu && menu.style.display === 'flex' && clicouFora) {
     menu.style.display = 'none';
   }
 });
