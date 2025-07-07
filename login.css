@@ -43,7 +43,7 @@ body {
   color: #005288;
 }
 
-/* Inputs */
+/* Inputs padrão */
 .form-box input[type="email"],
 .form-box input[type="password"],
 .form-box input[type="tel"],
@@ -56,39 +56,52 @@ body {
   font-size: 16px;
 }
 
-/* Campo de senha com ícone */
-
-.toggle-senha {
-  position: absolute;
-  right: 10px;
-  top: 50%;
-  transform: translateY(-50%);
-  background: none;
-  border: none;
-  padding: 0;
-  cursor: pointer;
-}
-
-.toggle-senha img {
-  width: 20px;
-  height: 20px;
-}
-
-/* Corrige foco azul ao clicar no botão de mostrar/ocultar senha */
-.toggle-senha:focus {
-  outline: none;
-}
-
-/* Garante que o campo de senha mantenha posição correta */
+/* Campo com botão de mostrar/ocultar senha */
 .campo-senha {
   position: relative;
+  width: 100%;
+  margin-bottom: 10px;
   display: flex;
   align-items: center;
 }
 
-.campo-senha input {
-  flex: 1;
-  padding-right: 45px;
+.campo-senha input[type="password"],
+.campo-senha input[type="text"] {
+  width: 100%;
+  padding: 12px 44px 12px 12px; /* espaço à direita para o botão */
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 16px;
+  box-sizing: border-box;
+}
+
+.toggle-senha {
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 100%;
+  width: 44px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  outline: none;
+}
+
+.toggle-senha:hover,
+.toggle-senha:focus {
+  background: none;
+  box-shadow: none;
+  outline: none;
+}
+
+.toggle-senha img {
+  width: 22px;
+  height: 22px;
+  pointer-events: none;
 }
 
 /* Botões gerais */
