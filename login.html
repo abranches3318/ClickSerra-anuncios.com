@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Login - Click Serra</title>
   <link rel="stylesheet" href="login.css" />
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <body>
   <div class="container">
@@ -12,23 +13,39 @@
       <img src="imagens/logo.png" alt="Logo Click Serra" class="logo">
       <h2>Entrar na Conta</h2>
 
+      <!-- Login com Email e Senha -->
       <form id="formLogin">
         <input type="email" id="emailLogin" placeholder="Email" required />
 
-       <div class="campo-senha">
-         <input type="password" id="senhaLogin" placeholder="Senha" required>
-           <button type="button" class="toggle-senha" onclick="toggleSenha()" aria-label="Revelar senha"><img id="iconeOlho" src="imagens/ocultar-senha.png" alt="Mostrar senha"></button>
-       </div>
-
-
+        <div class="campo-senha">
+          <input type="password" id="senhaLogin" placeholder="Senha" required>
+          <button type="button" class="toggle-senha" onclick="toggleSenha()" aria-label="Revelar senha">
+            <img id="iconeOlho" src="imagens/ocultar-senha.png" alt="Mostrar senha">
+          </button>
+        </div>
 
         <button type="submit">Entrar</button>
       </form>
 
       <p class="ou">ou</p>
+
+      <!-- Login com Google -->
       <div class="social-login">
         <button class="google" id="btnGoogle" onclick="loginComGoogle()">Continuar com Google</button>
-        <!--<button class="facebook">Entrar com Facebook</button> -->
+        <!-- <button class="facebook">Entrar com Facebook</button> -->
+      </div>
+
+      <p class="ou">ou</p>
+
+      <!-- Login com Telefone -->
+      <div class="login-telefone">
+        <input type="tel" id="telefoneLogin" placeholder="Digite seu telefone com DDD" />
+        <button id="enviarSMS" onclick="enviarCodigoSMS()">Enviar Código</button>
+
+        <div id="codigoContainer" style="display: none; margin-top: 10px;">
+          <input type="text" id="codigoSMS" placeholder="Código SMS recebido" />
+          <button onclick="confirmarCodigoSMS()">Confirmar Código</button>
+        </div>
       </div>
 
       <p class="troca-tela">
@@ -37,31 +54,27 @@
     </div>
   </div>
 
- <!-- Menu Hambúrguer -->
-<div class="menu-topo">
-  <button class="hamburguer" onclick="toggleMenu()">☰</button>
-</div>
+  <!-- Menu Hambúrguer -->
+  <div class="menu-topo">
+    <button class="hamburguer" onclick="toggleMenu()">☰</button>
+  </div>
 
-<!-- Menu Lateral -->
-<nav id="menuNavegacao" class="menu-lateral">
-  <ul>
-    <li><a href="index.html">Início</a></li>
-    <li><a href="#">Sobre</a></li>
-    <li><a href="#">Contato</a></li>
-    <!-- Adicione mais links conforme necessário -->
-  </ul>
-</nav>
+  <nav id="menuNavegacao" class="menu-lateral">
+    <ul>
+      <li><a href="index.html">Início</a></li>
+      <li><a href="#">Sobre</a></li>
+      <li><a href="#">Contato</a></li>
+    </ul>
+  </nav>
 
   <script type="module" src="login.js"></script>
 
-  <!-- Script do menu hambúrguer -->
-<script>
-  function toggleMenu() {
-    const menu = document.getElementById('menuNavegacao');
-    menu.style.display = menu.style.display === 'flex' ? 'none' : 'flex';
-  }
-</script>
+  <!-- Script Menu -->
+  <script>
+    function toggleMenu() {
+      const menu = document.getElementById('menuNavegacao');
+      menu.style.display = menu.style.display === 'flex' ? 'none' : 'flex';
+    }
+  </script>
 </body>
 </html>
-
-
