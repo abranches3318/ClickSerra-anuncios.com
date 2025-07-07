@@ -92,6 +92,23 @@ body {
   height: 22px;
   pointer-events: none;
 }
+.toggle-senha {
+  outline: none;
+  box-shadow: none;
+}
+
+/* Para tirar completamente o efeito azul ao clicar no botão */
+.toggle-senha:focus {
+  outline: none;
+  box-shadow: none;
+}
+
+.campo-senha input:focus,
+.campo-senha input:focus-visible {
+  outline: none;
+  box-shadow: none;
+}
+
 
 .form-box button[type="submit"],
 .form-box button,
