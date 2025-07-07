@@ -74,10 +74,11 @@ body {
 
 .toggle-senha {
   position: absolute;
-  top: 0;
-  right: 0;
-  height: 100%;
-  width: 44px;
+  top: 50%;
+  right: 10px;
+  transform: translateY(-50%);
+  height: 24px;
+  width: 24px;
   background: none;
   border: none;
   cursor: pointer;
@@ -86,6 +87,7 @@ body {
   justify-content: center;
   padding: 0;
   outline: none;
+  z-index: 2;
 }
 
 .toggle-senha:hover,
