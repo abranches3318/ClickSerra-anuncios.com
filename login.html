@@ -19,8 +19,8 @@
 
         <div class="campo-senha">
           <input type="password" id="senhaLogin" placeholder="Senha" required />
-          <button type="button" class="toggle-senha" onclick="toggleSenha('confirmarSenha', 'iconeConfirmarSenha')" aria-label="Revelar senha">
-            <img id="iconeConfirmarSenha" src="imagens/ocultar-senha.png" alt="Mostrar senha" />
+          <button type="button" class="toggle-senha" onclick="toggleSenha('senhaLogin', 'iconeSenhaLogin')" aria-label="Revelar senha">
+            <img id="iconeSenhaLogin" src="imagens/ocultar-senha.png" alt="Mostrar senha" />
           </button>
         </div>
 
@@ -38,16 +38,18 @@
       <div class="social-login">
         <button class="telefone" onclick="exibirLoginTelefone()">Continuar com Telefone</button>
       </div>
-      
-<!-- Recaptcha invisível -->
-<div id="recaptcha-container" style="display: none;"></div>
+
+      <!-- Recaptcha invisível -->
+      <div id="recaptcha-container" style="display: none;"></div>
+
+      <!-- Formulário de Telefone -->
       <div class="login-telefone" id="formTelefone" style="display: none;">
         <input type="tel" id="telefoneLogin" value="+55 " />
 
         <div class="campo-senha">
           <input type="password" id="senhaTelefone" placeholder="Digite sua senha" />
-          <button type="button" class="toggle-senha" onclick="toggleSenha('confirmarSenha', 'iconeConfirmarSenha')" aria-label="Revelar senha">
-            <img id="iconeConfirmarSenha" src="imagens/ocultar-senha.png" alt="Mostrar senha" />
+          <button type="button" class="toggle-senha" onclick="toggleSenha('senhaTelefone', 'iconeSenhaTelefone')" aria-label="Revelar senha">
+            <img id="iconeSenhaTelefone" src="imagens/ocultar-senha.png" alt="Mostrar senha" />
           </button>
         </div>
 
@@ -80,14 +82,13 @@
 
   <script type="module" src="login.js"></script>
 
-  <!-- Script do menu -->
+  <!-- Script do menu e toggleSenha -->
   <script>
     function toggleMenu() {
       const menu = document.getElementById('menuNavegacao');
       menu.style.display = menu.style.display === 'flex' ? 'none' : 'flex';
     }
 
-    
     function toggleSenha(idCampo, idIcone) {
       const campo = document.getElementById(idCampo);
       const icone = document.getElementById(idIcone);
@@ -98,6 +99,15 @@
       icone.alt = mostrando ? "Mostrar senha" : "Ocultar senha";
     }
 
+    // Fecha o menu se clicar fora
+    document.addEventListener('click', function (event) {
+      const menu = document.getElementById('menuNavegacao');
+      const botao = document.querySelector('.hamburguer');
+
+      if (menu && menu.style.display === 'flex' && !menu.contains(event.target) && !botao.contains(event.target)) {
+        menu.style.display = 'none';
+      }
+    });
   </script>
 </body>
 </html>
