@@ -57,13 +57,6 @@ body {
 }
 
 /* Campo de senha com ícone */
-.campo-senha {
-  position: relative;
-}
-
-.campo-senha input {
-  padding-right: 45px;
-}
 
 .toggle-senha {
   position: absolute;
@@ -79,6 +72,23 @@ body {
 .toggle-senha img {
   width: 20px;
   height: 20px;
+}
+
+/* Corrige foco azul ao clicar no botão de mostrar/ocultar senha */
+.toggle-senha:focus {
+  outline: none;
+}
+
+/* Garante que o campo de senha mantenha posição correta */
+.campo-senha {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.campo-senha input {
+  flex: 1;
+  padding-right: 45px;
 }
 
 /* Botões gerais */
