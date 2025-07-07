@@ -126,6 +126,12 @@ function formatarTelefoneParaE164(input) {
   throw new Error('Telefone inválido. Formato esperado: (DDD) número com 11 dígitos.');
 }
 
+// Mostrar os campos de login com telefone
+window.exibirLoginTelefone = function () {
+  document.getElementById('formTelefone').style.display = 'block';
+  document.querySelector('.telefone').style.display = 'none';
+};
+
 // Mostrar/ocultar senha
 window.toggleSenha = function () {
   const campoSenha = document.getElementById('senhaLogin');
@@ -137,6 +143,7 @@ window.toggleSenha = function () {
   icone.src = mostrando ? 'imagens/ocultar-senha.png' : 'imagens/revelar-senha.png';
   icone.alt = mostrando ? 'Mostrar senha' : 'Ocultar senha';
 };
+
 
 // Traduz mensagens de erro do Firebase
 function traduzErroFirebase(codigo) {
