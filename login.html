@@ -87,6 +87,17 @@
       menu.style.display = menu.style.display === 'flex' ? 'none' : 'flex';
     }
 
+    
+    function toggleSenha(idCampo, idIcone) {
+      const campo = document.getElementById(idCampo);
+      const icone = document.getElementById(idIcone);
+      const mostrando = campo.type === "text";
+
+      campo.type = mostrando ? "password" : "text";
+      icone.src = mostrando ? "imagens/ocultar-senha.png" : "imagens/mostrar-senha.png";
+      icone.alt = mostrando ? "Mostrar senha" : "Ocultar senha";
+    }
+
   </script>
 </body>
 </html>
