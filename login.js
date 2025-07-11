@@ -13,6 +13,21 @@ import { auth } from "/ClickSerra-anuncios.com/firebase-config.js";
 
 let confirmationResult;
 
+function traduzErroFirebase(codigo) {
+  const erros = {
+    'auth/invalid-email': 'E-mail inválido.',
+    'auth/user-disabled': 'Usuário desativado.',
+    'auth/user-not-found': 'Usuário não encontrado.',
+    'auth/wrong-password': 'Senha incorreta.',
+    'auth/too-many-requests': 'Muitas tentativas. Tente mais tarde.',
+    'auth/code-expired': 'Código expirado.',
+    'auth/invalid-verification-code': 'Código inválido.',
+    'auth/missing-verification-code': 'Código ausente.',
+    'auth/missing-phone-number': 'Telefone ausente ou inválido.',
+    'auth/invalid-phone-number': 'Telefone inválido.'
+  };
+  return erros[codigo] || 'Erro desconhecido: ' + codigo;
+
 // === Login com E-mail e Senha ===
 document.getElementById('formLogin').addEventListener('submit', async function (e) {
   e.preventDefault();
