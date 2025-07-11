@@ -54,7 +54,6 @@ body {
   border: 1px solid #ccc;
   border-radius: 6px;
   font-size: 16px;
-  box-shadow: none;
   outline: none;
 }
 
@@ -65,9 +64,9 @@ body {
   margin-bottom: 15px;
 }
 
-.campo-senha input[type="password"],
-.campo-senha input[type="text"] {
-  padding-right: 44px; /* Espaço para o botão/ícone */
+.campo-senha input {
+  width: 100%;
+  padding-right: 40px;
 }
 
 /* Botão de mostrar/ocultar senha */
@@ -99,7 +98,8 @@ body {
 .form-box button[type="submit"],
 .form-box button,
 #btnEnviarSMS,
-#codigoContainer button {
+#codigoContainer button,
+#btnRedefinirSenha {
   width: 100%;
   padding: 12px;
   margin-top: 10px;
@@ -115,13 +115,15 @@ body {
 /* Botão azul padrão */
 .form-box button[type="submit"],
 #btnEnviarSMS,
-#codigoContainer button {
+#codigoContainer button,
+#btnRedefinirSenha {
   background-color: #007BFF;
 }
 
 .form-box button:hover,
 #btnEnviarSMS:hover,
-#codigoContainer button:hover {
+#codigoContainer button:hover,
+#btnRedefinirSenha:hover {
   background-color: #0056b3;
 }
 
@@ -152,7 +154,9 @@ body {
 
 /* Inputs extras */
 #formTelefone input,
-#codigoContainer input {
+#codigoContainer input,
+#recuperacaoContainer input,
+#novoCadastroContainer input {
   margin-top: 8px;
 }
 
