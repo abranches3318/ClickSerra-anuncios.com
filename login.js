@@ -1,4 +1,3 @@
-// login.js
 import {
   signInWithEmailAndPassword,
   signInWithPopup,
@@ -13,6 +12,7 @@ import { auth } from "/ClickSerra-anuncios.com/firebase-config.js";
 
 let confirmationResult;
 
+// 🔧 Corrigido: Função faltante causava erro
 function traduzErroFirebase(codigo) {
   const erros = {
     'auth/invalid-email': 'E-mail inválido.',
@@ -27,6 +27,7 @@ function traduzErroFirebase(codigo) {
     'auth/invalid-phone-number': 'Telefone inválido.'
   };
   return erros[codigo] || 'Erro desconhecido: ' + codigo;
+}
 
 // === Login com E-mail e Senha ===
 document.getElementById('formLogin').addEventListener('submit', async function (e) {
@@ -46,7 +47,6 @@ document.getElementById('formLogin').addEventListener('submit', async function (
     localStorage.removeItem('destinoAposLogin');
     Swal.fire('Bem-vindo!', 'Login realizado com sucesso.', 'success').then(() => window.location.href = destino);
   } catch (error) {
-    console.error("Erro no login:", error);
     Swal.fire('Erro', traduzErroFirebase(error.code), 'error');
   }
 });
@@ -64,18 +64,17 @@ window.loginComGoogle = async function () {
     localStorage.removeItem('destinoAposLogin');
     Swal.fire('Bem-vindo!', 'Login com Google realizado com sucesso.', 'success').then(() => window.location.href = destino);
   } catch (error) {
-    console.error("Erro no login com Google:", error);
     Swal.fire('Erro', traduzErroFirebase(error.code), 'error');
   }
 };
 
-// === Login com Telefone - Nova Lógica ===
+// === Login com Telefone ===
 window.exibirLoginTelefone = function () {
   document.getElementById('formTelefone').style.display = 'block';
   document.querySelector('.telefone').style.display = 'none';
-  document.getElementById('senhaTelefone').style.display = 'none';
-  document.getElementById('btnEntrarTelefone').style.display = 'none';
-  document.getElementById('btnVerificarTelefone').style.display = 'block';
+  document.getElementById('senhaContainer').style.display = 'none';
+  document.getElementById('novoCadastroContainer').style.display = 'none';
+  document.getElementById('btnAvancarTelefone').style.display = 'block';
 };
 
 window.verificarTelefone = async function () {
@@ -98,12 +97,9 @@ window.verificarTelefone = async function () {
     await signInWithEmailAndPassword(auth, numeroFormatado + '@clickserra.com', 'verificacaoFake');
   } catch (error) {
     if (error.code === 'auth/wrong-password') {
-      // Conta existe
-      document.getElementById('senhaTelefone').style.display = 'block';
-      document.getElementById('btnEntrarTelefone').style.display = 'block';
-      document.getElementById('btnVerificarTelefone').style.display = 'none';
+      document.getElementById('senhaContainer').style.display = 'block';
+      document.getElementById('btnAvancarTelefone').style.display = 'none';
     } else if (error.code === 'auth/user-not-found') {
-      // Conta não existe
       iniciarCadastroTelefone(numeroFormatado);
     } else {
       Swal.fire('Erro', traduzErroFirebase(error.code), 'error');
@@ -134,16 +130,14 @@ window.confirmarCodigoSMS = async function () {
   try {
     const result = await confirmationResult.confirm(codigo);
     const user = result.user;
-    document.getElementById('novaSenha').style.display = 'block';
-    document.getElementById('confirmarSenha').style.display = 'block';
-    document.getElementById('btnCadastrarTelefone').style.display = 'block';
+    document.getElementById('novoCadastroContainer').style.display = 'block';
     document.getElementById('codigoContainer').style.display = 'none';
   } catch (err) {
     Swal.fire('Erro', traduzErroFirebase(err.code), 'error');
   }
 };
 
-window.cadastrarTelefone = async function () {
+window.criarContaTelefone = async function () {
   const user = auth.currentUser;
   const senha = document.getElementById('novaSenha').value;
   const confirmar = document.getElementById('confirmarSenha').value;
@@ -184,7 +178,8 @@ window.esqueciSenha = async function () {
     inputLabel: 'Informe seu email ou telefone:',
     showCancelButton: true,
     confirmButtonText: 'Continuar',
-    inputPlaceholder: 'exemplo@email.com ou +55...' });
+    inputPlaceholder: 'exemplo@email.com ou +55...'
+  });
 
   if (!valor.value) return;
   const entrada = valor.value.trim();
@@ -245,11 +240,11 @@ function validarRegrasSenha(senha) {
   return true;
 }
 
-function validarConfirmacaoSenha() {
+window.validarConfirmacaoSenha = function () {
   const senha = document.getElementById("novaSenha").value;
   const confirmar = document.getElementById("confirmarSenha");
   confirmar.style.borderColor = confirmar.value && confirmar.value !== senha ? "red" : "";
-}
+};
 
 function finalizarLogin(numeroFormatado) {
   localStorage.setItem('usuarioLogado', auth.currentUser?.uid);
