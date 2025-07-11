@@ -7,7 +7,6 @@
   <link rel="stylesheet" href="login.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-  <script src="https://kit.fontawesome.com/a2e0e6f91c.js" crossorigin="anonymous"></script> <!-- Font Awesome -->
 </head>
 <body>
   <div class="container">
@@ -18,29 +17,37 @@
       <!-- Login com Email e Senha -->
       <form id="formLogin">
         <input type="email" id="emailLogin" placeholder="Email" required />
-
         <div class="campo-senha">
           <input type="password" id="senhaLogin" placeholder="Senha" required />
           <button type="button" class="toggle-senha" onclick="toggleSenha('senhaLogin', this)" aria-label="Revelar senha">
             <i class="fas fa-eye"></i>
           </button>
         </div>
-
         <button type="submit">Entrar</button>
       </form>
 
       <!-- Esqueci minha senha -->
       <p style="margin-top: 15px;">
         <a href="#" onclick="esqueciSenha()">Esqueci minha senha</a>
-        <input type="password" id="novaSenha" placeholder="Nova senha" />
-        <input type="password" id="confirmarSenha" placeholder="Confirmar nova senha" oninput="validarConfirmacaoSenha()" />
       </p>
+
+      <div id="recuperacaoContainer" style="display:none;">
+        <input type="text" id="recuperacaoInput" placeholder="Insira email ou telefone" />
+        <input type="password" id="novaSenhaRecuperacao" placeholder="Nova senha" />
+        <input type="password" id="confirmarSenhaRecuperacao" placeholder="Confirmar nova senha" oninput="validarConfirmacaoSenhaRecuperacao()" />
+        <div id="codigoRecuperacaoContainer" style="display:none;">
+          <input type="text" id="codigoSMSRecuperacao" placeholder="Código SMS" />
+          <button onclick="confirmarCodigoRecuperacao()">Confirmar Código</button>
+        </div>
+        <button onclick="enviarCodigoOuReset()">Avançar</button>
+        <button id="btnRedefinirSenha" onclick="redefinirSenha()" style="display:none;">Redefinir Senha</button>
+      </div>
 
       <p class="ou">ou</p>
 
       <!-- Login com Google -->
       <div class="social-login">
-        <button class="google" id="btnGoogle" onclick="loginComGoogle()">Continuar com Google</button>
+        <button class="google" onclick="loginComGoogle()">Continuar com Google</button>
       </div>
 
       <!-- Login com Telefone -->
@@ -53,16 +60,24 @@
 
       <!-- Formulário de Telefone -->
       <div class="login-telefone" id="formTelefone" style="display: none;">
-        <input type="tel" id="telefoneLogin" value="+55 " />
-
-        <div class="campo-senha">
-          <input type="password" id="senhaTelefone" placeholder="Digite sua senha" />
-          <button type="button" class="toggle-senha" onclick="toggleSenha('senhaTelefone', this)" aria-label="Revelar senha">
-            <i class="fas fa-eye"></i>
-          </button>
+        <input type="tel" id="telefoneLogin" value="+55 " placeholder="Número de telefone" />
+        <div id="senhaContainer" style="display:none;">
+          <div class="campo-senha">
+            <input type="password" id="senhaTelefone" placeholder="Digite sua senha" />
+            <button type="button" class="toggle-senha" onclick="toggleSenha('senhaTelefone', this)">
+              <i class="fas fa-eye"></i>
+            </button>
+          </div>
+          <button onclick="loginComTelefone()">Entrar</button>
         </div>
 
-        <button id="btnEnviarSMS" onclick="iniciarLoginTelefone()">Confirmar</button>
+        <div id="novoCadastroContainer" style="display:none;">
+          <input type="password" id="novaSenha" placeholder="Nova senha" />
+          <input type="password" id="confirmarSenha" placeholder="Confirmar nova senha" oninput="validarConfirmacaoSenha()" />
+          <button onclick="criarContaTelefone()">Cadastrar</button>
+        </div>
+
+        <button id="btnAvancarTelefone" onclick="verificarTelefone()">Avançar</button>
 
         <div id="codigoContainer" style="display: none;">
           <input type="text" id="codigoSMS" placeholder="Código SMS" />
@@ -101,7 +116,6 @@
       const campo = document.getElementById(idCampo);
       const icone = botao.querySelector('i');
       const mostrando = campo.type === "text";
-
       campo.type = mostrando ? "password" : "text";
       icone.classList.toggle("fa-eye", mostrando);
       icone.classList.toggle("fa-eye-slash", !mostrando);
@@ -111,7 +125,6 @@
     document.addEventListener('click', function (event) {
       const menu = document.getElementById('menuNavegacao');
       const botao = document.querySelector('.hamburguer');
-
       if (menu && menu.style.display === 'flex' && !menu.contains(event.target) && !botao.contains(event.target)) {
         menu.style.display = 'none';
       }
