@@ -116,8 +116,8 @@ window.confirmarCodigoSMS = async function () {
     const emailFake = user.phoneNumber + '@clickserra.com';
     const senha = document.getElementById('senhaTelefone').value;
     // atualiza credenciais
-    await user.updateEmail(emailFake);
-    await user.updatePassword(senha);
+    await updateEmail(user, emailFake);
+    await updatePassword(user, senha);
     finalizarLogin(user.phoneNumber);
   } catch (err) {
     console.error(err);
@@ -146,8 +146,9 @@ window.toggleSenha = function (campoId, iconeId) {
   const icone = document.getElementById(iconeId);
   const mostrando = campo.type === 'text';
   campo.type = mostrando ? 'password' : 'text';
-  icone.src = mostrando ? 'imagens/ocultar-senha.png' : 'imagens/revelar-senha.png';
-  icone.alt = mostrando ? 'Mostrar senha' : 'Ocultar senha';
+  icone.classList.remove(mostrando ? 'fa-eye-slash' : 'fa-eye');
+  icone.classList.add(mostrando ? 'fa-eye' : 'fa-eye-slash');
+  icone.setAttribute('aria-label', mostrando ? 'Mostrar senha' : 'Ocultar senha');
 };
 
 window.exibirLoginTelefone = function () {
