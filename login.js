@@ -56,17 +56,35 @@ function formatarTelefoneParaE164(input) {
 
 function inicializarRecaptcha() {
   if (typeof window === 'undefined') return;
-  if (!window.recaptchaVerifier) {
-    try {
-      window.recaptchaVerifier = new RecaptchaVerifier(
-        'recaptcha-container',
-        { size: 'invisible' },
-        auth
-      );
-      window.recaptchaVerifier.render();
-    } catch (error) {
-      console.error("Erro ao inicializar reCAPTCHA:", error);
-    }
+  if (window.recaptchaVerifier) return;
+
+  // Garante que o container existe
+  const container = document.getElementById('recaptcha-container');
+  if (!container) {
+    const div = document.createElement('div');
+    div.id = 'recaptcha-container';
+    document.body.appendChild(div);
+  }
+
+  try {
+    window.recaptchaVerifier = new RecaptchaVerifier(
+      'recaptcha-container',
+      {
+        size: 'invisible',
+        callback: (response) => {
+          // reCAPTCHA resolvido
+          console.log('reCAPTCHA verificado:', response);
+        }
+      },
+      auth // <-- aqui estará corretamente inicializado
+    );
+
+    window.recaptchaVerifier.render().then(widgetId => {
+      window.recaptchaWidgetId = widgetId;
+      console.log('reCAPTCHA renderizado com ID:', widgetId);
+    });
+  } catch (error) {
+    console.error("Erro ao inicializar reCAPTCHA:", error);
   }
 }
 
