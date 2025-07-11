@@ -58,25 +58,16 @@ function inicializarRecaptcha() {
   if (typeof window === 'undefined') return;
   if (window.recaptchaVerifier) return;
 
-  // Garante que o container existe
-  const container = document.getElementById('recaptcha-container');
-  if (!container) {
-    const div = document.createElement('div');
-    div.id = 'recaptcha-container';
-    document.body.appendChild(div);
-  }
-
   try {
     window.recaptchaVerifier = new RecaptchaVerifier(
       'recaptcha-container',
       {
         size: 'invisible',
         callback: (response) => {
-          // reCAPTCHA resolvido
-          console.log('reCAPTCHA verificado:', response);
+          console.log('reCAPTCHA resolvido:', response);
         }
       },
-      auth // <-- aqui estará corretamente inicializado
+      auth
     );
 
     window.recaptchaVerifier.render().then(widgetId => {
