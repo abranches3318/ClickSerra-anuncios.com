@@ -12,7 +12,7 @@ import {
 } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
 import { auth } from "/ClickSerra-anuncios.com/firebase-config.js";
 
-let confirmationResult;
+let confirmationResult = null;
 
 function traduzErroFirebase(codigo) {
   const erros = {
@@ -38,10 +38,25 @@ function formatarTelefoneParaE164(input) {
   throw new Error('Telefone inválido. Use formato +55 (DDD) + número.');
 }
 
+// Inicializa reCAPTCHA se ainda não inicializado
 function inicializarRecaptcha() {
-  if (!window.recaptchaVerifier && auth) {
+  if (typeof window === 'undefined') return; // segurança para ambiente browser
+  if (!window.recaptchaVerifier) {
+    if (!auth) {
+      console.error('Auth não definido ao inicializar RecaptchaVerifier');
+      return;
+    }
     try {
-      window.recaptchaVerifier = new RecaptchaVerifier('recaptcha-container', { size: 'invisible' }, auth);
+      window.recaptchaVerifier = new RecaptchaVerifier(
+        'recaptcha-container',
+        {
+          size: 'invisible',
+          callback: (response) => {
+            // reCAPTCHA resolvido
+          }
+        },
+        auth
+      );
       window.recaptchaVerifier.render();
     } catch (error) {
       console.error("Erro ao inicializar reCAPTCHA:", error);
@@ -122,6 +137,7 @@ window.verificarTelefone = async function () {
       document.getElementById('senhaContainer').style.display = 'block';
       document.getElementById('btnAvancarTelefone').style.display = 'none';
       document.getElementById('novoCadastroContainer').style.display = 'none';
+      document.getElementById('codigoContainer').style.display = 'none';
     } else {
       // Usuário não existe, iniciar cadastro via SMS
       try {
