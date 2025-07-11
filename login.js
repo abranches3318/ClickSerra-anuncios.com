@@ -1,4 +1,4 @@
-// login.js
+he];/// login.js
 import {
   signInWithEmailAndPassword,
   signInWithPopup,
@@ -55,11 +55,10 @@ function formatarTelefoneParaE164(input) {
   throw new Error('Telefone inválido. Use formato +55 (DDD) + número.');
 }
 
-function inicializarRecaptcha() {
+window.inicializarRecaptcha = function () {
   if (typeof window === 'undefined') return;
   if (window.recaptchaVerifier) return;
 
-  // Garante que auth existe e app foi inicializado
   if (!auth || !auth.app) {
     console.error("Firebase Auth não está pronto para inicializar reCAPTCHA.");
     return;
@@ -84,7 +83,8 @@ function inicializarRecaptcha() {
   } catch (error) {
     console.error("Erro ao inicializar reCAPTCHA:", error);
   }
-}
+};
+
 
 function validarRegrasSenha(senha) {
   const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^\w\s]).{8,}$/;
