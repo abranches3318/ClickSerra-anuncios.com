@@ -272,3 +272,4 @@ window.validarConfirmacaoSenha = function () {
   const confirmar = document.getElementById('confirmarSenha');
   confirmar.style.borderColor = confirmar.value && confirmar.value !== senha ? 'red' : '';
 };
+
