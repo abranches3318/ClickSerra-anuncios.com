@@ -173,6 +173,13 @@ function traduzErroFirebase(codigo) {
   }
 }
 
+
+function validarConfirmacaoSenha() {
+  const senha = document.getElementById("novaSenha").value;
+  const confirmar = document.getElementById("confirmarSenha");
+  confirmar.style.borderColor = confirmar.value && confirmar.value !== senha ? "red" : "";
+}
+
 document.addEventListener('click', function (event) {
   const menu = document.getElementById('menuNavegacao');
   const botao = document.querySelector('.hamburguer');
