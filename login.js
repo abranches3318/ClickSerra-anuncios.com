@@ -1,3 +1,4 @@
+// login.js
 import {
   signInWithEmailAndPassword,
   signInWithPopup,
@@ -6,13 +7,13 @@ import {
   RecaptchaVerifier,
   updatePassword,
   updateEmail,
-  sendPasswordResetEmail
+  sendPasswordResetEmail,
+  fetchSignInMethodsForEmail
 } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
 import { auth } from "/ClickSerra-anuncios.com/firebase-config.js";
 
 let confirmationResult;
 
-// 🔧 Corrigido: Função faltante causava erro
 function traduzErroFirebase(codigo) {
   const erros = {
     'auth/invalid-email': 'E-mail inválido.',
@@ -24,7 +25,8 @@ function traduzErroFirebase(codigo) {
     'auth/invalid-verification-code': 'Código inválido.',
     'auth/missing-verification-code': 'Código ausente.',
     'auth/missing-phone-number': 'Telefone ausente ou inválido.',
-    'auth/invalid-phone-number': 'Telefone inválido.'
+    'auth/invalid-phone-number': 'Telefone inválido.',
+    'auth/invalid-credential': 'Credencial inválida. Faça a verificação corretamente.'
   };
   return erros[codigo] || 'Erro desconhecido: ' + codigo;
 }
@@ -72,14 +74,10 @@ window.loginComGoogle = async function () {
 window.exibirLoginTelefone = function () {
   document.getElementById('formTelefone').style.display = 'block';
   document.querySelector('.telefone').style.display = 'none';
-  document.getElementById('senhaContainer').style.display = 'none';
-  document.getElementById('novoCadastroContainer').style.display = 'none';
-  document.getElementById('btnAvancarTelefone').style.display = 'block';
 };
 
 window.verificarTelefone = async function () {
   const telefone = document.getElementById('telefoneLogin').value.trim();
-
   if (!telefone) {
     Swal.fire('Atenção', 'Informe seu telefone.', 'warning');
     return;
@@ -93,17 +91,17 @@ window.verificarTelefone = async function () {
     return;
   }
 
+  const emailFake = numeroFormatado + '@clickserra.com';
+
   try {
-    await signInWithEmailAndPassword(auth, numeroFormatado + '@clickserra.com', 'verificacaoFake');
-  } catch (error) {
-    if (error.code === 'auth/wrong-password') {
+    const methods = await fetchSignInMethodsForEmail(auth, emailFake);
+    if (methods.length > 0) {
       document.getElementById('senhaContainer').style.display = 'block';
-      document.getElementById('btnAvancarTelefone').style.display = 'none';
-    } else if (error.code === 'auth/user-not-found') {
-      iniciarCadastroTelefone(numeroFormatado);
     } else {
-      Swal.fire('Erro', traduzErroFirebase(error.code), 'error');
+      iniciarCadastroTelefone(numeroFormatado);
     }
+  } catch (error) {
+    Swal.fire('Erro', traduzErroFirebase(error.code), 'error');
   }
 };
 
@@ -129,7 +127,6 @@ window.confirmarCodigoSMS = async function () {
   }
   try {
     const result = await confirmationResult.confirm(codigo);
-    const user = result.user;
     document.getElementById('novoCadastroContainer').style.display = 'block';
     document.getElementById('codigoContainer').style.display = 'none';
   } catch (err) {
@@ -159,10 +156,9 @@ window.criarContaTelefone = async function () {
   }
 };
 
-window.entrarTelefone = async function () {
+window.loginComTelefone = async function () {
   const telefone = document.getElementById('telefoneLogin').value.trim();
   const senha = document.getElementById('senhaTelefone').value;
-
   try {
     const userCredential = await signInWithEmailAndPassword(auth, formatarTelefoneParaE164(telefone) + '@clickserra.com', senha);
     finalizarLogin(userCredential.user.phoneNumber);
@@ -171,6 +167,7 @@ window.entrarTelefone = async function () {
   }
 };
 
+// === Esqueci minha senha ===
 window.esqueciSenha = async function () {
   const valor = await Swal.fire({
     title: 'Recuperar Acesso',
@@ -182,6 +179,7 @@ window.esqueciSenha = async function () {
   });
 
   if (!valor.value) return;
+
   const entrada = valor.value.trim();
 
   if (entrada.includes('@')) {
@@ -199,10 +197,11 @@ window.esqueciSenha = async function () {
         await window.recaptchaVerifier.render();
       }
       confirmationResult = await signInWithPhoneNumber(auth, numero, window.recaptchaVerifier);
+
       const { value: codigo } = await Swal.fire({
-        title: 'Informe o código',
+        title: 'Código SMS',
         input: 'text',
-        inputPlaceholder: 'Código SMS',
+        inputPlaceholder: 'Digite o código recebido',
         confirmButtonText: 'Verificar'
       });
       if (!codigo) return;
@@ -226,11 +225,12 @@ window.esqueciSenha = async function () {
       await updatePassword(user, novaSenha);
       Swal.fire('Senha redefinida!', 'Acesse com sua nova senha.', 'success');
     } catch (err) {
-      Swal.fire('Erro', traduzErroFirebase(err.code), 'error');
+      Swal.fire('Erro', traduzErroFirebase(err.code || 'erro-desconhecido'), 'error');
     }
   }
 };
 
+// === Funções auxiliares ===
 function validarRegrasSenha(senha) {
   const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^\w\s]).{8,}$/;
   if (!regex.test(senha)) {
@@ -246,9 +246,10 @@ window.validarConfirmacaoSenha = function () {
   confirmar.style.borderColor = confirmar.value && confirmar.value !== senha ? "red" : "";
 };
 
-function finalizarLogin(numeroFormatado) {
+function finalizarLogin(info) {
   localStorage.setItem('usuarioLogado', auth.currentUser?.uid);
-  localStorage.setItem('usuarioTelefone', numeroFormatado);
+  if (auth.currentUser?.email) localStorage.setItem('usuarioEmail', auth.currentUser.email);
+  if (auth.currentUser?.phoneNumber) localStorage.setItem('usuarioTelefone', auth.currentUser.phoneNumber);
   const destino = localStorage.getItem('destinoAposLogin') || 'index.html';
   localStorage.removeItem('destinoAposLogin');
   Swal.fire('Bem-vindo!', 'Login realizado com sucesso.', 'success').then(() => window.location.href = destino);
@@ -258,13 +259,6 @@ function formatarTelefoneParaE164(input) {
   const numeros = input.replace(/\D/g, '');
   if (numeros.length === 11) return '+55' + numeros;
   if (numeros.length === 13 && numeros.startsWith('55')) return '+' + numeros;
-  throw new Error('Telefone inválido. Use formato +55 (DDD) + número.');
+  throw new Error('Telefone inválido. Use o formato +55 (DDD) + número.');
 }
 
-document.addEventListener('click', function (event) {
-  const menu = document.getElementById('menuNavegacao');
-  const botao = document.querySelector('.hamburguer');
-  if (menu && menu.style.display === 'flex' && !menu.contains(event.target) && !botao.contains(event.target)) {
-    menu.style.display = 'none';
-  }
-});
