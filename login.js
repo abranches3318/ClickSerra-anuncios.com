@@ -10,7 +10,42 @@ import {
   sendPasswordResetEmail,
   fetchSignInMethodsForEmail
 } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import { getAuth } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+
+
+const firebaseConfig = {
+  apiKey: "AIzaSyDhjUescYhrZ1e12M6nv5mnWxDovNcGxw0",
+  authDomain: "clickserra-anuncios.firebaseapp.com",
+  databaseURL: "https://clickserra-anuncios-default-rtdb.firebaseio.com",
+  projectId: "clickserra-anuncios",
+  storageBucket: "clickserra-anuncios.firebasestorage.app",
+  messagingSenderId: "251868045964",
+  appId: "1:251868045964:web:34f527f3d7c380746211a9"
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+
+export { auth };
+
 import { auth } from "/ClickSerra-anuncios.com/firebase-config.js";
+
+function inicializarRecaptcha() {
+  if (!window.recaptchaVerifier) {
+    console.log('auth:', auth);
+    if (!auth) {
+      console.error('Auth não definido ao inicializar RecaptchaVerifier');
+      return;
+    }
+    try {
+      window.recaptchaVerifier = new RecaptchaVerifier('recaptcha-container', { size: 'invisible' }, auth);
+      window.recaptchaVerifier.render();
+    } catch (error) {
+      console.error("Erro ao inicializar reCAPTCHA:", error);
+    }
+  }
+}
 
 let confirmationResult = null;
 
