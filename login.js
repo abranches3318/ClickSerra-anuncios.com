@@ -59,9 +59,9 @@ function inicializarRecaptcha() {
   if (typeof window === 'undefined') return;
   if (window.recaptchaVerifier) return;
 
-  // Verifica se auth.app existe, evitando erro de appVerificationDisabledForTesting
+  // Garante que auth existe e app foi inicializado
   if (!auth || !auth.app) {
-    console.error("Firebase Auth não está pronto para inicializar o reCAPTCHA.");
+    console.error("Firebase Auth não está pronto para inicializar reCAPTCHA.");
     return;
   }
 
