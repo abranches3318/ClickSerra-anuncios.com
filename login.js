@@ -10,10 +10,11 @@ import {
   sendPasswordResetEmail,
   fetchSignInMethodsForEmail
 } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
 import { getAuth } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
 
-// === Firebase ===
+// === Firebase Config ===
 const firebaseConfig = {
   apiKey: "AIzaSyDhjUescYhrZ1e12M6nv5mnWxDovNcGxw0",
   authDomain: "clickserra-anuncios.firebaseapp.com",
@@ -26,7 +27,7 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
-window.auth = auth; // para debug no console
+window.auth = auth; // Torna global
 
 let confirmationResult = null;
 
