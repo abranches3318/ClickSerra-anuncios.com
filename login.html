@@ -43,7 +43,6 @@
         <button class="telefone" onclick="exibirLoginTelefone()">Continuar com Telefone</button>
       </div>
 
-
       <!-- Login com telefone -->
       <div class="login-telefone" id="formTelefone" style="display: none;">
         <input type="tel" id="telefoneLogin" placeholder="+55 (DDD) 9XXXX-XXXX" autocomplete="tel" inputmode="tel" />
@@ -108,8 +107,12 @@
     </ul>
   </nav>
 
-  <!-- Scripts -->
-  <script type="module" src="login.js"></script>
+  <!-- Firebase (não usar type="module") -->
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+  <script src="login.js"></script>
+
+  <!-- Scripts auxiliares -->
   <script>
     function toggleMenu() {
       const menu = document.getElementById('menuNavegacao');
