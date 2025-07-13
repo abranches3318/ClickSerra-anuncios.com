@@ -5,15 +5,15 @@ let confirmationResult = null;
 
 // Inicializa Firebase
 function inicializarFirebase() {
-const firebaseConfig = {
-  apiKey: "AIzaSyDhjUescYhrZ1e12M6nv5mnWxDovNcGxw0",
-  authDomain: "clickserra-anuncios.firebaseapp.com",
-  databaseURL: "https://clickserra-anuncios-default-rtdb.firebaseio.com",
-  projectId: "clickserra-anuncios",
-  storageBucket: "clickserra-anuncios.firebasestorage.app",
-  messagingSenderId: "251868045964",
-  appId: "1:251868045964:web:34f527f3d7c380746211a9"
-};
+  const firebaseConfig = {
+    apiKey: "AIzaSyDhjUescYhrZ1e12M6nv5mnWxDovNcGxw0",
+    authDomain: "clickserra-anuncios.firebaseapp.com",
+    databaseURL: "https://clickserra-anuncios-default-rtdb.firebaseio.com",
+    projectId: "clickserra-anuncios",
+    storageBucket: "clickserra-anuncios.firebasestorage.app",
+    messagingSenderId: "251868045964",
+    appId: "1:251868045964:web:34f527f3d7c380746211a9"
+  };
 
   app = firebase.initializeApp(firebaseConfig);
   auth = firebase.auth();
@@ -21,21 +21,24 @@ const firebaseConfig = {
 
 inicializarFirebase();
 
-// Função global
+// Função global para inicializar reCAPTCHA
 window.inicializarRecaptcha = function () {
-  if (!window.recaptchaVerifier) {
-    try {
-      window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('recaptcha-container', {
-        size: 'invisible',
-        callback: (response) => console.log('reCAPTCHA resolvido', response)
-      });
-      window.recaptchaVerifier.render().then(widgetId => {
-        window.recaptchaWidgetId = widgetId;
-        console.log('reCAPTCHA widget ID:', widgetId);
-      });
-    } catch (err) {
-      console.error("Erro ao inicializar reCAPTCHA:", err);
+  try {
+    if (window.recaptchaVerifier) {
+      window.recaptchaVerifier.clear(); // Evita múltiplas instâncias
     }
+
+    window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('recaptcha-container', {
+      size: 'invisible',
+      callback: (response) => console.log('reCAPTCHA resolvido', response)
+    });
+
+    window.recaptchaVerifier.render().then(widgetId => {
+      window.recaptchaWidgetId = widgetId;
+      console.log('reCAPTCHA widget ID:', widgetId);
+    });
+  } catch (err) {
+    console.error("Erro ao inicializar reCAPTCHA:", err);
   }
 };
 
@@ -126,12 +129,14 @@ window.verificarTelefone = async function () {
   const emailFake = numeroFormatado + '@clickserra.com';
 
   try {
+    window.inicializarRecaptcha(); // <- obrigatório antes da chamada Firebase
+
     const methods = await auth.fetchSignInMethodsForEmail(emailFake);
+
     if (methods.length > 0) {
       document.getElementById('senhaContainer').style.display = 'block';
       document.getElementById('btnAvancarTelefone').style.display = 'none';
     } else {
-      window.inicializarRecaptcha();
       confirmationResult = await auth.signInWithPhoneNumber(numeroFormatado, window.recaptchaVerifier);
       document.getElementById('codigoContainer').style.display = 'block';
       document.getElementById('btnAvancarTelefone').style.display = 'none';
