@@ -1,111 +1,81 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
-  <title>Teste reCAPTCHA Firebase</title>
+  <meta charset="UTF-8">
+  <title>Login por Telefone - Teste Firebase</title>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-  <style>
-    body {
-      font-family: sans-serif;
-      max-width: 400px;
-      margin: 50px auto;
-      text-align: center;
-    }
-    input {
-      padding: 10px;
-      margin: 10px 0;
-      width: 100%;
-      font-size: 16px;
-    }
-    button {
-      padding: 10px 20px;
-      font-size: 16px;
-      cursor: pointer;
-    }
-  </style>
 </head>
 <body>
-  <h2>Teste reCAPTCHA + SMS Firebase</h2>
+  <h2>Teste de Login por Telefone</h2>
 
-  <input type="tel" id="telefone" placeholder="Digite seu número +55..." />
-  <button onclick="enviarCodigo()">Enviar Código</button>
+  <input id="telefone" type="text" placeholder="Digite seu telefone">
+  <button onclick="enviarSMS()">Enviar SMS</button>
 
-  <div id="codigoContainer" style="display:none;">
-    <input type="text" id="codigoSMS" placeholder="Digite o código recebido" />
-    <button onclick="confirmarCodigo()">Confirmar Código</button>
-  </div>
+  <br><br>
 
-  <div id="recaptcha-container" style="margin-top: 20px;"></div>
+  <input id="codigo" type="text" placeholder="Digite o código recebido">
+  <button onclick="verificarCodigo()">Verificar Código</button>
 
-  <!-- Firebase compat -->
-  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+  <div id="recaptcha-container"></div>
 
   <script>
-    const firebaseConfig = {
+    // === Inicialização do Firebase ===
+    firebase.initializeApp({
       apiKey: "AIzaSyDhjUescYhrZ1e12M6nv5mnWxDovNcGxw0",
       authDomain: "clickserra-anuncios.firebaseapp.com",
       projectId: "clickserra-anuncios",
       storageBucket: "clickserra-anuncios.appspot.com",
       messagingSenderId: "251868045964",
       appId: "1:251868045964:web:34f527f3d7c380746211a9"
-    };
+    });
 
-    firebase.initializeApp(firebaseConfig);
     const auth = firebase.auth();
-    let confirmationResult;
+    let confirmationResult = null;
 
-    function formatarE164(numero) {
-      const n = numero.replace(/\D/g, '');
-      if (n.length === 11) return '+55' + n;
-      if (n.length === 13 && n.startsWith('55')) return '+' + n;
-      throw new Error('Telefone inválido');
+    function formatarTelefone(input) {
+      const numeros = input.replace(/\D/g, '');
+      if (numeros.length === 11) return '+55' + numeros;
+      throw new Error('Telefone inválido. Use DDD + número.');
     }
 
-    function criarRecaptcha() {
-      if (window.recaptchaVerifier) {
-        window.recaptchaVerifier.clear();
-      }
-      window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('recaptcha-container', {
-        size: 'invisible',
-        callback: response => console.log('reCAPTCHA resolvido:', response)
-      });
-      return window.recaptchaVerifier;
-    }
-
-    async function enviarCodigo() {
+    function enviarSMS() {
       const telefone = document.getElementById('telefone').value.trim();
-      if (!telefone) return Swal.fire('Erro', 'Informe o número.', 'error');
-
-      let formatado;
+      let numero;
       try {
-        formatado = formatarE164(telefone);
+        numero = formatarTelefone(telefone);
       } catch (e) {
         return Swal.fire('Erro', e.message, 'error');
       }
 
-      try {
-        const verifier = criarRecaptcha();
-        confirmationResult = await auth.signInWithPhoneNumber(formatado, verifier);
-        document.getElementById('codigoContainer').style.display = 'block';
-        Swal.fire('Sucesso', 'Código SMS enviado com sucesso.', 'success');
-      } catch (err) {
-        Swal.fire('Erro', err.message, 'error');
-        console.error(err);
-      }
+      const recaptcha = new firebase.auth.RecaptchaVerifier('recaptcha-container', {
+        size: 'invisible'
+      });
+
+      auth.signInWithPhoneNumber(numero, recaptcha)
+        .then(result => {
+          confirmationResult = result;
+          Swal.fire('Código enviado', 'Verifique o SMS no seu telefone.', 'success');
+        })
+        .catch(err => {
+          Swal.fire('Erro', err.message, 'error');
+        });
     }
 
-    async function confirmarCodigo() {
-      const codigo = document.getElementById('codigoSMS').value.trim();
+    function verificarCodigo() {
+      const codigo = document.getElementById('codigo').value.trim();
+      if (!confirmationResult) return Swal.fire('Erro', 'Envie o SMS primeiro.', 'error');
       if (!codigo) return Swal.fire('Erro', 'Informe o código SMS.', 'error');
 
-      try {
-        const result = await confirmationResult.confirm(codigo);
-        Swal.fire('Sucesso', 'Login com telefone bem-sucedido.', 'success');
-        console.log('Usuário:', result.user);
-      } catch (err) {
-        Swal.fire('Erro', err.message, 'error');
-      }
+      confirmationResult.confirm(codigo)
+        .then(result => {
+          const user = result.user;
+          Swal.fire('Sucesso!', 'Login feito com ' + user.phoneNumber, 'success');
+        })
+        .catch(err => {
+          Swal.fire('Erro', err.message, 'error');
+        });
     }
   </script>
 </body>
