@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <title>Teste reCAPTCHA - Click Serra</title>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+</head>
+<body>
+  <h2>Teste de reCAPTCHA com número real</h2>
+  <div id="recaptcha-container"></div>
+  <button onclick="iniciarVerificacao()">Testar Envio de SMS</button>
+
+  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyDhjUescYhrZ1e12M6nv5mnWxDovNcGxw0",
+      authDomain: "clickserra-anuncios.firebaseapp.com",
+      projectId: "clickserra-anuncios",
+      appId: "1:251868045964:web:34f527f3d7c380746211a9"
+    };
+    firebase.initializeApp(firebaseConfig);
+
+    let recaptchaVerifier, confirmationResult;
+
+    window.onload = () => {
+      recaptchaVerifier = new firebase.auth.RecaptchaVerifier('recaptcha-container', {
+        size: 'invisible',
+        callback: (token) => {
+          console.log('✅ reCAPTCHA resolvido:', token);
+        }
+      });
+      recaptchaVerifier.render();
+    };
+
+    async function iniciarVerificacao() {
+      const telefone = prompt("Digite seu número real no formato +55XXXXXXXXXXX:");
+      if (!telefone || !telefone.startsWith('+55')) return alert("Número inválido.");
+
+      try {
+        confirmationResult = await firebase.auth().signInWithPhoneNumber(telefone, recaptchaVerifier);
+        alert("✅ Código enviado via SMS.");
+
+        const codigo = prompt("Digite o código recebido:");
+        if (!codigo) return alert("Código não informado.");
+
+        const result = await confirmationResult.confirm(codigo);
+        alert("✅ Login OK: " + result.user.phoneNumber);
+      } catch (error) {
+        console.error("❌ Erro:", error);
+        alert("Erro: " + error.message);
+      }
+    }
+  </script>
+</body>
+</html>
