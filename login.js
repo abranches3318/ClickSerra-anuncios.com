@@ -1,49 +1,45 @@
 // login.js
 
-let auth, app;
+let app, auth;
 let confirmationResult = null;
 
-// Inicializa Firebase
+// === Inicializar Firebase ===
 function inicializarFirebase() {
   const firebaseConfig = {
     apiKey: "AIzaSyDhjUescYhrZ1e12M6nv5mnWxDovNcGxw0",
     authDomain: "clickserra-anuncios.firebaseapp.com",
     databaseURL: "https://clickserra-anuncios-default-rtdb.firebaseio.com",
     projectId: "clickserra-anuncios",
-    storageBucket: "clickserra-anuncios.firebasestorage.app",
+    storageBucket: "clickserra-anuncios.appspot.com",
     messagingSenderId: "251868045964",
     appId: "1:251868045964:web:34f527f3d7c380746211a9"
   };
-
   app = firebase.initializeApp(firebaseConfig);
   auth = firebase.auth();
 }
 
 inicializarFirebase();
 
-// Função global para inicializar reCAPTCHA
+// === Inicializar reCAPTCHA ===
 window.inicializarRecaptcha = function () {
-  try {
-    if (window.recaptchaVerifier) {
-      window.recaptchaVerifier.clear(); // Evita múltiplas instâncias
+  if (!window.recaptchaVerifier) {
+    try {
+      window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('recaptcha-container', {
+        size: 'invisible',
+        callback: response => console.log('reCAPTCHA resolvido', response)
+      });
+      window.recaptchaVerifier.render().then(id => {
+        window.recaptchaWidgetId = id;
+        console.log('reCAPTCHA widget ID:', id);
+      });
+    } catch (err) {
+      console.error("Erro ao inicializar reCAPTCHA:", err);
     }
-
-    window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('recaptcha-container', {
-      size: 'invisible',
-      callback: (response) => console.log('reCAPTCHA resolvido', response)
-    });
-
-    window.recaptchaVerifier.render().then(widgetId => {
-      window.recaptchaWidgetId = widgetId;
-      console.log('reCAPTCHA widget ID:', widgetId);
-    });
-  } catch (err) {
-    console.error("Erro ao inicializar reCAPTCHA:", err);
   }
 };
 
-function traduzErroFirebase(codigo) {
-  const erros = {
+function traduzErroFirebase(code) {
+  const mensagens = {
     'auth/invalid-email': 'E-mail inválido.',
     'auth/user-disabled': 'Usuário desativado.',
     'auth/user-not-found': 'Usuário não encontrado.',
@@ -54,9 +50,10 @@ function traduzErroFirebase(codigo) {
     'auth/missing-verification-code': 'Código ausente.',
     'auth/missing-phone-number': 'Telefone ausente ou inválido.',
     'auth/invalid-phone-number': 'Telefone inválido.',
-    'auth/invalid-credential': 'Credencial inválida. Tente novamente.'
+    'auth/invalid-credential': 'Credencial inválida. Tente novamente.',
+    'auth/operation-not-allowed': 'Este tipo de login não está ativado.'
   };
-  return erros[codigo] || 'Erro desconhecido: ' + codigo;
+  return mensagens[code] || 'Erro desconhecido: ' + code;
 }
 
 function formatarTelefoneParaE164(input) {
@@ -76,20 +73,18 @@ function finalizarLogin(identificador) {
   });
 }
 
-// === E-mail e senha ===
-document.getElementById('formLogin').addEventListener('submit', async function (e) {
+// === Login por e-mail ===
+document.getElementById('formLogin').addEventListener('submit', async e => {
   e.preventDefault();
   const email = document.getElementById('emailLogin').value.trim();
   const senha = document.getElementById('senhaLogin').value;
-  if (!email || !senha) {
-    Swal.fire('Atenção', 'Preencha e-mail e senha corretamente.', 'warning');
-    return;
-  }
+  if (!email || !senha) return Swal.fire('Atenção', 'Preencha e-mail e senha corretamente.', 'warning');
+
   try {
-    const userCredential = await auth.signInWithEmailAndPassword(email, senha);
-    finalizarLogin(userCredential.user.email);
-  } catch (error) {
-    Swal.fire('Erro', traduzErroFirebase(error.code), 'error');
+    const cred = await auth.signInWithEmailAndPassword(email, senha);
+    finalizarLogin(cred.user.email);
+  } catch (err) {
+    Swal.fire('Erro', traduzErroFirebase(err.code), 'error');
   }
 });
 
@@ -99,12 +94,11 @@ window.loginComGoogle = async function () {
     const provider = new firebase.auth.GoogleAuthProvider();
     const result = await auth.signInWithPopup(provider);
     finalizarLogin(result.user.email);
-  } catch (error) {
-    Swal.fire('Erro', traduzErroFirebase(error.code), 'error');
+  } catch (err) {
+    Swal.fire('Erro', traduzErroFirebase(err.code), 'error');
   }
 };
 
-// === Exibir Login Telefone ===
 window.exibirLoginTelefone = function () {
   document.getElementById('formTelefone').style.display = 'block';
   document.querySelector('.telefone').style.display = 'none';
@@ -114,30 +108,27 @@ window.exibirLoginTelefone = function () {
   document.getElementById('btnAvancarTelefone').style.display = 'block';
 };
 
-// === Verificar Telefone ===
+// === Verificar se telefone possui senha ou precisa cadastrar ===
 window.verificarTelefone = async function () {
-  const telefoneInput = document.getElementById('telefoneLogin').value.trim();
-  let numeroFormatado;
+  const telefone = document.getElementById('telefoneLogin').value.trim();
+  let numero;
 
   try {
-    numeroFormatado = formatarTelefoneParaE164(telefoneInput);
+    numero = formatarTelefoneParaE164(telefone);
   } catch (e) {
-    Swal.fire('Erro', e.message, 'error');
-    return;
+    return Swal.fire('Erro', e.message, 'error');
   }
 
-  const emailFake = numeroFormatado + '@clickserra.com';
+  const emailFake = numero + '@clickserra.com';
 
   try {
-    window.inicializarRecaptcha(); // <- obrigatório antes da chamada Firebase
-
     const methods = await auth.fetchSignInMethodsForEmail(emailFake);
-
     if (methods.length > 0) {
       document.getElementById('senhaContainer').style.display = 'block';
       document.getElementById('btnAvancarTelefone').style.display = 'none';
     } else {
-      confirmationResult = await auth.signInWithPhoneNumber(numeroFormatado, window.recaptchaVerifier);
+      window.inicializarRecaptcha();
+      confirmationResult = await auth.signInWithPhoneNumber(numero, window.recaptchaVerifier);
       document.getElementById('codigoContainer').style.display = 'block';
       document.getElementById('btnAvancarTelefone').style.display = 'none';
       Swal.fire('Verificação', 'SMS enviado com sucesso.', 'success');
@@ -147,12 +138,11 @@ window.verificarTelefone = async function () {
   }
 };
 
+// === Confirmar código SMS ===
 window.confirmarCodigoSMS = async function () {
   const codigo = document.getElementById('codigoSMS').value.trim();
-  if (!codigo) {
-    Swal.fire('Erro', 'Informe o código recebido por SMS.', 'error');
-    return;
-  }
+  if (!codigo) return Swal.fire('Erro', 'Informe o código.', 'error');
+
   try {
     const result = await confirmationResult.confirm(codigo);
     document.getElementById('novoCadastroContainer').style.display = 'block';
@@ -162,12 +152,13 @@ window.confirmarCodigoSMS = async function () {
   }
 };
 
+// === Criar senha nova para telefone ===
 window.cadastrarTelefone = async function () {
   const user = auth.currentUser;
   const senha = document.getElementById('novaSenha').value;
   const confirmar = document.getElementById('confirmarSenha').value;
 
-  if (!senha || !confirmar) return Swal.fire('Erro', 'Preencha ambos os campos de senha.', 'error');
+  if (!senha || !confirmar) return Swal.fire('Erro', 'Preencha ambas as senhas.', 'error');
   if (senha !== confirmar) return Swal.fire('Erro', 'As senhas não coincidem.', 'error');
 
   try {
@@ -180,19 +171,21 @@ window.cadastrarTelefone = async function () {
   }
 };
 
+// === Entrar com telefone já com senha ===
 window.entrarTelefone = async function () {
-  const telefoneInput = document.getElementById('telefoneLogin').value.trim();
+  const telefone = document.getElementById('telefoneLogin').value.trim();
   const senha = document.getElementById('senhaTelefone').value;
 
   try {
-    const numeroFormatado = formatarTelefoneParaE164(telefoneInput);
-    const userCredential = await auth.signInWithEmailAndPassword(numeroFormatado + '@clickserra.com', senha);
-    finalizarLogin(userCredential.user.phoneNumber);
+    const numero = formatarTelefoneParaE164(telefone);
+    const cred = await auth.signInWithEmailAndPassword(numero + '@clickserra.com', senha);
+    finalizarLogin(cred.user.phoneNumber);
   } catch (err) {
     Swal.fire('Erro', traduzErroFirebase(err.code), 'error');
   }
 };
 
+// === Esqueci minha senha ===
 window.esqueciSenha = async function () {
   const { value: entrada } = await Swal.fire({
     title: 'Recuperar Acesso',
@@ -201,7 +194,7 @@ window.esqueciSenha = async function () {
     inputPlaceholder: 'exemplo@email.com ou +55...',
     showCancelButton: true,
     confirmButtonText: 'Continuar',
-    inputValidator: (value) => (!value ? 'Informe um valor!' : null)
+    inputValidator: value => (!value ? 'Informe um valor!' : null)
   });
 
   if (!entrada) return;
@@ -215,21 +208,20 @@ window.esqueciSenha = async function () {
     }
   } else {
     try {
-      const numeroFormatado = formatarTelefoneParaE164(entrada.trim());
+      const numero = formatarTelefoneParaE164(entrada.trim());
       window.inicializarRecaptcha();
-      confirmationResult = await auth.signInWithPhoneNumber(numeroFormatado, window.recaptchaVerifier);
+      confirmationResult = await auth.signInWithPhoneNumber(numero, window.recaptchaVerifier);
+
       const { value: codigo } = await Swal.fire({
         title: 'Código SMS',
         input: 'text',
         inputPlaceholder: 'Digite o código recebido',
         confirmButtonText: 'Verificar',
-        inputValidator: (value) => (!value ? 'Informe o código!' : null)
+        inputValidator: val => (!val ? 'Informe o código!' : null)
       });
 
       if (!codigo) return;
-
       const result = await confirmationResult.confirm(codigo);
-      const user = result.user;
 
       const { value: novaSenha } = await Swal.fire({
         title: 'Nova senha',
@@ -237,12 +229,12 @@ window.esqueciSenha = async function () {
         inputPlaceholder: 'Digite a nova senha',
         confirmButtonText: 'Confirmar',
         inputAttributes: { minlength: 8, required: true },
-        inputValidator: (value) => (!value ? 'Informe a nova senha!' : null)
+        inputValidator: val => (!val ? 'Informe a nova senha!' : null)
       });
 
       if (!novaSenha) return;
 
-      await user.updatePassword(novaSenha);
+      await result.user.updatePassword(novaSenha);
       Swal.fire('Senha redefinida!', 'Acesse com sua nova senha.', 'success');
     } catch (err) {
       Swal.fire('Erro', traduzErroFirebase(err.code), 'error');
@@ -250,6 +242,7 @@ window.esqueciSenha = async function () {
   }
 };
 
+// === Validação visual da confirmação de senha ===
 window.validarConfirmacaoSenha = function () {
   const senha = document.getElementById('novaSenha').value;
   const confirmar = document.getElementById('confirmarSenha');
