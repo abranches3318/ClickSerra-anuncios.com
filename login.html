@@ -38,16 +38,16 @@
         <button class="google" onclick="loginComGoogle()">Continuar com Google</button>
       </div>
 
-      <!-- Login Telefone -->
+      <!--
       <div class="social-login">
         <button class="telefone" onclick="exibirLoginTelefone()">Continuar com Telefone</button>
       </div>
 
-      <!-- Login com telefone -->
+      
       <div class="login-telefone" id="formTelefone" style="display: none;">
         <input type="tel" id="telefoneLogin" placeholder="+55 (DDD) 9XXXX-XXXX" autocomplete="tel" inputmode="tel" />
 
-        <!-- Senha existente -->
+        
         <div id="senhaContainer" style="display:none;">
           <div class="campo-senha">
             <input type="password" id="senhaTelefone" placeholder="Digite sua senha" />
@@ -58,32 +58,34 @@
           <button onclick="entrarTelefone()">Entrar</button>
         </div>
 
-        <!-- Novo cadastro -->
+    
         <div id="novoCadastroContainer" style="display:none;">
           <input type="password" id="novaSenha" placeholder="Nova senha" />
           <input type="password" id="confirmarSenha" placeholder="Confirmar nova senha" oninput="validarConfirmacaoSenha()" />
           <button onclick="cadastrarTelefone()">Cadastrar</button>
         </div>
 
-        <!-- Botão avançar -->
+        
         <button id="btnAvancarTelefone" onclick="verificarTelefone()">Avançar</button>
 
-        <!-- Código SMS -->
+      
         <div id="codigoContainer" style="display: none;">
           <input type="text" id="codigoSMS" placeholder="Código SMS" />
           <button onclick="confirmarCodigoSMS()">Confirmar Código</button>
         </div>
-      </div>
+      </div> -->>
 
       <!-- Recuperação via telefone/email -->
       <div id="recuperacaoContainer" style="display:none;">
-        <input type="text" id="recuperacaoInput" placeholder="Insira email ou telefone" />
+        <input type="text" id="recuperacaoInput" placeholder="Insira seu email" />
         <input type="password" id="novaSenhaRecuperacao" placeholder="Nova senha" />
         <input type="password" id="confirmarSenhaRecuperacao" placeholder="Confirmar nova senha" oninput="validarConfirmacaoSenhaRecuperacao()" />
+        <!--
         <div id="codigoRecuperacaoContainer" style="display:none;">
           <input type="text" id="codigoSMSRecuperacao" placeholder="Código SMS" />
           <button onclick="confirmarCodigoRecuperacao()">Confirmar Código</button>
         </div>
+          -->
         <button onclick="enviarCodigoOuReset()">Avançar</button>
         <button id="btnRedefinirSenha" onclick="redefinirSenha()" style="display:none;">Redefinir Senha</button>
       </div>
