@@ -6,19 +6,25 @@
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 20px; }
+    input, button { padding: 10px; margin-bottom: 10px; }
+    #loading-spinner { display: none; margin-top: 10px; } /* Estilo para o spinner */
+  </style>
 </head>
 <body>
   <h2>Teste de Login por Telefone</h2>
 
-  <input id="telefone" type="text" placeholder="Digite seu telefone">
-  <button onclick="enviarSMS()">Enviar SMS</button>
+  <input id="telefone" type="text" placeholder="Digite seu telefone (+55 DDD Número)" style="width: 250px;">
+  <button id="btnEnviarSMS" onclick="enviarSMS()">Enviar SMS</button>
 
   <br><br>
 
-  <input id="codigo" type="text" placeholder="Digite o código recebido">
-  <button onclick="verificarCodigo()">Verificar Código</button>
+  <input id="codigo" type="text" placeholder="Digite o código recebido" style="width: 250px;">
+  <button id="btnVerificarCodigo" onclick="verificarCodigo()">Verificar Código</button>
 
   <div id="recaptcha-container"></div>
+  <div id="loading-spinner">Carregando...</div> <!-- Elemento para o spinner -->
 
   <script>
     // === Inicialização do Firebase ===
@@ -33,49 +39,146 @@
 
     const auth = firebase.auth();
     let confirmationResult = null;
+    let recaptchaVerifier; // Declarar a variável recaptchaVerifier globalmente
+
+    // === Inicializa o reCAPTCHA ao carregar a página ===
+    // Para 'invisible', ele só vai aparecer se houver necessidade de verificação manual.
+    // Pode ser instanciado uma vez e reutilizado.
+    document.addEventListener('DOMContentLoaded', () => {
+      recaptchaVerifier = new firebase.auth.RecaptchaVerifier('recaptcha-container', {
+        size: 'invisible', // Ou 'normal' se preferir o widget visível
+        callback: (response) => {
+          // reCAPTCHA resolvido (apenas para 'normal' ou se 'invisible' precisar de interação)
+          console.log('reCAPTCHA response:', response);
+        },
+        'expired-callback': () => {
+          console.log('reCAPTCHA expirou. Limpando...');
+          if (recaptchaVerifier) recaptchaVerifier.clear();
+        }
+      });
+      // Para 'invisible', não é estritamente necessário chamar render() aqui,
+      // ele é ativado na chamada de signInWithPhoneNumber.
+      // recaptchaVerifier.render(); // Chame isso se usar size: 'normal' e quiser que apareça imediatamente
+    });
+
 
     function formatarTelefone(input) {
+      // Remove tudo que não for dígito e garante o +55 na frente
       const numeros = input.replace(/\D/g, '');
-      if (numeros.length === 11) return '+55' + numeros;
-      throw new Error('Telefone inválido. Use DDD + número.');
+      if (numeros.length === 11) { // Considerando 2 dígitos para DDD + 9 para o número
+        return '+55' + numeros;
+      }
+      // Você pode adicionar mais validações aqui, como verificar se começa com 11-99 ou se tem o 9 na frente
+      throw new Error('Telefone inválido. Exemplo: 11987654321.');
     }
 
-    function enviarSMS() {
+    function toggleLoading(isLoading) {
+      document.getElementById('btnEnviarSMS').disabled = isLoading;
+      document.getElementById('btnVerificarCodigo').disabled = isLoading;
+      document.getElementById('loading-spinner').style.display = isLoading ? 'block' : 'none';
+    }
+
+    async function enviarSMS() {
       const telefone = document.getElementById('telefone').value.trim();
       let numero;
       try {
         numero = formatarTelefone(telefone);
       } catch (e) {
-        return Swal.fire('Erro', e.message, 'error');
+        return Swal.fire('Erro de Telefone', e.message, 'error');
       }
 
-      const recaptcha = new firebase.auth.RecaptchaVerifier('recaptcha-container', {
-        size: 'invisible'
-      });
+      toggleLoading(true); // Ativa o loading
 
-      auth.signInWithPhoneNumber(numero, recaptcha)
-        .then(result => {
-          confirmationResult = result;
-          Swal.fire('Código enviado', 'Verifique o SMS no seu telefone.', 'success');
-        })
-        .catch(err => {
-          Swal.fire('Erro', err.message, 'error');
-        });
+      try {
+        // Usa o recaptchaVerifier globalmente
+        confirmationResult = await auth.signInWithPhoneNumber(numero, recaptchaVerifier);
+        Swal.fire('Código Enviado!', 'Verifique o SMS no seu telefone.', 'success');
+      } catch (err) {
+        let errorMessage = 'Ocorreu um erro inesperado. Por favor, tente novamente.';
+        console.error('Erro ao enviar SMS:', err); // Log para depuração
+
+        switch (err.code) {
+          case 'auth/captcha-check-failed':
+            errorMessage = 'A verificação de segurança falhou. Tente novamente.';
+            break;
+          case 'auth/invalid-phone-number':
+            errorMessage = 'O número de telefone está inválido. Use o formato correto (ex: +55 DDD Número).';
+            break;
+          case 'auth/missing-phone-number':
+            errorMessage = 'Por favor, digite seu número de telefone.';
+            break;
+          case 'auth/quota-exceeded':
+            errorMessage = 'Muitas solicitações. Por favor, tente novamente mais tarde.';
+            break;
+          case 'auth/internal-error-encountered':
+            errorMessage = 'Ocorreu um erro interno. Verifique sua conexão e tente novamente. Se o problema persistir, entre em contato com o suporte do aplicativo.';
+            break;
+          case 'auth/operation-not-allowed':
+            errorMessage = 'Autenticação por telefone não está habilitada. Verifique as configurações do seu projeto Firebase.';
+            break;
+          case 'auth/user-disabled':
+            errorMessage = 'Sua conta foi desativada.';
+            break;
+          default:
+            errorMessage = `Erro desconhecido: ${err.message}`;
+            break;
+        }
+        Swal.fire('Erro ao Enviar SMS', errorMessage, 'error');
+
+        // Limpa o reCAPTCHA para uma nova tentativa, essencial em caso de erro.
+        if (recaptchaVerifier) {
+            recaptchaVerifier.clear();
+        }
+
+      } finally {
+        toggleLoading(false); // Desativa o loading
+      }
     }
 
-    function verificarCodigo() {
+    async function verificarCodigo() {
       const codigo = document.getElementById('codigo').value.trim();
-      if (!confirmationResult) return Swal.fire('Erro', 'Envie o SMS primeiro.', 'error');
-      if (!codigo) return Swal.fire('Erro', 'Informe o código SMS.', 'error');
+      if (!confirmationResult) return Swal.fire('Erro', 'Por favor, envie o SMS primeiro.', 'error');
+      if (!codigo) return Swal.fire('Erro', 'Por favor, informe o código SMS.', 'error');
 
-      confirmationResult.confirm(codigo)
-        .then(result => {
-          const user = result.user;
-          Swal.fire('Sucesso!', 'Login feito com ' + user.phoneNumber, 'success');
-        })
-        .catch(err => {
-          Swal.fire('Erro', err.message, 'error');
-        });
+      toggleLoading(true); // Ativa o loading
+
+      try {
+        const result = await confirmationResult.confirm(codigo);
+        const user = result.user;
+        Swal.fire('Sucesso!', 'Login feito com sucesso! Número: ' + user.phoneNumber, 'success');
+        // Você pode redirecionar o usuário ou atualizar a UI aqui
+      } catch (err) {
+        let errorMessage = 'Ocorreu um erro ao verificar o código. Tente novamente.';
+        console.error('Erro ao verificar código:', err); // Log para depuração
+
+        switch (err.code) {
+          case 'auth/invalid-verification-code':
+            errorMessage = 'Código de verificação inválido. Verifique e tente novamente.';
+            break;
+          case 'auth/code-expired':
+            errorMessage = 'O código de verificação expirou. Por favor, envie um novo SMS.';
+            break;
+          case 'auth/internal-error-encountered':
+            errorMessage = 'Ocorreu um erro interno ao verificar o código. Tente novamente.';
+            break;
+          case 'auth/user-disabled':
+            errorMessage = 'Sua conta foi desativada.';
+            break;
+          default:
+            errorMessage = `Erro desconhecido: ${err.message}`;
+            break;
+        }
+        Swal.fire('Erro de Verificação', errorMessage, 'error');
+
+        // Em caso de erro na verificação do código, pode ser útil limpar o reCAPTCHA
+        // se o usuário precisar iniciar o processo novamente.
+        if (recaptchaVerifier) {
+            recaptchaVerifier.clear();
+        }
+
+      } finally {
+        toggleLoading(false); // Desativa o loading
+      }
     }
   </script>
 </body>
