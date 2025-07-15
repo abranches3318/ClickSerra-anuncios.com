@@ -68,7 +68,7 @@ body {
 .campo-senha input[type="password"],
 .campo-senha input[type="text"] {
   width: 100%;
-  padding: 12px 44px 12px 12px; /* espaço à direita para o botão */
+  padding: 12px 44px 12px 12px;
   border-radius: 5px;
   border: 1px solid #ccc;
   box-sizing: border-box;
