@@ -25,9 +25,7 @@
         </div>
         <button type="submit">Entrar</button>
       </form>
-
       <p class="ou">ou</p>
-
       <!-- Login Google -->
       <div class="social-login">
         <button class="google" onclick="loginComGoogle()">Continuar com Google</button>
@@ -69,15 +67,6 @@
       menu.classList.toggle('ativo');
     }
 
-    function toggleSenha(idCampo, idIcone) {
-      const campo = document.getElementById(idCampo);
-      const icone = document.getElementById(idIcone);
-      const mostrando = campo.type === "text";
-
-      campo.type = mostrando ? "password" : "text";
-      icone.src = mostrando ? "imagens/ocultar-senha.png" : "imagens/mostrar-senha.png";
-      icone.alt = mostrando ? "Mostrar senha" : "Ocultar senha";
-    }
     
     document.addEventListener('click', function (event) {
       const menu = document.getElementById('menuNavegacao');
