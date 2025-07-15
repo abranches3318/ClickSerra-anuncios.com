@@ -9,7 +9,6 @@
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <body>
-  <div id="recaptcha-container" style="width:0; height:0; overflow:hidden;"></div>
   <div class="container">
     <div class="form-box">
       <img src="imagens/mascote-olhoaberto.png" alt="Logo Click Serra" class="logo">
@@ -27,7 +26,6 @@
         <button type="submit">Entrar</button>
       </form>
 
-
       <p class="ou">ou</p>
 
       <!-- Login Google -->
@@ -35,62 +33,9 @@
         <button class="google" onclick="loginComGoogle()">Continuar com Google</button>
       </div>
 
-      <!--
-      <div class="social-login">
-        <button class="telefone" onclick="exibirLoginTelefone()">Continuar com Telefone</button>
-      </div>
-
-      
-      <div class="login-telefone" id="formTelefone" style="display: none;">
-        <input type="tel" id="telefoneLogin" placeholder="+55 (DDD) 9XXXX-XXXX" autocomplete="tel" inputmode="tel" />
-
-        
-        <div id="senhaContainer" style="display:none;">
-          <div class="campo-senha">
-            <input type="password" id="senhaTelefone" placeholder="Digite sua senha" />
-            <button type="button" class="toggle-senha" onclick="toggleSenha('senhaTelefone', this)">
-              <i class="fas fa-eye"></i>
-            </button>
-          </div>
-          <button onclick="entrarTelefone()">Entrar</button>
-        </div>
-
-    
-        <div id="novoCadastroContainer" style="display:none;">
-          <input type="password" id="novaSenha" placeholder="Nova senha" />
-          <input type="password" id="confirmarSenha" placeholder="Confirmar nova senha" oninput="validarConfirmacaoSenha()" />
-          <button onclick="cadastrarTelefone()">Cadastrar</button>
-        </div>
-
-        
-        <button id="btnAvancarTelefone" onclick="verificarTelefone()">Avançar</button>
-
-      
-        <div id="codigoContainer" style="display: none;">
-          <input type="text" id="codigoSMS" placeholder="Código SMS" />
-          <button onclick="confirmarCodigoSMS()">Confirmar Código</button>
-        </div>
-      </div> -->
-
-
-      <p style="margin-top: 15px;">
+      <p class="esqueci-senha">
         <a href="#" onclick="esqueciSenha()">Esqueci minha senha</a>
       </p>
-
-      <!-- Recuperação via telefone/email -->
-      <div id="recuperacaoContainer" style="display:none;">
-        <input type="text" id="recuperacaoInput" placeholder="Insira seu email" />
-        <input type="password" id="novaSenhaRecuperacao" placeholder="Nova senha" />
-        <input type="password" id="confirmarSenhaRecuperacao" placeholder="Confirmar nova senha" oninput="validarConfirmacaoSenhaRecuperacao()" />
-        <!--
-        <div id="codigoRecuperacaoContainer" style="display:none;">
-          <input type="text" id="codigoSMSRecuperacao" placeholder="Código SMS" />
-          <button onclick="confirmarCodigoRecuperacao()">Confirmar Código</button>
-        </div>
-          -->
-        <button onclick="enviarCodigoOuReset()">Avançar</button>
-        <button id="btnRedefinirSenha" onclick="redefinirSenha()" style="display:none;">Redefinir Senha</button>
-      </div>
 
       <p class="troca-tela">
         Não tem uma conta? <a href="cadastro.html">Cadastre-se</a>
@@ -103,6 +48,7 @@
     <button class="hamburguer" onclick="toggleMenu()">☰</button>
   </div>
 
+  <!-- Menu lateral com transição -->
   <nav id="menuNavegacao" class="menu-lateral">
     <ul>
       <li><a href="index.html">Início</a></li>
@@ -111,7 +57,7 @@
     </ul>
   </nav>
 
-  <!-- Firebase (não usar type="module") -->
+  <!-- Firebase (sem module) -->
   <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
   <script src="login.js"></script>
@@ -120,7 +66,7 @@
   <script>
     function toggleMenu() {
       const menu = document.getElementById('menuNavegacao');
-      menu.style.display = menu.style.display === 'flex' ? 'none' : 'flex';
+      menu.classList.toggle('ativo');
     }
 
     function toggleSenha(idCampo, botao) {
@@ -135,8 +81,10 @@
     document.addEventListener('click', function (event) {
       const menu = document.getElementById('menuNavegacao');
       const botao = document.querySelector('.hamburguer');
-      if (menu && menu.style.display === 'flex' && !menu.contains(event.target) && !botao.contains(event.target)) {
-        menu.style.display = 'none';
+      if (menu && menu.classList.contains('ativo') &&
+          !menu.contains(event.target) &&
+          !botao.contains(event.target)) {
+        menu.classList.remove('ativo');
       }
     });
   </script>
