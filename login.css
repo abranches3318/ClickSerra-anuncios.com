@@ -43,9 +43,10 @@ body {
   color: #005288;
 }
 
-/* Inputs */
+/* Inputs padrão */
 .form-box input[type="email"],
 .form-box input[type="password"],
+.form-box input[type="tel"],
 .form-box input[type="text"] {
   width: 100%;
   padding: 12px 14px;
@@ -56,45 +57,56 @@ body {
   outline: none;
 }
 
-/* Campo de senha com botão de olho */
+/* Campo com botão de mostrar/ocultar senha */
 .campo-senha {
   position: relative;
   width: 100%;
   margin-bottom: 15px;
 }
 
-.campo-senha input {
-  width: 100%;
-  padding-right: 40px;
+.campo-senha input[type="password"],
+.campo-senha input[type="text"] {
+  padding: 12px 44px 12px 12px; /* espaço à direita para o botão */
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
 }
 
 /* Botão de mostrar/ocultar senha */
 .toggle-senha {
   position: absolute;
-  top: 50%;
-  right: 10px;
-  transform: translateY(-50%);
+  top: 0;
+  right: 0;
+  height: 100%;
+  width: 44px;
   background: none;
   border: none;
   cursor: pointer;
-  padding: 0;
-  height: 30px;
-  width: 30px;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #666;
-  font-size: 18px;
-  z-index: 2;
+  padding: 0;
+  outline: none;
 }
 
+.toggle-senha:focus,
 .toggle-senha:hover {
-  color: #000;
+  background: none;
+  outline: none;
+  box-shadow: none;
+}
+
+.toggle-senha i {
+  font-size: 18px;
+  color: #666;
+  pointer-events: none;
 }
 
 /* Botões */
 .form-box button[type="submit"],
 .form-box button,
+#btnEnviarSMS,
+#codigoContainer button,
 #btnRedefinirSenha {
   width: 100%;
   padding: 12px;
@@ -110,11 +122,15 @@ body {
 
 /* Botão azul padrão */
 .form-box button[type="submit"],
+#btnEnviarSMS,
+#codigoContainer button,
 #btnRedefinirSenha {
   background-color: #007BFF;
 }
 
 .form-box button:hover,
+#btnEnviarSMS:hover,
+#codigoContainer button:hover,
 #btnRedefinirSenha:hover {
   background-color: #0056b3;
 }
@@ -135,19 +151,12 @@ body {
   color: #888;
 }
 
-/* Link "esqueci minha senha" */
-.form-box a[href*="esqueci"],
-.form-box a[onclick*="esqueciSenha"] {
-  font-size: 14px;
-  display: inline-block;
-  margin-top: 10px;
-  color: #007BFF;
-  text-decoration: none;
-}
-
-.form-box a[href*="esqueci"]:hover,
-.form-box a[onclick*="esqueciSenha"]:hover {
-  text-decoration: underline;
+/* Inputs extras */
+#formTelefone input,
+#codigoContainer input,
+#recuperacaoContainer input,
+#novoCadastroContainer input {
+  margin-top: 8px;
 }
 
 /* Redirecionamento para cadastro */
@@ -170,7 +179,6 @@ body {
   position: absolute;
   top: 15px;
   left: 15px;
-  z-index: 1000;
 }
 
 .hamburguer {
@@ -181,37 +189,32 @@ body {
   cursor: pointer;
 }
 
-/* Menu lateral deslizante */
+/* Menu lateral */
 .menu-lateral {
-  position: fixed;
-  top: 0;
-  left: -220px;
-  width: 200px;
-  height: 100%;
+  display: none;
+  flex-direction: column;
   background-color: #fff;
-  box-shadow: 2px 0 8px rgba(0,0,0,0.15);
-  padding: 20px;
-  transition: left 0.3s ease;
-  z-index: 999;
-}
-
-.menu-lateral.ativo {
+  position: absolute;
+  top: 60px;
   left: 0;
+  width: 200px;
+  border: 1px solid #ccc;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+  padding: 10px;
+  z-index: 10;
 }
 
 .menu-lateral ul {
   list-style: none;
-  padding: 0;
 }
 
 .menu-lateral ul li {
-  margin-bottom: 15px;
+  margin: 10px 0;
 }
 
 .menu-lateral ul li a {
   text-decoration: none;
   color: #005288;
-  font-weight: bold;
 }
 
 /* Responsivo */
