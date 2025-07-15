@@ -69,6 +69,16 @@
       menu.classList.toggle('ativo');
     }
 
+    function toggleSenha(idCampo, idIcone) {
+      const campo = document.getElementById(idCampo);
+      const icone = document.getElementById(idIcone);
+      const mostrando = campo.type === "text";
+
+      campo.type = mostrando ? "password" : "text";
+      icone.src = mostrando ? "imagens/ocultar-senha.png" : "imagens/mostrar-senha.png";
+      icone.alt = mostrando ? "Mostrar senha" : "Ocultar senha";
+    }
+    
     document.addEventListener('click', function (event) {
       const menu = document.getElementById('menuNavegacao');
       const botao = document.querySelector('.hamburguer');
