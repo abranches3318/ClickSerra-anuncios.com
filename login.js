@@ -86,3 +86,17 @@ window.esqueciSenha = async function () {
     Swal.fire('Erro', traduzErroFirebase(err.code), 'error');
   }
 };
+
+// Mostrar/ocultar senha ou confirmar senha
+window.toggleSenha = function (campoId, iconeId) {
+  const campo = document.getElementById(campoId);
+  const icone = document.getElementById(iconeId);
+
+  const mostrando = campo.type === 'text';
+  campo.type = mostrando ? 'password' : 'text';
+
+  icone.src = mostrando ? 'imagens/ocultar-senha.png' : 'imagens/revelar-senha.png';
+  icone.alt = mostrando ? 'Mostrar senha' : 'Ocultar senha';
+};
+
+
