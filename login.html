@@ -17,12 +17,12 @@
       <!-- Login com e-mail -->
       <form id="formLogin">
         <input type="email" id="emailLogin" placeholder="Email" required />
-        <div class="campo-senha">
-          <input type="password" id="senhaLogin" placeholder="Senha" required />
-          <button type="button" class="toggle-senha" onclick="toggleSenha('senhaLogin', this)" aria-label="Revelar senha">
-            <i class="fas fa-eye"></i>
-          </button>
-        </div>
+          <div class="campo-senha">
+    <input type="password" id="senhaLogin" placeholder="Senha" required />
+    <button type="button" class="toggle-senha" onclick="toggleSenha('senhaLogin', 'iconeSenhaLogin')" aria-label="Revelar senha">
+      <img id="iconeSenhaLogin" src="imagens/mostrar-senha.png" alt="Mostrar senha" />
+    </button>
+  </div
         <button type="submit">Entrar</button>
       </form>
 
@@ -67,15 +67,6 @@
     function toggleMenu() {
       const menu = document.getElementById('menuNavegacao');
       menu.classList.toggle('ativo');
-    }
-
-    function toggleSenha(idCampo, botao) {
-      const campo = document.getElementById(idCampo);
-      const icone = botao.querySelector('i');
-      const mostrando = campo.type === "text";
-      campo.type = mostrando ? "password" : "text";
-      icone.classList.toggle("fa-eye", mostrando);
-      icone.classList.toggle("fa-eye-slash", !mostrando);
     }
 
     document.addEventListener('click', function (event) {
