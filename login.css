@@ -66,13 +66,13 @@ body {
 
 .campo-senha input[type="password"],
 .campo-senha input[type="text"] {
+  width: 100%;
   padding: 12px 44px 12px 12px; /* espaço à direita para o botão */
-  border-radius: 6px;
+  border-radius: 5px;
   border: 1px solid #ccc;
   box-sizing: border-box;
 }
 
-/* Botão de mostrar/ocultar senha */
 .toggle-senha {
   position: absolute;
   top: 0;
@@ -89,16 +89,16 @@ body {
   outline: none;
 }
 
-.toggle-senha:focus,
-.toggle-senha:hover {
+.toggle-senha:hover,
+.toggle-senha:focus {
   background: none;
-  outline: none;
   box-shadow: none;
+  outline: none;
 }
 
-.toggle-senha i {
-  font-size: 18px;
-  color: #666;
+.toggle-senha img {
+  width: 22px;
+  height: 22px;
   pointer-events: none;
 }
 
