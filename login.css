@@ -43,10 +43,9 @@ body {
   color: #005288;
 }
 
-/* Inputs padrão */
+/* Inputs */
 .form-box input[type="email"],
 .form-box input[type="password"],
-.form-box input[type="tel"],
 .form-box input[type="text"] {
   width: 100%;
   padding: 12px 14px;
@@ -79,7 +78,6 @@ body {
   border: none;
   cursor: pointer;
   padding: 0;
-  margin: 0;
   height: 30px;
   width: 30px;
   display: flex;
@@ -97,8 +95,6 @@ body {
 /* Botões */
 .form-box button[type="submit"],
 .form-box button,
-#btnEnviarSMS,
-#codigoContainer button,
 #btnRedefinirSenha {
   width: 100%;
   padding: 12px;
@@ -114,15 +110,11 @@ body {
 
 /* Botão azul padrão */
 .form-box button[type="submit"],
-#btnEnviarSMS,
-#codigoContainer button,
 #btnRedefinirSenha {
   background-color: #007BFF;
 }
 
 .form-box button:hover,
-#btnEnviarSMS:hover,
-#codigoContainer button:hover,
 #btnRedefinirSenha:hover {
   background-color: #0056b3;
 }
@@ -136,15 +128,6 @@ body {
   background-color: #a8332b;
 }
 
-/* Botão Telefone */
-.telefone {
-  background-color: #000;
-}
-
-.telefone:hover {
-  background-color: #333;
-}
-
 /* Texto divisório */
 .ou {
   margin: 15px 0 10px;
@@ -152,12 +135,19 @@ body {
   color: #888;
 }
 
-/* Inputs extras */
-#formTelefone input,
-#codigoContainer input,
-#recuperacaoContainer input,
-#novoCadastroContainer input {
-  margin-top: 8px;
+/* Link "esqueci minha senha" */
+.form-box a[href*="esqueci"],
+.form-box a[onclick*="esqueciSenha"] {
+  font-size: 14px;
+  display: inline-block;
+  margin-top: 10px;
+  color: #007BFF;
+  text-decoration: none;
+}
+
+.form-box a[href*="esqueci"]:hover,
+.form-box a[onclick*="esqueciSenha"]:hover {
+  text-decoration: underline;
 }
 
 /* Redirecionamento para cadastro */
@@ -180,6 +170,7 @@ body {
   position: absolute;
   top: 15px;
   left: 15px;
+  z-index: 1000;
 }
 
 .hamburguer {
@@ -190,31 +181,37 @@ body {
   cursor: pointer;
 }
 
-/* Menu lateral */
+/* Menu lateral deslizante */
 .menu-lateral {
-  display: none;
-  flex-direction: column;
-  background-color: #fff;
-  position: absolute;
-  top: 60px;
-  left: 0;
+  position: fixed;
+  top: 0;
+  left: -220px;
   width: 200px;
-  border: 1px solid #ccc;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
-  padding: 10px;
+  height: 100%;
+  background-color: #fff;
+  box-shadow: 2px 0 8px rgba(0,0,0,0.15);
+  padding: 20px;
+  transition: left 0.3s ease;
+  z-index: 999;
+}
+
+.menu-lateral.ativo {
+  left: 0;
 }
 
 .menu-lateral ul {
   list-style: none;
+  padding: 0;
 }
 
 .menu-lateral ul li {
-  margin: 10px 0;
+  margin-bottom: 15px;
 }
 
 .menu-lateral ul li a {
   text-decoration: none;
   color: #005288;
+  font-weight: bold;
 }
 
 /* Responsivo */
