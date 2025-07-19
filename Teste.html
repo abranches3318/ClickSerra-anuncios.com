@@ -1,218 +1,139 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Login - Click Serra</title>
-  <link rel="stylesheet" href="login.css" />
+  <meta charset="UTF-8">
+  <title>Login por Telefone - Teste Firebase</title>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-  <!-- Firebase SDKs -->
-  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js"></script>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 20px; }
+    input, button { padding: 10px; margin-bottom: 10px; }
+    #loading-spinner { display: none; margin-top: 10px; }
+  </style>
 </head>
 <body>
-  <div class="container">
-    <div class="form-box">
-      <img src="imagens/logo.png" alt="Logo Click Serra" class="logo">
-      <h2>Entrar na Conta</h2>
+  <h2>Teste de Login por Telefone</h2>
 
-      <!-- Login com Email e Senha -->
-      <form id="formLogin">
-        <input type="email" id="emailLogin" placeholder="Email" required />
-        <div class="campo-senha">
-          <input type="password" id="senhaLogin" placeholder="Senha" required>
-          <button type="button" class="toggle-senha" onclick="toggleSenha()" aria-label="Revelar senha">
-            <img id="iconeOlho" src="imagens/ocultar-senha.png" alt="Mostrar senha">
-          </button>
-        </div>
-        <button type="submit">Entrar</button>
-      </form>
+  <input id="telefone" type="text" placeholder="Digite seu telefone (+55 DDD Número)" style="width: 250px;">
+  <button id="btnEnviarSMS" onclick="enviarSMS()">Enviar SMS</button>
 
-      <p class="ou">ou</p>
+  <br><br>
 
-      <!-- Login com Google -->
-      <div class="social-login">
-        <button class="google" id="btnGoogle" onclick="loginComGoogle()">Continuar com Google</button>
-      </div>
+  <input id="codigo" type="text" placeholder="Digite o código recebido" style="width: 250px;">
+  <button id="btnVerificarCodigo" onclick="verificarCodigo()">Verificar Código</button>
 
-      <p class="ou">ou</p>
-
-      <!-- Login com Telefone -->
-      <div class="social-login">
-        <button id="btnTelefone" class="telefone" onclick="iniciarLoginTelefone()">Continuar com Telefone</button>
-      </div>
-
-      <!-- Inputs dinâmicos para telefone/senha -->
-      <div id="areaTelefone" style="display: none; margin-top: 15px;">
-        <input type="tel" id="telefoneLogin" placeholder="Digite seu telefone" />
-        <input type="password" id="senhaTelefone" placeholder="Crie sua senha" />
-        <button onclick="enviarCodigoSMS()">Confirmar e Enviar SMS</button>
-      </div>
-
-      <!-- Campo para confirmar código SMS -->
-      <div id="codigoContainer" style="display: none; margin-top: 15px;">
-        <input type="text" id="codigoSMS" placeholder="Código SMS recebido" />
-        <button onclick="confirmarCodigoSMS()">Confirmar Código</button>
-      </div>
-
-      <!-- Link cadastro -->
-      <p class="troca-tela">
-        Não tem uma conta? <a href="cadastro.html">Cadastre-se</a>
-      </p>
-    </div>
-  </div>
-
-  <!-- Menu Hambúrguer -->
-  <div class="menu-topo">
-    <button class="hamburguer" onclick="toggleMenu()">☰</button>
-  </div>
-
-  <nav id="menuNavegacao" class="menu-lateral">
-    <ul>
-      <li><a href="index.html">Início</a></li>
-      <li><a href="#">Sobre</a></li>
-      <li><a href="#">Contato</a></li>
-    </ul>
-  </nav>
-
-  <!-- Recaptcha -->
   <div id="recaptcha-container"></div>
+  <div id="loading-spinner">Carregando...</div>
 
   <script>
-    // 🔥 Config Firebase
+    // === Inicialização do Firebase ===
     const firebaseConfig = {
-     apiKey: "AIzaSyDhjUescYhrZ1e12M6nv5mnWxDovNcGxw0",
-  authDomain: "clickserra-anuncios.firebaseapp.com",
-  databaseURL: "https://clickserra-anuncios-default-rtdb.firebaseio.com",
-  projectId: "clickserra-anuncios",
-  storageBucket: "clickserra-anuncios.firebasestorage.app",
-  messagingSenderId: "251868045964",
-  appId: "1:251868045964:web:34f527f3d7c380746211a9"
+      apiKey: "AIzaSyDhjUescYhrZ1e12M6nv5mnWxDovNcGxw0",
+      authDomain: "clickserra-anuncios.firebaseapp.com",
+      projectId: "clickserra-anuncios",
+      storageBucket: "clickserra-anuncios.appspot.com",
+      messagingSenderId: "251868045964",
+      appId: "1:251868045964:web:34f527f3d7c380746211a9"
     };
 
     firebase.initializeApp(firebaseConfig);
     const auth = firebase.auth();
 
-    // 🔐 SweetAlert padrão de erro
-    function erro(titulo, mensagem) {
-      Swal.fire({ icon: 'error', title: titulo, text: mensagem });
-    }
+    let confirmationResult = null;
+    let recaptchaVerifier;
 
-    // ✅ Login com email e senha
-    document.getElementById('formLogin').addEventListener('submit', async function (e) {
-      e.preventDefault();
-      const email = document.getElementById('emailLogin').value.trim();
-      const senha = document.getElementById('senhaLogin').value;
-      if (!email || !senha) return erro('Atenção', 'Preencha email e senha');
+    document.addEventListener('DOMContentLoaded', async () => {
+      recaptchaVerifier = new firebase.auth.RecaptchaVerifier('recaptcha-container', {
+        size: 'normal', // <-- VISÍVEL
+        callback: (response) => {
+          console.log('reCAPTCHA resolvido:', response);
+        },
+        'expired-callback': () => {
+          console.log('reCAPTCHA expirado');
+          recaptchaVerifier.clear();
+        }
+      });
 
-      try {
-        await auth.signInWithEmailAndPassword(email, senha);
-        Swal.fire({ icon: 'success', title: 'Bem-vindo!', text: 'Login realizado com sucesso' })
-          .then(() => window.location.href = 'index.html');
-      } catch (err) {
-        erro('Erro ao logar', traduzErroFirebase(err.code));
-      }
+      await recaptchaVerifier.render(); // obrigatório quando 'normal'
     });
 
-    // ✅ Login com Google
-    async function loginComGoogle() {
-      try {
-        const provider = new firebase.auth.GoogleAuthProvider();
-        await auth.signInWithPopup(provider);
-        Swal.fire({ icon: 'success', title: 'Google conectado!', text: 'Login realizado com sucesso' })
-          .then(() => window.location.href = 'index.html');
-      } catch (err) {
-        erro('Erro Google', traduzErroFirebase(err.code));
+    function formatarTelefone(input) {
+      const numeros = input.replace(/\D/g, '');
+      if (numeros.length === 11) {
+        return '+55' + numeros;
       }
+      throw new Error('Telefone inválido. Exemplo: 11987654321.');
     }
 
-    // ✅ Mostrar/ocultar senha
-    function toggleSenha() {
-      const campo = document.getElementById('senhaLogin');
-      const icone = document.getElementById('iconeOlho');
-      const mostrando = campo.type === 'text';
-      campo.type = mostrando ? 'password' : 'text';
-      icone.src = mostrando ? 'imagens/ocultar-senha.png' : 'imagens/revelar-senha.png';
-      icone.alt = mostrando ? 'Mostrar senha' : 'Ocultar senha';
+    function toggleLoading(isLoading) {
+      document.getElementById('btnEnviarSMS').disabled = isLoading;
+      document.getElementById('btnVerificarCodigo').disabled = isLoading;
+      document.getElementById('loading-spinner').style.display = isLoading ? 'block' : 'none';
     }
 
-    // ✅ Iniciar fluxo de login com telefone
-    function iniciarLoginTelefone() {
-      document.getElementById('areaTelefone').style.display = 'block';
-      document.getElementById('btnTelefone').style.display = 'none';
-    }
+    async function enviarSMS() {
+      const telefone = document.getElementById('telefone').value.trim();
+      let numero;
+      try {
+        numero = formatarTelefone(telefone);
+      } catch (e) {
+        return Swal.fire('Erro de Telefone', e.message, 'error');
+      }
 
-    // ✅ Enviar SMS
-    async function enviarCodigoSMS() {
-      const tel = document.getElementById('telefoneLogin').value.trim();
-      const senha = document.getElementById('senhaTelefone').value;
-
-      if (!tel || !senha) return erro('Campos obrigatórios', 'Preencha telefone e senha');
+      toggleLoading(true);
 
       try {
-        window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('recaptcha-container', {
-          size: 'invisible'
-        }, auth);
-
-        const appVerifier = window.recaptchaVerifier;
-        const provider = new firebase.auth.PhoneAuthProvider(auth);
-        const verifId = await provider.verifyPhoneNumber(tel, appVerifier);
-
-        document.getElementById('areaTelefone').style.display = 'none';
-        document.getElementById('codigoContainer').style.display = 'block';
-        window.confirmationResult = { verifId, tel, senha };
-
+        confirmationResult = await auth.signInWithPhoneNumber(numero, recaptchaVerifier);
+        Swal.fire('Código Enviado!', 'Verifique o SMS no seu telefone.', 'success');
       } catch (err) {
-        erro('Erro ao enviar SMS', traduzErroFirebase(err.code));
+        let msg = 'Erro desconhecido.';
+        switch (err.code) {
+          case 'auth/captcha-check-failed':
+            msg = 'Verificação falhou. Tente novamente.';
+            break;
+          case 'auth/invalid-phone-number':
+            msg = 'Número inválido.';
+            break;
+          case 'auth/quota-exceeded':
+            msg = 'Muitas tentativas. Espere um pouco.';
+            break;
+          case 'auth/internal-error-encountered':
+            msg = 'Erro interno. Tente mais tarde.';
+            break;
+          default:
+            msg = err.message;
+        }
+        Swal.fire('Erro ao Enviar SMS', msg, 'error');
+        if (recaptchaVerifier) recaptchaVerifier.clear();
+      } finally {
+        toggleLoading(false);
       }
     }
 
-    // ✅ Confirmar código SMS
-    async function confirmarCodigoSMS() {
-      const cod = document.getElementById('codigoSMS').value.trim();
-      if (!cod) return erro('Atenção', 'Informe o código recebido');
+    async function verificarCodigo() {
+      const codigo = document.getElementById('codigo').value.trim();
+      if (!confirmationResult) return Swal.fire('Erro', 'Envie o SMS primeiro.', 'error');
+      if (!codigo) return Swal.fire('Erro', 'Digite o código.', 'error');
+
+      toggleLoading(true);
 
       try {
-        const cred = firebase.auth.PhoneAuthProvider.credential(window.confirmationResult.verifId, cod);
-        await auth.signInWithCredential(cred);
-        Swal.fire({ icon: 'success', title: 'Sucesso!', text: 'Login com telefone realizado' })
-          .then(() => window.location.href = 'index.html');
+        const result = await confirmationResult.confirm(codigo);
+        Swal.fire('Sucesso!', 'Login feito com ' + result.user.phoneNumber, 'success');
       } catch (err) {
-        erro('Código inválido', traduzErroFirebase(err.code));
+        let msg = 'Erro ao verificar.';
+        if (err.code === 'auth/invalid-verification-code') {
+          msg = 'Código inválido.';
+        } else if (err.code === 'auth/code-expired') {
+          msg = 'Código expirado.';
+        }
+        Swal.fire('Erro de Verificação', msg, 'error');
+        if (recaptchaVerifier) recaptchaVerifier.clear();
+      } finally {
+        toggleLoading(false);
       }
-    }
-
-    // 🔁 Tradutor de erros do Firebase
-    function traduzErroFirebase(codigo) {
-      switch (codigo) {
-        case 'auth/user-not-found': return 'Usuário não encontrado.';
-        case 'auth/wrong-password': return 'Senha incorreta.';
-        case 'auth/invalid-email': return 'E-mail inválido.';
-        case 'auth/missing-password': return 'Senha não informada.';
-        case 'auth/too-many-requests': return 'Muitas tentativas. Tente novamente mais tarde.';
-        case 'auth/popup-blocked': return 'Navegador bloqueou o pop-up.';
-        case 'auth/popup-closed-by-user': return 'Pop-up fechado antes da conclusão.';
-        case 'auth/cancelled-popup-request': return 'Solicitação cancelada.';
-        case 'auth/invalid-verification-code': return 'Código inválido.';
-        case 'auth/invalid-phone-number': return 'Telefone inválido.';
-        default: return 'Erro desconhecido. Tente novamente.';
-      }
-    }
-
-    // ✅ Fecha menu lateral ao clicar fora
-    document.addEventListener('click', e => {
-      const menu = document.getElementById('menuNavegacao');
-      const botao = document.querySelector('.hamburguer');
-      if (menu && !menu.contains(e.target) && !botao.contains(e.target)) {
-        menu.style.display = 'none';
-      }
-    });
-
-    function toggleMenu() {
-      const menu = document.getElementById('menuNavegacao');
-      menu.style.display = menu.style.display === 'flex' ? 'none' : 'flex';
     }
   </script>
 </body>
 </html>
-
