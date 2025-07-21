@@ -58,6 +58,55 @@ body {
 }
 
 
+/* Menu topo (hambúrguer) */
+.menu-topo {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+}
+
+.hamburguer {
+  font-size: 24px;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+/* Menu lateral */
+.menu-lateral {
+  display: none;
+  flex-direction: column;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: white;
+  width: 220px;
+  height: 100%;
+  box-shadow: 2px 0 10px rgba(0,0,0,0.2);
+  padding: 20px;
+  z-index: 999;
+}
+
+.menu-lateral ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.menu-lateral li {
+  margin-bottom: 15px;
+}
+
+.menu-lateral a {
+  text-decoration: none;
+  color: #333;
+  font-weight: bold;
+}
+
+.menu-lateral a:hover {
+  color: #1e90ff;
+}
+
 /* Campo com botão de mostrar/ocultar senha */
 .campo-senha {
   position: relative;
@@ -68,7 +117,7 @@ body {
 .campo-senha input[type="password"],
 .campo-senha input[type="text"] {
   width: 100%;
-  padding: 12px 44px 12px 12px;
+  padding: 12px 44px 12px 12px; /* espaço à direita para o botão */
   border-radius: 5px;
   border: 1px solid #ccc;
   box-sizing: border-box;
@@ -101,6 +150,11 @@ body {
   width: 22px;
   height: 22px;
   pointer-events: none;
+}
+
+/* Corrige o box-sizing de todos os elementos */
+*, *::before, *::after {
+  box-sizing: border-box;
 }
 
 /* Botões */
@@ -175,48 +229,6 @@ body {
   text-decoration: underline;
 }
 
-/* Menu hambúrguer */
-.menu-topo {
-  position: absolute;
-  top: 15px;
-  left: 15px;
-}
-
-.hamburguer {
-  font-size: 24px;
-  background: none;
-  border: none;
-  color: #333;
-  cursor: pointer;
-}
-
-/* Menu lateral */
-.menu-lateral {
-  display: none;
-  flex-direction: column;
-  background-color: #fff;
-  position: absolute;
-  top: 60px;
-  left: 0;
-  width: 200px;
-  border: 1px solid #ccc;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
-  padding: 10px;
-  z-index: 10;
-}
-
-.menu-lateral ul {
-  list-style: none;
-}
-
-.menu-lateral ul li {
-  margin: 10px 0;
-}
-
-.menu-lateral ul li a {
-  text-decoration: none;
-  color: #005288;
-}
 
 /* Responsivo */
 @media (max-width: 480px) {
