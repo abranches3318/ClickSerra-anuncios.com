@@ -16,16 +16,22 @@
 
       <!-- Login com e-mail -->
       <form id="formLogin">
+        
         <input type="email" id="emailLogin" placeholder="Email" required />
+        
         <div class="campo-senha">
           <input type="password" id="senha" placeholder="Senha" required />
           <button type="button" class="toggle-senha" onclick="toggleSenha('senha', 'iconeSenha')" aria-label="Revelar senha">
             <img id="iconeSenha" src="imagens/ocultar-senha.png" alt="Mostrar senha" />
           </button>
         </div>
+        
         <button type="submit">Entrar</button>
+        
       </form>
+      
       <p class="ou">ou</p>
+      
       <!-- Login Google -->
       <div class="social-login">
         <button class="google" onclick="loginComGoogle()">Continuar com Google</button>
