@@ -60,23 +60,22 @@
   <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
   <script src="login.js"></script>
 
-  <!-- Scripts auxiliares -->
+   <!-- Script do menu hambúrguer -->
   <script>
     function toggleMenu() {
       const menu = document.getElementById('menuNavegacao');
-      menu.classList.toggle('ativo');
+      menu.style.display = menu.style.display === 'flex' ? 'none' : 'flex';
     }
 
-    
-    document.addEventListener('click', function (event) {
-      const menu = document.getElementById('menuNavegacao');
-      const botao = document.querySelector('.hamburguer');
-      if (menu && menu.classList.contains('ativo') &&
-          !menu.contains(event.target) &&
-          !botao.contains(event.target)) {
-        menu.classList.remove('ativo');
-      }
-    });
+    function toggleSenha(idCampo, idIcone) {
+      const campo = document.getElementById(idCampo);
+      const icone = document.getElementById(idIcone);
+      const mostrando = campo.type === "text";
+
+      campo.type = mostrando ? "password" : "text";
+      icone.src = mostrando ? "imagens/ocultar-senha.png" : "imagens/mostrar-senha.png";
+      icone.alt = mostrando ? "Mostrar senha" : "Ocultar senha";
+    }
   </script>
 </body>
 </html>
